@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>整经方案优化计算器</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+  background: #f5f6f8;
+  color: #1a1a2e;
+  line-height: 1.6;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.container {
+  max-width: 880px;
+  width: 100%;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  padding: 28px 32px 36px;
+}
+h1 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: .3px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+h1 svg { width: 24px; height: 24px; flex-shrink: 0; }
+.section { margin-bottom: 24px; }
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #5b6777;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e9ecef;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+}
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+.form-group .unit {
+  font-size: 12px;
+  color: #888;
+  font-weight: 400;
+}
+input[type="number"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+  background: #fff;
+}
+input[type="number"]:focus {
+  border-color: #4f6ef7;
+  box-shadow: 0 0 0 3px rgba(79,110,247,.15);
+}
+input[type="number"]:read-only { background: #f3f4f6; }
+.mode-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  overflow: hidden;
+  width: fit-content;
+}
+.mode-toggle button {
+  padding: 6px 18px;
+  font-size: 13px;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+  color: #374151;
+  transition: background .12s, color .12s;
+}
+.mode-toggle button.active {
+  background: #4f6ef7;
+  color: #fff;
+}
+.mode-toggle button:not(.active):hover { background: #f0f2f5; }
+.mode-toggle button + button { border-left: 1px solid #d1d5db; }
+.calc-btn {
+  margin-top: 8px;
+  padding: 10px 32px;
+  background: #4f6ef7;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s;
+}
+.calc-btn:hover { background: #3b57d9; }
+.calc-btn:active { background: #2f48c2; }
+.results { display: none; margin-top: 8px; }
+.results.visible { display: block; }
+.result-summary {
+  background: #f8f9fb;
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.result-summary .label { color: #6b7280; }
+.result-summary .value { font-weight: 600; color: #1a1a2e; }
+.result-summary .warn { color: #dc2626; }
+.result-summary .ok { color: #16a34a; }
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+.comp-table th {
+  background: #f3f4f6;
+  text-align: left;
+  padding: 8px 12px;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid #d1d5db;
+}
+.comp-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e9ecef;
+}
+.comp-table tr:last-child td { border-bottom: none; }
+.comp-table .recommended {
+  background: #eef2ff;
+  font-weight: 600;
+}
+.comp-table .recommended td:first-child { border-left: 3px solid #4f6ef7; }
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: 4px;
+}
+.badge-rec { background: #dbeafe; color: #1e40af; }
+.badge-double { background: #fef3c7; color: #92400e; }
+.badge-single { background: #e0e7ff; color: #3730a3; }
+.recommend-box {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 6px;
+  padding: 14px 18px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.recommend-box .big { font-size: 20px; font-weight: 700; color: #1e40af; }
+.recommend-box .big-waste { font-size: 20px; font-weight: 700; color: #dc2626; }
+.error-msg {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  padding: 14px 18px;
+  color: #991b1b;
+  font-size: 14px;
+}
+.footnote {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e9ecef;
+  font-size: 12px;
+  color: #9ca3af;
+  line-height: 1.6;
+}
+@media (max-width: 620px) {
+  body { padding: 12px; }
+  .container { padding: 20px 16px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .comp-table { font-size: 12px; }
+  .comp-table th, .comp-table td { padding: 6px 8px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>
+  <svg viewBox="0 0 24 24" fill="none" stroke="#4f6ef7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+  整经方案优化计算器
+</h1>
+<div class="section">
+  <div class="section-title">① 原始方案 — 确定现有线轴长度 Y</div>
+  <div class="mode-toggle" id="yMode">
+    <button class="active" data-mode="calc">根据方案计算</button>
+    <button data-mode="direct">直接输入线轴长度</button>
+  </div>
+  <div class="form-grid" id="calcFields">
+    <div class="form-group">
+      <label>整经长度 L&#8321; <span class="unit">(米)</span></label>
+      <input type="number" id="L1" min="0.01" step="0.1" value="5000" placeholder="例: 5000">
+    </div>
+    <div class="form-group">
+      <label>经盘个数 N&#8321; <span class="unit">(个)</span></label>
+      <input type="number" id="N1" min="1" step="1" value="10" placeholder="例: 10">
+    </div>
+  </div>
+  <div class="form-grid" id="directFields" style="display:none">
+    <div class="form-group" style="grid-column:1/-1;max-width:280px">
+      <label>线轴长度 Y <span class="unit">(米)</span></label>
+      <input type="number" id="Ydirect" min="0.01" step="0.1" placeholder="例: 100000">
+    </div>
+  </div>
+</div>
+<div class="section">
+  <div class="section-title">② 厂家约束</div>
+  <div class="form-grid">
+    <div class="form-group">
+      <label>最大线轴长度 <span class="unit">(米)</span></label>
+      <input type="number" id="MaxY" min="0.01" step="1" value="20000" placeholder="例: 20000">
+    </div>
+    <div class="form-group">
+      <label>最大整经长度 <span class="unit">(米)</span></label>
+      <input type="number" id="MaxL" min="0.01" step="0.1" value="6000" placeholder="例: 6000">
+    </div>
+  </div>
+</div>
+<div class="section">
+  <div class="section-title">③ 新方案</div>
+  <div class="form-grid">
+    <div class="form-group" style="grid-column:1/-1;max-width:280px">
+      <label>新方案经盘个数 N&#8322; <span class="unit">(个)</span></label>
+      <input type="number" id="N2" min="1" step="1" value="8" placeholder="例: 8">
+    </div>
+  </div>
+</div>
+<button class="calc-btn" id="calcBtn">计算最优方案</button>
+<div class="results" id="results">
+  <div class="section-title" style="margin-top:28px">计算结果</div>
+  <div id="resultSummary" class="result-summary"></div>
+  <div id="resultTable"></div>
+  <div id="resultRecommend" class="recommend-box"></div>
+  <div id="errorMsg" class="error-msg" style="display:none"></div>
+</div>
+<div class="footnote">
+  计算逻辑：整经长度 &times; 经盘个数 &le; 最大线轴长度 &rarr; 线轴长度 = 整经长度 &times; 经盘个数（单倍）；<br>
+  超过最大线轴长度 &rarr; 线轴长度 = 整经长度 &times; 经盘个数 &times; 2（双倍）。<br>
+  新方案在满足最大整经长度约束下，选取使浪费最少的整经长度。
+</div>
+</div>
+<script>
+(function() {
+  const modeBtns = document.querySelectorAll('#yMode button');
+  const calcFields = document.getElementById('calcFields');
+  const directFields = document.getElementById('directFields');
+  const calcBtn = document.getElementById('calcBtn');
+  const results = document.getElementById('results');
+  const resultSummary = document.getElementById('resultSummary');
+  const resultTable = document.getElementById('resultTable');
+  const resultRecommend = document.getElementById('resultRecommend');
+  const errorMsg = document.getElementById('errorMsg');
+  let yMode = 'calc';
+  modeBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      modeBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      yMode = this.dataset.mode;
+      calcFields.style.display = yMode === 'calc' ? '' : 'none';
+      directFields.style.display = yMode === 'direct' ? '' : 'none';
+    });
+  });
+  function getVal(id) {
+    const v = parseFloat(document.getElementById(id).value);
+    return isNaN(v) ? null : v;
+  }
+  function fmt(x) { return Number(x).toLocaleString('zh-CN', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+  function calc() {
+    results.classList.remove('visible');
+    errorMsg.style.display = 'none';
+    const MaxY = getVal('MaxY');
+    const MaxL = getVal('MaxL');
+    const N2 = getVal('N2');
+    if (!MaxY || MaxY <= 0) { showError('请输入有效的最大线轴长度'); return; }
+    if (!MaxL || MaxL <= 0) { showError('请输入有效的最大整经长度'); return; }
+    if (!N2 || N2 < 1 || !Number.isInteger(N2)) { showError('经盘个数必须为正整数'); return; }
+    let Y, Ydesc, isDoubleA;
+    if (yMode === 'calc') {
+      const L1 = getVal('L1');
+      const N1 = getVal('N1');
+      if (!L1 || L1 <= 0) { showError('请输入有效的原始整经长度 L1'); return; }
+      if (!N1 || N1 < 1 || !Number.isInteger(N1)) { showError('原始经盘个数必须为正整数'); return; }
+      const raw = L1 * N1;
+      isDoubleA = raw > MaxY;
+      Y = isDoubleA ? raw * 2 : raw;
+      Ydesc = 'L1 x N1 = ' + fmt(raw) + ' 米' + (isDoubleA ? ' > ' + fmt(MaxY) + ' → 翻倍，Y = ' + fmt(raw) + ' x 2 = ' + fmt(Y) + ' 米' : ' ≤ ' + fmt(MaxY) + ' → 单倍，Y = ' + fmt(Y) + ' 米');
+    } else {
+      Y = getVal('Ydirect');
+      if (!Y || Y <= 0) { showError('请输入有效的线轴长度 Y'); return; }
+      isDoubleA = null;
+      Ydesc = '直接输入 Y = ' + fmt(Y) + ' 米';
+    }
+    const L2_single = Math.min(MaxL, MaxY / N2, Y / N2);
+    const consumed_single = L2_single * N2;
+    const waste_single = Y - consumed_single;
+    const wastePct_single = Y > 0 ? (waste_single / Y * 100) : 0;
+    const valid_single = L2_single > 0 && consumed_single <= Y && (L2_single * N2) <= MaxY;
+    const threshold_double = MaxY / N2;
+    const L2_double_raw = Math.min(MaxL, Y / (2 * N2));
+    let valid_double = false;
+    let L2_double = 0, consumed_double = 0, waste_double = 0, wastePct_double = 0;
+    if (L2_double_raw > threshold_double) {
+      valid_double = true;
+      L2_double = L2_double_raw;
+      consumed_double = L2_double * N2 * 2;
+      waste_double = Y - consumed_double;
+      wastePct_double = Y > 0 ? (waste_double / Y * 100) : 0;
+    }
+    let best;
+    if (!valid_single && !valid_double) {
+      showError('该新方案无法使用现有线轴 — 即使取最小整经长度，所需线轴长度仍超过可用长度。请检查参数。');
+      return;
+    }
+    if (valid_single && !valid_double) {
+      best = { L2: L2_single, consumed: consumed_single, waste: waste_single, wastePct: wastePct_single, isDouble: false };
+    } else if (!valid_single && valid_double) {
+      best = { L2: L2_double, consumed: consumed_double, waste: waste_double, wastePct: wastePct_double, isDouble: true };
+    } else {
+      best = (waste_double < waste_single)
+        ? { L2: L2_double, consumed: consumed_double, waste: waste_double, wastePct: wastePct_double, isDouble: true }
+        : { L2: L2_single, consumed: consumed_single, waste: waste_single, wastePct: wastePct_single, isDouble: false };
+    }
+    let summaryHTML = '原始线轴长度 Y：<strong>' + fmt(Y) + '</strong> 米<br>' + Ydesc;
+    if (isDoubleA === true) summaryHTML += '<br><span style="color:#dc2626">⚠ 原始方案已触发翻倍</span>';
+    else if (isDoubleA === false) summaryHTML += '<br><span style="color:#16a34a">✓ 原始方案为单倍</span>';
+    resultSummary.innerHTML = summaryHTML;
+    let tableHTML = '<table class="comp-table"><thead><tr><th>方案</th><th>整经长度 (米)</th><th>是否翻倍</th><th>消耗线轴 (米)</th><th>浪费长度 (米)</th><th>浪费率</th></tr></thead><tbody>';
+    function addRow(cls, label, L2, isDouble, consumed, waste, pct) {
+      const dblHtml = isDouble ? '<span class="badge badge-double">是</span>' : '<span class="badge badge-single">否</span>';
+      const wClass = waste <= 0.01 ? ' style="color:#16a34a"' : ' style="color:#dc2626"';
+      tableHTML += '<tr class="' + cls + '"><td>' + label + '</td><td>' + fmt(L2) + '</td><td>' + dblHtml + '</td><td>' + fmt(consumed) + '</td><td' + wClass + '>' + fmt(waste) + '</td><td>' + pct.toFixed(2) + '%</td></tr>';
+    }
+    if (valid_single) {
+      addRow(!best.isDouble ? 'recommended' : '', '单倍方案' + (!best.isDouble ? ' <span class="badge badge-rec">推荐</span>' : ''), L2_single, false, consumed_single, waste_single, wastePct_single);
+    }
+    if (valid_double) {
+      addRow(best.isDouble ? 'recommended' : '', '双倍方案' + (best.isDouble ? ' <span class="badge badge-rec">推荐</span>' : ''), L2_double, true, consumed_double, waste_double, wastePct_double);
+    }
+    tableHTML += '</tbody></table>';
+    resultTable.innerHTML = tableHTML;
+    const modeStr = best.isDouble ? '双倍' : '单倍';
+    resultRecommend.innerHTML = '<strong>★ 推荐方案（' + modeStr + '）</strong><br>整经长度 L₂ = <span class="big">' + fmt(best.L2) + '</span> 米 &nbsp;|&nbsp;消耗线轴 <span class="big">' + fmt(best.consumed) + '</span> 米 &nbsp;|&nbsp;浪费长度 <span class="big-waste">' + fmt(best.waste) + '</span> 米（' + best.wastePct.toFixed(2) + '%）';
+    results.classList.add('visible');
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.style.display = 'block';
+    results.classList.remove('visible');
+    errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  calcBtn.addEventListener('click', calc);
+  document.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') calc(); });
+  });
+  document.getElementById('Ydirect').value = '';
+})();
+</script>
+</body>
+</html>
