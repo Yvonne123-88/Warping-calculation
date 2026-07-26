@@ -3,134 +3,118 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>整经方案优化计算器</title>
+<title>整经方案计算器</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;background:#f5f6f8;color:#1a1a2e;line-height:1.6;padding:16px;min-height:100vh;display:flex;justify-content:center;align-items:flex-start}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;background:#f5f6f8;color:#1a1a2e;line-height:1.5;padding:16px;min-height:100vh;display:flex;justify-content:center;align-items:flex-start}
 .container{max-width:1200px;width:100%;background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:24px 28px 32px}
 h1{font-size:20px;font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:8px}
 h1 svg{width:24px;height:24px;flex-shrink:0}
-.section{margin-bottom:20px}
-.section-title{font-size:13px;font-weight:600;color:#5b6777;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e9ecef}
+.section{margin-bottom:18px}
+.section-title{font-size:13px;font-weight:600;color:#5b6777;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #e9ecef}
 .layout{display:flex;gap:28px;align-items:flex-start}
-.layout-left{flex:0 0 380px;min-width:0}
+.layout-left{flex:0 0 420px;min-width:0}
 .layout-right{flex:1;min-width:0}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}
-.form-group{display:flex;flex-direction:column;gap:4px}
-.form-group label{font-size:13px;font-weight:500;color:#374151}
-.form-group .unit{font-size:12px;color:#888;font-weight:400}
-input[type="number"],.ref-controls input,.ref-controls select{padding:8px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:14px;outline:none;background:#fff}
-input[type="number"]:focus,.ref-controls input:focus,.ref-controls select:focus{border-color:#4f6ef7;box-shadow:0 0 0 3px rgba(79,110,247,.15)}
-.mode-toggle{display:flex;border:1px solid #d1d5db;border-radius:6px;overflow:hidden;width:fit-content;margin-bottom:12px}
-.mode-toggle button{padding:6px 18px;font-size:13px;border:none;background:#fff;cursor:pointer;color:#374151;border-right:1px solid #d1d5db}
-.mode-toggle button:last-child{border-right:none}
-.mode-toggle button.active{background:#4f6ef7;color:#fff}
-.calc-btn{margin-top:8px;padding:10px 32px;background:#4f6ef7;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer}
+.row-common{display:flex;gap:12px;flex-wrap:wrap}
+.row-common .fg{flex:1;min-width:100px}
+.row-line{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:6px;margin-bottom:6px}
+.row-line.top{background:#f0f7ff;border:1px solid #dbeafe}
+.row-line.bot{background:#fdf2f8;border:1px solid #fce7f3}
+.row-label{font-weight:600;font-size:14px;width:44px;flex-shrink:0;text-align:center;padding:4px 0}
+.row-label.top{color:#1e40af}
+.row-label.bot{color:#9d174d}
+.row-line .fg{display:flex;flex-direction:column;gap:2px;flex:1}
+.row-line .fg label{font-size:11px;color:#6b7280;font-weight:500}
+.row-line .fg input{padding:6px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;outline:none;width:100%}
+.row-line .fg input:focus{border-color:#4f6ef7;box-shadow:0 0 0 2px rgba(79,110,247,.12)}
+.row-result{font-size:14px;font-weight:600;text-align:right;min-width:130px;padding:4px 6px;flex-shrink:0}
+.row-result .val{font-size:18px;color:#1e40af}
+.calc-btn{margin-top:4px;padding:8px 28px;background:#4f6ef7;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer}
 .calc-btn:hover{background:#3b57d9}
-.results{display:none;margin-top:20px}
-.results.visible{display:block}
-.result-summary{background:#f8f9fb;border-radius:6px;padding:14px 18px;margin:0 0 14px;font-size:14px;line-height:1.7}
-.comp-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px}
-.comp-table th{background:#f3f4f6;text-align:left;padding:8px 12px;font-weight:600;color:#374151;border-bottom:1px solid #d1d5db}
-.comp-table td{padding:10px 12px;border-bottom:1px solid #e9ecef}
-.comp-table .recommended{background:#eef2ff;font-weight:600}
-.comp-table .recommended td:first-child{border-left:3px solid #4f6ef7}
-.badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:4px}
-.badge-rec{background:#dbeafe;color:#1e40af}
-.badge-double{background:#fef3c7;color:#92400e}
-.badge-single{background:#e0e7ff;color:#3730a3}
-.badge-top{background:#dbeafe;color:#1e3a5f}
-.badge-bot{background:#fce7f3;color:#831843}
-.recommend-box{background:#eef2ff;border:1px solid #c7d2fe;border-radius:6px;padding:14px 18px;font-size:14px;line-height:1.8}
-.recommend-box .big{font-size:20px;font-weight:700;color:#1e40af}
-.recommend-box .big-waste{font-size:20px;font-weight:700;color:#dc2626}
-.error-msg{background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:14px 18px;color:#991b1b;font-size:14px;display:none}
-.footnote{margin-top:20px;padding-top:16px;border-top:1px solid #e9ecef;font-size:12px;color:#9ca3af;line-height:1.6}
+.formula-note{margin-top:10px;font-size:12px;color:#9ca3af;line-height:1.5;padding:8px 12px;background:#f9fafb;border-radius:4px}
+/* ref table */
 .ref-section{margin-top:0}
-.ref-controls{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
-.ref-controls input{flex:1;min-width:140px;font-size:13px;padding:6px 10px}
-.ref-controls select{width:auto;font-size:13px;padding:6px 10px}
+.ref-controls{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
+.ref-controls input{flex:1;min-width:140px;font-size:13px;padding:6px 10px;border:1px solid #d1d5db;border-radius:6px;outline:none}
+.ref-controls select{font-size:13px;padding:6px 10px;border:1px solid #d1d5db;border-radius:6px;outline:none}
+.ref-controls input:focus,.ref-controls select:focus{border-color:#4f6ef7;box-shadow:0 0 0 3px rgba(79,110,247,.15)}
 .ref-count{font-size:12px;color:#6b7280;margin-left:auto;white-space:nowrap}
-.ref-wrap{max-height:520px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:6px}
+.ref-wrap{max-height:500px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:6px}
 .ref-table{width:100%;border-collapse:collapse;font-size:12px}
-.ref-table th{position:sticky;top:0;z-index:2;background:#f3f4f6;text-align:left;padding:7px 8px;font-weight:600;color:#374151;font-size:11px;border-bottom:1px solid #d1d5db}
-.ref-table td{padding:6px 8px;border-bottom:1px solid #f0f0f0}
+.ref-table th{position:sticky;top:0;z-index:2;background:#f3f4f6;text-align:left;padding:6px 8px;font-weight:600;color:#374151;font-size:11px;border-bottom:1px solid #d1d5db}
+.ref-table td{padding:5px 8px;border-bottom:1px solid #f0f0f0}
 .ref-table tr{cursor:pointer}
 .ref-table tr:hover td{background:#f0f4ff}
 .ref-table .warp-group{cursor:default}
-.ref-table .warp-group td{font-weight:700;color:#1e40af;background:#eef2ff!important;padding:5px 8px}
-.warp-label{display:inline-block;font-weight:700;color:#1e40af;font-size:13px}
-.empty-state{padding:32px;text-align:center;color:#9ca3af;font-size:13px}
+.ref-table .warp-group td{font-weight:700;color:#1e40af;background:#eef2ff!important;padding:4px 8px}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:1px 7px;border-radius:8px}
+.badge-top{background:#dbeafe;color:#1e3a5f}
+.badge-bot{background:#fce7f3;color:#831843}
+.empty-state{padding:28px;text-align:center;color:#9ca3af;font-size:13px}
 .click-hint{font-size:11px;color:#9ca3af;display:block;margin-top:4px}
+.footnote{margin-top:20px;padding-top:14px;border-top:1px solid #e9ecef;font-size:12px;color:#9ca3af;line-height:1.6}
 @media(max-width:960px){.layout{flex-direction:column}.layout-left{flex:1;width:100%}}
-@media(max-width:620px){body{padding:10px}.container{padding:16px 12px}.form-grid{grid-template-columns:1fr}.comp-table{font-size:12px}.comp-table th,.comp-table td{padding:6px 8px}.ref-wrap{max-height:360px}}
+@media(max-width:620px){body{padding:10px}.container{padding:16px 12px}.row-line{flex-wrap:wrap}.row-result{min-width:auto;text-align:left}}
 </style>
 </head>
 <body>
-<div class="container" id="app">
+<div class="container">
 <h1>
 <svg viewBox="0 0 24 24" fill="none" stroke="#4f6ef7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-整经方案优化计算器
+整经方案计算器
 </h1>
 <div class="layout">
 <div class="layout-left">
 <div class="section">
-<div class="section-title">① 原始方案 — 确定现有线轴长度 Y</div>
-<div class="mode-toggle" id="yMode">
-<button class="active" data-mode="calc">根据方案计算</button>
-<button data-mode="direct">直接输入线轴长度</button>
-</div>
-<div class="form-grid" id="calcFields">
-<div class="form-group"><label>整经长度 L&#8321; <span class="unit">(米)</span></label><input type="number" id="L1" min="0.01" step="0.1" value="5000" placeholder="例: 5000"></div>
-<div class="form-group"><label>经盘个数 N&#8321; <span class="unit">(个)</span></label><input type="number" id="N1" min="1" step="1" value="10" placeholder="例: 10"></div>
-</div>
-<div class="form-grid" id="directFields" style="display:none">
-<div class="form-group" style="grid-column:1/-1;max-width:280px"><label>线轴长度 Y <span class="unit">(米)</span></label><input type="number" id="Ydirect" min="0.01" step="0.1" placeholder="例: 100000"></div>
+<div class="section-title">① 公共参数</div>
+<div class="row-common">
+<div class="fg"><label>最大整经长度 <span style="color:#888;font-weight:400">(米)</span></label><input type="number" id="maxL" min="0.01" step="0.1" value="3400"></div>
+<div class="fg"><label>整经长度 <span style="color:#888;font-weight:400">(米)</span></label><input type="number" id="warpLen" min="0.01" step="0.1" value="3400"></div>
+<div class="fg"><label>经盘数量 <span style="color:#888;font-weight:400">(个)</span></label><input type="number" id="beamCnt" min="1" step="1" value="56"></div>
 </div>
 </div>
 <div class="section">
-<div class="section-title">② 厂家约束</div>
-<div class="form-grid">
-<div class="form-group"><label>最大线轴长度 <span class="unit">(米)</span></label><input type="number" id="MaxY" min="0.01" step="1" value="20000" placeholder="例: 20000"></div>
-<div class="form-group"><label>最大整经长度 <span class="unit">(米)</span></label><input type="number" id="MaxL" min="0.01" step="0.1" value="6000" placeholder="例: 6000"></div>
+<div class="section-title">② 计算明细</div>
+<div class="row-line top">
+<div class="row-label top"><b>Top</b></div>
+<div class="fg"><label>上架次数</label><input type="number" id="topTimes" min="0" step="1" value="1"></div>
+<div class="fg"><label>上架筒子数量</label><input type="number" id="topSpools" min="0" step="1" value="508"></div>
+<div class="row-result">线轴长度<br><span class="val" id="topResult">—</span> <span style="font-size:12px;color:#888">米</span></div>
 </div>
+<div class="row-line bot">
+<div class="row-label bot"><b>Bot</b></div>
+<div class="fg"><label>上架次数</label><input type="number" id="botTimes" min="0" step="1" value="1"></div>
+<div class="fg"><label>上架筒子数量</label><input type="number" id="botSpools" min="0" step="1" value="508"></div>
+<div class="row-result">线轴长度<br><span class="val" id="botResult">—</span> <span style="font-size:12px;color:#888">米</span></div>
 </div>
-<div class="section">
-<div class="section-title">③ 新方案</div>
-<div class="form-grid">
-<div class="form-group" style="grid-column:1/-1"><label>新方案经盘个数 N&#8322; <span class="unit">(个)</span></label><input type="number" id="N2" min="1" step="1" value="8" placeholder="例: 8"></div>
+<button class="calc-btn" id="calcBtn">计算</button>
+<div class="formula-note">
+<b>公式：</b>线轴长度 = 整经长度 &times; 经盘数量 + 200 &times; 上架次数<br>
+<b>参考：</b>超过最大线轴长度则自动翻倍（&times;2）
 </div>
-</div>
-<button class="calc-btn" id="calcBtn">计算最优方案</button>
-<div class="results" id="results">
-<div id="errorMsg" class="error-msg"></div>
-<div id="resultSummary" class="result-summary" style="margin-top:0"></div>
-<div id="resultTable" style="margin-bottom:14px"></div>
-<div id="resultRecommend" class="recommend-box" style="margin-bottom:0"></div>
 </div>
 </div>
 <div class="layout-right">
 <div class="section ref-section">
-<div class="section-title">④ 整经数据参考表 — 点击行填入计算框</div>
+<div class="section-title">③ 整经数据参考表 — 点击行填入</div>
 <div class="ref-controls">
 <input type="text" id="refSearch" placeholder="搜索 WarpSet 或 Loom...">
 <select id="refFilter"><option value="">全部 WarpSet</option></select>
 <span class="ref-count" id="refCount"></span>
 </div>
 <div class="ref-wrap" id="refWrap">
-<table class="ref-table"><thead><tr><th>PairCode</th><th>Loom</th><th>Top/Bot</th><th>整经长度</th><th>经盘数</th><th>线轴数</th><th>最大线轴长</th></tr></thead><tbody id="refBody"></tbody></table>
+<table class="ref-table"><thead><tr><th>PairCode</th><th>Loom</th><th>T/B</th><th>整经长度</th><th>经盘数</th><th>线轴数</th><th>最大线轴长</th></tr></thead><tbody id="refBody"></tbody></table>
 </div>
-<span class="click-hint">💡 点击数据行自动填入计算框（作为原始方案）</span>
+<span class="click-hint">💡 点击行自动填入公共参数</span>
 </div>
 </div>
 </div>
 <div class="footnote">
-计算逻辑：整经长度 &times; 经盘个数 &le; 最大线轴长度 &rarr; 单倍；超过 &rarr; 双倍。<br>
-新方案在满足最大整经长度约束下，选取使浪费最少的整经长度。<br>
-参考表数据来源：整经数据.xlsx（仅显示 Top / Bot 行）。
+数据来源：整经数据.xlsx（仅显示 Top / Bot 行）。<br>线轴长度超过最大线轴长度时需翻倍，翻倍后若仍超过则标注。
 </div>
 </div>
 <script>
+// ===== warp data (same as before) =====
 const warpData=[
 {pair:"AT1F01",tb:"Top",loom:"F01",ws:"DW500",len:3400,beam:56,spool:508,maxY:103283,maxL:3400},
 {pair:"AB1F01",tb:"Bot",loom:"F01",ws:"DW500",len:1664,beam:56,spool:508,maxY:47529,maxL:1664},
@@ -285,7 +269,7 @@ const warpData=[
 {pair:"EB1P15",tb:"Bot",loom:"P15",ws:"JAX5",len:2180,beam:114,spool:90,maxY:14000,maxL:2180},
 {pair:"FB1P15",tb:"Bot",loom:"P15",ws:"JAX5",len:2180,beam:120,spool:90,maxY:14000,maxL:2180}
 ];
-// Reference table
+// Reference table render
 const refBody=document.getElementById('refBody'),refSearch=document.getElementById('refSearch'),refFilter=document.getElementById('refFilter'),refCount=document.getElementById('refCount');
 function renderRef(){
   const q=refSearch.value.trim().toLowerCase(),fws=refFilter.value;
@@ -298,8 +282,8 @@ function renderRef(){
     h+='<tr class="warp-group"><td colspan="7"><span class="warp-label">'+ws+'</span></td></tr>';
     g[ws].forEach(d=>{
       const tc=d.tb==='Top'?'badge-top':'badge-bot';
-      h+='<tr data-pair="'+d.pair+'" data-loom="'+d.loom+'" data-tb="'+d.tb+'" data-len="'+d.len+'" data-beam="'+d.beam+'" data-spool="'+d.spool+'" data-maxy="'+d.maxY+'" data-maxl="'+d.maxL+'">';
-      h+='<td>'+d.pair+'</td><td>'+d.loom+'</td><td><span class="badge '+tc+'">'+d.tb+'</span></td><td>'+d.len+'</td><td>'+d.beam+'</td><td>'+d.spool+'</td><td>'+d.maxY+'</td></tr>'
+      h+='<tr data-len="'+d.len+'" data-beam="'+d.beam+'" data-spool="'+d.spool+'" data-maxy="'+d.maxY+'" data-maxl="'+d.maxL+'" data-tb="'+d.tb+'">';
+      h+='<td>'+d.pair+'</td><td>'+d.loom+'</td><td><span class="badge '+tc+'">'+d.tb.slice(0,1)+'</span></td><td>'+d.len+'</td><td>'+d.beam+'</td><td>'+d.spool+'</td><td>'+d.maxY+'</td></tr>'
     })
   });
   refBody.innerHTML=f.length?h:'<tr><td colspan="7" class="empty-state">无匹配数据</td></tr>'
@@ -307,69 +291,45 @@ function renderRef(){
 const wsSet=Array.from(new Set(warpData.map(d=>d.ws))).sort();
 wsSet.forEach(ws=>{const o=document.createElement('option');o.value=ws;o.textContent=ws;refFilter.appendChild(o)});
 refSearch.addEventListener('input',renderRef);refFilter.addEventListener('change',renderRef);renderRef();
-// Click to fill calculator
+// Click ref row to fill
 refBody.addEventListener('click',function(e){
   const tr=e.target.closest('tr');
-  if(!tr||!tr.dataset.loom)return;
-  document.getElementById('L1').value=tr.dataset.len;
-  document.getElementById('N1').value=tr.dataset.beam;
-  document.getElementById('N2').value=tr.dataset.beam;
-  document.getElementById('MaxY').value=tr.dataset.maxy;
-  document.getElementById('MaxL').value=tr.dataset.maxl;
-  document.querySelector('#yMode button[data-mode="calc"]').click()
+  if(!tr||!tr.dataset.len)return;
+  document.getElementById('maxL').value=tr.dataset.maxl;
+  document.getElementById('warpLen').value=tr.dataset.len;
+  document.getElementById('beamCnt').value=tr.dataset.beam;
 });
-// Calculator
-(function(){
-  const mb=document.querySelectorAll('#yMode button'),cf=document.getElementById('calcFields'),df=document.getElementById('directFields');
-  const cb=document.getElementById('calcBtn'),rs=document.getElementById('results'),rSum=document.getElementById('resultSummary'),rTab=document.getElementById('resultTable'),rRec=document.getElementById('resultRecommend'),eMsg=document.getElementById('errorMsg');
-  let yMode='calc';
-  mb.forEach(b=>b.addEventListener('click',function(){mb.forEach(x=>x.classList.remove('active'));this.classList.add('active');yMode=this.dataset.mode;cf.style.display=yMode==='calc'?'':'none';df.style.display=yMode==='direct'?'':'none'}));
-  function gv(id){const v=parseFloat(document.getElementById(id).value);return isNaN(v)?null:v}
-  function fmt(x){return Number(x).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2})}
-  function se(m){eMsg.textContent=m;eMsg.style.display='block';rs.classList.remove('visible')}
-  function calc(){
-    rs.classList.remove('visible');eMsg.style.display='none';
-    const MaxY=gv('MaxY'),MaxL=gv('MaxL'),N2=gv('N2');
-    if(!MaxY||MaxY<=0){se('请输入有效的最大线轴长度');return}
-    if(!MaxL||MaxL<=0){se('请输入有效的最大整经长度');return}
-    if(!N2||N2<1||!Number.isInteger(N2)){se('经盘个数必须为正整数');return}
-    let Y,Ydesc,isDoubleA;
-    if(yMode==='calc'){
-      const L1=gv('L1'),N1=gv('N1');
-      if(!L1||L1<=0){se('请输入有效的原始整经长度 L1');return}
-      if(!N1||N1<1||!Number.isInteger(N1)){se('原始经盘个数必须为正整数');return}
-      const raw=L1*N1;isDoubleA=raw>MaxY;Y=isDoubleA?raw*2:raw;
-      Ydesc='L1 x N1 = '+fmt(raw)+' 米'+(isDoubleA?' > '+fmt(MaxY)+' → 翻倍，Y = '+fmt(raw)+' x 2 = '+fmt(Y)+' 米':' ≤ '+fmt(MaxY)+' → 单倍，Y = '+fmt(Y)+' 米')
-    }else{Y=gv('Ydirect');if(!Y||Y<=0){se('请输入有效的线轴长度 Y');return}isDoubleA=null;Ydesc='直接输入 Y = '+fmt(Y)+' 米'}
-    const L2s=Math.min(MaxL,MaxY/N2,Y/N2),cs=L2s*N2,ws=Y-cs,wps=Y>0?ws/Y*100:0,vs=L2s>0&&cs<=Y&&(L2s*N2)<=MaxY;
-    const td=MaxY/N2,L2dr=Math.min(MaxL,Y/(2*N2));
-    let vd=false,L2d=0,cd=0,wd=0,wpdd=0;
-    if(L2dr>td){vd=true;L2d=L2dr;cd=L2d*N2*2;wd=Y-cd;wpdd=Y>0?wd/Y*100:0}
-    let best;
-    if(!vs&&!vd){se('该新方案无法使用现有线轴 — 请检查参数');return}
-    if(vs&&!vd)best={L2:L2s,consumed:cs,waste:ws,wastePct:wps,isDouble:false};
-    else if(!vs&&vd)best={L2:L2d,consumed:cd,waste:wd,wastePct:wpdd,isDouble:true};
-    else best=(wd<ws)?{L2:L2d,consumed:cd,waste:wd,wastePct:wpdd,isDouble:true}:{L2:L2s,consumed:cs,waste:ws,wastePct:wps,isDouble:false};
-    let sh='原始线轴长度 Y：<strong>'+fmt(Y)+'</strong> 米<br>'+Ydesc;
-    if(isDoubleA===true)sh+='<br><span style="color:#dc2626">&#9888; 原始方案已触发翻倍</span>';
-    else if(isDoubleA===false)sh+='<br><span style="color:#16a34a">&#10003; 原始方案为单倍</span>';
-    rSum.innerHTML=sh;
-    let th='<table class="comp-table"><thead><tr><th>方案</th><th>整经长度</th><th>翻倍</th><th>消耗线轴</th><th>浪费长度</th><th>浪费率</th></tr></thead><tbody>';
-    function ar(cls,lb,l2,dbl,cons,wst,pct){
-      const dh=dbl?'<span class="badge badge-double">是</span>':'<span class="badge badge-single">否</span>';
-      th+='<tr class="'+cls+'"><td>'+lb+'</td><td>'+fmt(l2)+'</td><td>'+dh+'</td><td>'+fmt(cons)+'</td><td'+(wst<=0.01?' style="color:#16a34a"':' style="color:#dc2626"')+'>'+fmt(wst)+'</td><td>'+pct.toFixed(2)+'%</td></tr>'
-    }
-    if(vs)ar(!best.isDouble?'recommended':'','单倍方案'+(!best.isDouble?' <span class="badge badge-rec">推荐</span>':''),L2s,false,cs,ws,wps);
-    if(vd)ar(best.isDouble?'recommended':'','双倍方案'+(best.isDouble?' <span class="badge badge-rec">推荐</span>':''),L2d,true,cd,wd,wpdd);
-    th+='</tbody></table>';rTab.innerHTML=th;
-    const ms=best.isDouble?'双倍':'单倍';
-    rRec.innerHTML='<strong>&#9733; 推荐方案（'+ms+'）</strong><br>整经长度 L&#8322; = <span class="big">'+fmt(best.L2)+'</span> 米 &nbsp;|&nbsp;消耗线轴 <span class="big">'+fmt(best.consumed)+'</span> 米 &nbsp;|&nbsp;浪费长度 <span class="big-waste">'+fmt(best.waste)+'</span> 米（'+best.wastePct.toFixed(2)+'%）';
-    rs.classList.add('visible')
-  }
-  cb.addEventListener('click',calc);
-  document.querySelectorAll('input').forEach(inp=>inp.addEventListener('keydown',e=>{if(e.key==='Enter')calc()}));
-  document.getElementById('Ydirect').value=''
-})();
+// Calculator logic
+const fmt=x=>Number(x).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
+function calcOne(times,spools,warpLen,beamCnt,maxL){
+  const base=warpLen*beamCnt+200*times;
+  let doubled=false;
+  let total=base;
+  if(base>maxL){total=base*2;doubled=true}
+  return{total,doubled,base}
+}
+function fmtResult(r){
+  let s=fmt(r.total)+' 米';
+  if(r.doubled)s+=' <span style="color:#dc2626;font-size:11px">(翻倍)</span>';
+  return s
+}
+function calc(){
+  const warpLen=parseFloat(document.getElementById('warpLen').value)||0;
+  const beamCnt=parseFloat(document.getElementById('beamCnt').value)||0;
+  const maxL=parseFloat(document.getElementById('maxL').value)||0;
+  const tTimes=parseFloat(document.getElementById('topTimes').value)||0;
+  const tSpools=parseFloat(document.getElementById('topSpools').value)||0;
+  const bTimes=parseFloat(document.getElementById('botTimes').value)||0;
+  const bSpools=parseFloat(document.getElementById('botSpools').value)||0;
+  if(!warpLen||!beamCnt||!maxL){document.getElementById('topResult').innerHTML='<span style="color:#dc2626">请填参数</span>';document.getElementById('botResult').innerHTML='<span style="color:#dc2626">请填参数</span>';return}
+  const rTop=calcOne(tTimes,tSpools,warpLen,beamCnt,maxL);
+  const rBot=calcOne(bTimes,bSpools,warpLen,beamCnt,maxL);
+  document.getElementById('topResult').innerHTML=fmtResult(rTop);
+  document.getElementById('botResult').innerHTML=fmtResult(rBot);
+}
+document.getElementById('calcBtn').addEventListener('click',calc);
+document.querySelectorAll('input').forEach(inp=>inp.addEventListener('keydown',e=>{if(e.key==='Enter')calc()}));
+calc();
 </script>
 </body>
 </html>
