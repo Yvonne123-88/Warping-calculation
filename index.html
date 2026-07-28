@@ -7,54 +7,48 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;background:#f5f6f8;color:#1a1a2e;line-height:1.5;padding:16px;min-height:100vh;display:flex;justify-content:center;align-items:flex-start}
-.container{max-width:1200px;width:100%;background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:24px 28px 32px}
-h1{font-size:20px;font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.container{max-width:1100px;width:100%;background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:20px 24px 28px}
+h1{font-size:20px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 h1 svg{width:24px;height:24px;flex-shrink:0}
-.section{margin-bottom:18px}
-.section-title{font-size:13px;font-weight:600;color:#5b6777;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #e9ecef}
-.layout{display:flex;gap:28px;align-items:flex-start}
-.layout-left{flex:0 0 420px;min-width:0}
-.layout-right{flex:1;min-width:0}
-.row-common{display:flex;gap:12px;flex-wrap:wrap}
-.row-common .fg{flex:1;min-width:100px}
-.row-line{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:6px;margin-bottom:6px}
+.section{margin-bottom:16px}
+.section-title{font-size:13px;font-weight:600;color:#5b6777;letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #e9ecef}
+.param-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.param-row .fg{display:flex;flex-direction:column;gap:2px;flex:1;min-width:110px}
+.param-row .fg label{font-size:11px;color:#6b7280;font-weight:500}
+.param-row .fg input{padding:7px 9px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;outline:none;width:100%}
+.param-row .fg input:focus{border-color:#4f6ef7;box-shadow:0 0 0 2px rgba(79,110,247,.13)}
+.row-line{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:6px;margin-bottom:7px;flex-wrap:wrap}
 .row-line.top{background:#f0f7ff;border:1px solid #dbeafe}
 .row-line.bot{background:#fdf2f8;border:1px solid #fce7f3}
-.row-label{font-weight:600;font-size:14px;width:44px;flex-shrink:0;text-align:center;padding:4px 0}
-.row-label.top{color:#1e40af}
-.row-label.bot{color:#9d174d}
-.row-line .fg{display:flex;flex-direction:column;gap:2px;flex:1}
-.row-line .fg label{font-size:11px;color:#6b7280;font-weight:500}
-.row-line .fg input{padding:6px 8px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;outline:none;width:100%}
+.row-label{font-weight:600;font-size:14px;width:40px;flex-shrink:0;text-align:center}
+.row-label.top{color:#1e40af}.row-label.bot{color:#9d174d}
+.row-line .fg{display:flex;flex-direction:column;gap:2px;flex:1;min-width:80px}
+.row-line .fg label{font-size:10px;color:#6b7280;font-weight:500;white-space:nowrap}
+.row-line .fg input{padding:5px 7px;border:1px solid #d1d5db;border-radius:4px;font-size:13px;outline:none;width:100%}
 .row-line .fg input:focus{border-color:#4f6ef7;box-shadow:0 0 0 2px rgba(79,110,247,.12)}
-.row-result{font-size:14px;font-weight:600;text-align:right;min-width:130px;padding:4px 6px;flex-shrink:0}
-.row-result .val{font-size:18px;color:#1e40af}
-.calc-btn{margin-top:4px;padding:8px 28px;background:#4f6ef7;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer}
+.row-res{display:flex;gap:12px;flex-shrink:0}
+.row-res .item{text-align:right}
+.row-res .item .v{font-size:16px;font-weight:700;color:#1e40af}
+.row-res .item .lbl{font-size:10px;color:#6b7280}
+.row-res .item .warn{color:#dc2626;font-size:11px}
+.calc-btn{padding:8px 28px;background:#4f6ef7;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer}
 .calc-btn:hover{background:#3b57d9}
 .formula-note{margin-top:10px;font-size:12px;color:#9ca3af;line-height:1.5;padding:8px 12px;background:#f9fafb;border-radius:4px}
-/* ref table */
-.ref-section{margin-top:0}
 .ref-controls{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
 .ref-controls input{flex:1;min-width:140px;font-size:13px;padding:6px 10px;border:1px solid #d1d5db;border-radius:6px;outline:none}
 .ref-controls select{font-size:13px;padding:6px 10px;border:1px solid #d1d5db;border-radius:6px;outline:none}
 .ref-controls input:focus,.ref-controls select:focus{border-color:#4f6ef7;box-shadow:0 0 0 3px rgba(79,110,247,.15)}
 .ref-count{font-size:12px;color:#6b7280;margin-left:auto;white-space:nowrap}
-.ref-wrap{max-height:500px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:6px}
+.ref-wrap{max-height:480px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:6px}
 .ref-table{width:100%;border-collapse:collapse;font-size:12px}
-.ref-table th{position:sticky;top:0;z-index:2;background:#f3f4f6;text-align:left;padding:6px 8px;font-weight:600;color:#374151;font-size:11px;border-bottom:1px solid #d1d5db}
-.ref-table td{padding:5px 8px;border-bottom:1px solid #f0f0f0}
+.ref-table th{position:sticky;top:0;z-index:2;background:#f3f4f6;text-align:left;padding:5px 7px;font-weight:600;color:#374151;font-size:11px;border-bottom:1px solid #d1d5db}
+.ref-table td{padding:4px 7px;border-bottom:1px solid #f0f0f0}
 .ref-table tr{cursor:pointer}
 .ref-table tr:hover td{background:#f0f4ff}
-.ref-table .warp-group{cursor:default}
-.ref-table .warp-group td{font-weight:700;color:#1e40af;background:#eef2ff!important;padding:4px 8px}
-.badge{display:inline-block;font-size:10px;font-weight:600;padding:1px 7px;border-radius:8px}
-.badge-top{background:#dbeafe;color:#1e3a5f}
-.badge-bot{background:#fce7f3;color:#831843}
-.empty-state{padding:28px;text-align:center;color:#9ca3af;font-size:13px}
+.ref-table .ws-head td{font-weight:700;color:#1e40af;background:#eef2ff!important;padding:4px 7px;cursor:default}
 .click-hint{font-size:11px;color:#9ca3af;display:block;margin-top:4px}
-.footnote{margin-top:20px;padding-top:14px;border-top:1px solid #e9ecef;font-size:12px;color:#9ca3af;line-height:1.6}
-@media(max-width:960px){.layout{flex-direction:column}.layout-left{flex:1;width:100%}}
-@media(max-width:620px){body{padding:10px}.container{padding:16px 12px}.row-line{flex-wrap:wrap}.row-result{min-width:auto;text-align:left}}
+.footnote{margin-top:16px;padding-top:12px;border-top:1px solid #e9ecef;font-size:12px;color:#9ca3af;line-height:1.6}
+@media(max-width:700px){body{padding:10px}.container{padding:14px 12px}.row-line{gap:5px}.row-line .fg{min-width:70px}.row-res{gap:6px}.row-res .item .v{font-size:14px}}
 </style>
 </head>
 <body>
@@ -63,269 +57,184 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 <svg viewBox="0 0 24 24" fill="none" stroke="#4f6ef7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
 整经方案计算器
 </h1>
-<div class="layout">
-<div class="layout-left">
 <div class="section">
-<div class="section-title">① 公共参数</div>
-<div class="row-common">
-<div class="fg"><label>最大整经长度 <span style="color:#888;font-weight:400">(米)</span></label><input type="number" id="maxL" min="0.01" step="0.1" value="3400"></div>
-<div class="fg"><label>整经长度 <span style="color:#888;font-weight:400">(米)</span></label><input type="number" id="warpLen" min="0.01" step="0.1" value="3400"></div>
-<div class="fg"><label>经盘数量 <span style="color:#888;font-weight:400">(个)</span></label><input type="number" id="beamCnt" min="1" step="1" value="56"></div>
+<div class="section-title">① 计算参数</div>
+<div class="param-row">
+<div class="fg"><label>整经长度 <span style="color:#888">(米)</span></label><input type="number" id="warpLen" min="0.01" step="0.1" value="3400"></div>
+<div class="fg"><label>经盘数量 <span style="color:#888">(个)</span></label><input type="number" id="beamCnt" min="1" step="1" value="56"></div>
+<div class="fg"><label>最大整经长度 <span style="color:#888">(米)</span></label><input type="number" id="maxWarpLen" min="0.01" step="0.1" value="3400"></div>
 </div>
 </div>
 <div class="section">
 <div class="section-title">② 计算明细</div>
 <div class="row-line top">
-<div class="row-label top"><b>Top</b></div>
-<div class="fg"><label>上架次数</label><input type="number" id="topTimes" min="0" step="1" value="1"></div>
-<div class="fg"><label>上架筒子数量</label><input type="number" id="topSpools" min="0" step="1" value="508"></div>
-<div class="row-result">线轴长度<br><span class="val" id="topResult">—</span> <span style="font-size:12px;color:#888">米</span></div>
+<div class="row-label top"><b>TOP</b></div>
+<div class="fg" style="max-width:90px"><label>上架数</label><input type="number" id="tMount" min="0.01" step="0.01" value="2"></div>
+<div class="fg" style="max-width:110px"><label>loom 线轴数量</label><input type="number" id="tSpool" min="0" step="1" value="508"></div>
+<div class="fg" style="max-width:90px"><label>上架次数</label><input type="number" id="tTimes" min="0" step="1" value="2"></div>
+<div class="row-res">
+<div class="item"><div class="lbl">线轴长度</div><div class="v" id="tLenRes">—</div><div class="warn" id="tWarn"></div></div>
+<div class="item" style="border-left:1px solid #d1d5db;padding-left:10px"><div class="lbl">线轴数量</div><div class="v" id="tSpoolRes">—</div></div>
+</div>
 </div>
 <div class="row-line bot">
-<div class="row-label bot"><b>Bot</b></div>
-<div class="fg"><label>上架次数</label><input type="number" id="botTimes" min="0" step="1" value="1"></div>
-<div class="fg"><label>上架筒子数量</label><input type="number" id="botSpools" min="0" step="1" value="508"></div>
-<div class="row-result">线轴长度<br><span class="val" id="botResult">—</span> <span style="font-size:12px;color:#888">米</span></div>
+<div class="row-label bot"><b>BOT</b></div>
+<div class="fg" style="max-width:90px"><label>上架数</label><input type="number" id="bMount" min="0.01" step="0.01" value="2"></div>
+<div class="fg" style="max-width:110px"><label>loom 线轴数量</label><input type="number" id="bSpool" min="0" step="1" value="508"></div>
+<div class="fg" style="max-width:90px"><label>上架次数</label><input type="number" id="bTimes" min="0" step="1" value="2"></div>
+<div class="row-res">
+<div class="item"><div class="lbl">线轴长度</div><div class="v" id="bLenRes">—</div><div class="warn" id="bWarn"></div></div>
+<div class="item" style="border-left:1px solid #d1d5db;padding-left:10px"><div class="lbl">线轴数量</div><div class="v" id="bSpoolRes">—</div></div>
+</div>
 </div>
 <button class="calc-btn" id="calcBtn">计算</button>
 <div class="formula-note">
-<b>公式：</b>线轴长度 = 整经长度 &times; 经盘数量 + 200 &times; 上架次数<br>
-<b>参考：</b>超过最大线轴长度则自动翻倍（&times;2）
+<b>公式：</b>线轴长度 = 整经长度 &times; 经盘数量 &times; ceil(上架数) &nbsp;|&nbsp; 线轴数量 = (loom 线轴数量 + 4) &times; 上架次数<br>
+线轴长度超过最大整经长度时会标注 ⚠
 </div>
 </div>
-</div>
-<div class="layout-right">
-<div class="section ref-section">
+<div class="section">
 <div class="section-title">③ 整经数据参考表 — 点击行填入</div>
 <div class="ref-controls">
-<input type="text" id="refSearch" placeholder="搜索 WarpSet 或 Loom...">
+<input type="text" id="refSearch" placeholder="搜索 WarpSet 或物料号...">
 <select id="refFilter"><option value="">全部 WarpSet</option></select>
 <span class="ref-count" id="refCount"></span>
 </div>
-<div class="ref-wrap" id="refWrap">
-<table class="ref-table"><thead><tr><th>PairCode</th><th>Loom</th><th>T/B</th><th>整经长度</th><th>经盘数</th><th>线轴数</th><th>最大线轴长</th></tr></thead><tbody id="refBody"></tbody></table>
+<div class="ref-wrap">
+<table class="ref-table"><thead><tr><th>物料号</th><th>描述</th><th>WarpSet</th><th>整经长度</th><th>经盘数</th><th>线轴数</th><th>上架次数</th><th>最大经长</th><th>最大线轴长</th></tr></thead><tbody id="refBody"></tbody></table>
 </div>
-<span class="click-hint">💡 点击行自动填入公共参数</span>
-</div>
-</div>
+<span class="click-hint">💡 点击行自动填入公共参数和对应行的 loom 线轴数量、上架次数</span>
 </div>
 <div class="footnote">
-数据来源：整经数据.xlsx（仅显示 Top / Bot 行）。<br>线轴长度超过最大线轴长度时需翻倍，翻倍后若仍超过则标注。
+数据来源：整经数据.xlsx &nbsp;|&nbsp; Active=Y 为有效数据
 </div>
 </div>
 <script>
-// ===== warp data (same as before) =====
 const warpData=[
-{pair:"AT1F01",tb:"Top",loom:"F01",ws:"DW500",len:3400,beam:56,spool:508,maxY:103283,maxL:3400},
-{pair:"AB1F01",tb:"Bot",loom:"F01",ws:"DW500",len:1664,beam:56,spool:508,maxY:47529,maxL:1664},
-{pair:"AT1F02",tb:"Top",loom:"F02",ws:"DW500",len:3400,beam:56,spool:508,maxY:103283,maxL:3400},
-{pair:"AB1F02",tb:"Bot",loom:"F02",ws:"DW500",len:1664,beam:56,spool:508,maxY:47529,maxL:1664},
-{pair:"BT1F02",tb:"Top",loom:"F02",ws:"DW340",len:2400,beam:56,spool:474,maxY:73000,maxL:3200},
-{pair:"BB1F02",tb:"Bot",loom:"F02",ws:"DW340",len:1175,beam:56,spool:314,maxY:20700,maxL:1044},
-{pair:"CT1F02",tb:"Top",loom:"F02",ws:"DW340",len:3200,beam:56,spool:474,maxY:89796,maxL:3200},
-{pair:"CB1F02",tb:"Bot",loom:"F02",ws:"DW340",len:1044,beam:57,spool:314,maxY:22442,maxL:1044},
-{pair:"DT1F02",tb:"Top",loom:"F02",ws:"DW330",len:2906,beam:56,spool:570,maxY:96108,maxL:3375},
-{pair:"DB1F02",tb:"Bot",loom:"F02",ws:"DW330",len:1422,beam:56,spool:378,maxY:40045,maxL:1650},
-{pair:"EB1F02",tb:"Bot",loom:"F02",ws:"JAX4",len:3150,beam:112,spool:83,maxY:22200,maxL:3200},
-{pair:"FB1F02",tb:"Bot",loom:"F02",ws:"JAX5",len:1980,beam:112,spool:69,maxY:14000,maxL:2200},
-{pair:"GB1F02",tb:"Bot",loom:"F02",ws:"M2",len:2470,beam:69,spool:382,maxY:57000,maxL:2700},
-{pair:"HB1F02",tb:"Bot",loom:"F02",ws:"JAX4",len:3150,beam:112,spool:78,maxY:22200,maxL:3200},
-{pair:"IT1F02",tb:"Top",loom:"F02",ws:"DW330",len:2440,beam:56,spool:570,maxY:96108,maxL:3375},
-{pair:"IB1F02",tb:"Bot",loom:"F02",ws:"DW330",len:1194,beam:56,spool:378,maxY:40045,maxL:1650},
-{pair:"AT1F03",tb:"Top",loom:"F03",ws:"DW555",len:3360,beam:54,spool:986,maxY:137615,maxL:3360},
-{pair:"AB1F03",tb:"Bot",loom:"F03",ws:"DW555",len:1644,beam:52,spool:614,maxY:52083,maxL:1644},
-{pair:"BT1F03",tb:"Top",loom:"F03",ws:"DW555",len:3360,beam:54,spool:1002,maxY:137615,maxL:3360},
-{pair:"BB1F03",tb:"Bot",loom:"F03",ws:"DW555",len:1644,beam:52,spool:624,maxY:52083,maxL:1644},
-{pair:"CT1F03",tb:"Top",loom:"F03",ws:"DW555",len:1680,beam:54,spool:1002,maxY:137615,maxL:3360},
-{pair:"CB1F03",tb:"Bot",loom:"F03",ws:"DW555",len:1644,beam:52,spool:624,maxY:52083,maxL:1644},
-{pair:"DT1F03",tb:"Top",loom:"F03",ws:"DW555",len:1650,beam:54,spool:1002,maxY:138396,maxL:3360},
-{pair:"DB1F03",tb:"Bot",loom:"F03",ws:"DW555",len:1600,beam:52,spool:624,maxY:52302,maxL:1644},
-{pair:"AT1F04",tb:"Top",loom:"F04",ws:"DW330",len:3106,beam:52,spool:780,maxY:96108,maxL:3106},
-{pair:"AB1F04",tb:"Bot",loom:"F04",ws:"DW330",len:1520,beam:52,spool:518,maxY:40045,maxL:1520},
-{pair:"BT1F04",tb:"Top",loom:"F04",ws:"DW555",len:3360,beam:54,spool:986,maxY:137615,maxL:3360},
-{pair:"BB1F04",tb:"Bot",loom:"F04",ws:"DW555",len:1644,beam:52,spool:614,maxY:52083,maxL:1644},
-{pair:"AB1F05",tb:"Bot",loom:"F05",ws:"JAX4",len:2750,beam:120,spool:77,maxY:22200,maxL:2750},
-{pair:"BB1F05",tb:"Bot",loom:"F05",ws:"4PLY",len:910,beam:120,spool:92,maxY:10000,maxL:1000},
-{pair:"CB1F05",tb:"Bot",loom:"F05",ws:"4PLY",len:500,beam:120,spool:92,maxY:10000,maxL:1000},
-{pair:"AT1F06",tb:"Top",loom:"F06",ws:"DW500",len:3060,beam:52,spool:698,maxY:103283,maxL:3060},
-{pair:"AB1F06",tb:"Bot",loom:"F06",ws:"DW500",len:1500,beam:52,spool:698,maxY:47529,maxL:1500},
-{pair:"BT1F06",tb:"Top",loom:"F06",ws:"DW330",len:3106,beam:52,spool:780,maxY:96108,maxL:3106},
-{pair:"BB1F06",tb:"Bot",loom:"F06",ws:"DW330",len:1520,beam:52,spool:518,maxY:40045,maxL:1520},
-{pair:"CT1F06",tb:"Top",loom:"F06",ws:"DW555",len:3360,beam:54,spool:986,maxY:137615,maxL:3360},
-{pair:"CB1F06",tb:"Bot",loom:"F06",ws:"DW555",len:1644,beam:52,spool:614,maxY:52083,maxL:1644},
-{pair:"DT1F06",tb:"Top",loom:"F06",ws:"DW555",len:1644,beam:54,spool:986,maxY:137615,maxL:3360},
-{pair:"DB1F06",tb:"Bot",loom:"F06",ws:"DW555",len:1644,beam:52,spool:614,maxY:52083,maxL:1644},
-{pair:"ET1F06",tb:"Top",loom:"F06",ws:"DW555",len:1550,beam:54,spool:986,maxY:138396,maxL:3360},
-{pair:"EB1F06",tb:"Bot",loom:"F06",ws:"DW555",len:1500,beam:52,spool:614,maxY:52302,maxL:1644},
-{pair:"FT1F06",tb:"Top",loom:"F06",ws:"DW500",len:600,beam:52,spool:698,maxY:84731,maxL:3060},
-{pair:"FB1F06",tb:"Bot",loom:"F06",ws:"DW500",len:600,beam:52,spool:698,maxY:48000,maxL:1500},
-{pair:"AT1F07",tb:"Top",loom:"F07",ws:"DW320",len:3678,beam:54,spool:984,maxY:137615,maxL:3678},
-{pair:"AB1F07",tb:"Bot",loom:"F07",ws:"DW320",len:1800,beam:52,spool:654,maxY:52083,maxL:1800},
-{pair:"BT1F07",tb:"Top",loom:"F07",ws:"DW320",len:3360,beam:54,spool:984,maxY:137615,maxL:3360},
-{pair:"BB1F07",tb:"Bot",loom:"F07",ws:"DW320",len:1644,beam:52,spool:654,maxY:52083,maxL:1644},
-{pair:"CT1F07",tb:"Top",loom:"F07",ws:"DW320",len:3360,beam:54,spool:984,maxY:138396,maxL:3360},
-{pair:"CB1F07",tb:"Bot",loom:"F07",ws:"DW320",len:1644,beam:52,spool:654,maxY:52302,maxL:1644},
-{pair:"AT1F08",tb:"Top",loom:"F08",ws:"DW500",len:3000,beam:48,spool:698,maxY:103283,maxL:3300},
-{pair:"AB1F08",tb:"Bot",loom:"F08",ws:"DW500",len:1468,beam:48,spool:698,maxY:47529,maxL:1615},
-{pair:"BT1F08",tb:"Top",loom:"F08",ws:"DW500",len:1500,beam:48,spool:698,maxY:103000,maxL:1500},
-{pair:"BB1F08",tb:"Bot",loom:"F08",ws:"DW500",len:1500,beam:48,spool:698,maxY:48000,maxL:1500},
-{pair:"AT1F09",tb:"Top",loom:"F09",ws:"DW340",len:3110,beam:52,spool:660,maxY:73000,maxL:3110},
-{pair:"AB1F09",tb:"Bot",loom:"F09",ws:"DW340",len:1015,beam:52,spool:438,maxY:20700,maxL:1015},
-{pair:"BT1F09",tb:"Top",loom:"F09",ws:"DW340",len:3110,beam:52,spool:660,maxY:89796,maxL:3110},
-{pair:"BB1F09",tb:"Bot",loom:"F09",ws:"DW340",len:1015,beam:105,spool:438,maxY:22442,maxL:1015},
-{pair:"CT1F09",tb:"Top",loom:"F09",ws:"DW340",len:3110,beam:52,spool:660,maxY:89796,maxL:3110},
-{pair:"CB1F09_1_1",tb:"Bot",loom:"F09",ws:"DW340",len:1015,beam:36,spool:438,maxY:22442,maxL:1015},
-{pair:"CB1F09_1_2",tb:"Bot",loom:"F09",ws:"DW340",len:1015,beam:16,spool:438,maxY:22442,maxL:1015},
-{pair:"DT1F09-Trial",tb:"Top",loom:"F09",ws:"DW340",len:1050,beam:52,spool:660,maxY:101780,maxL:3110},
-{pair:"DB1F09",tb:"Bot",loom:"F09",ws:"DW340",len:1015,beam:52,spool:438,maxY:21800,maxL:1015},
-{pair:"AT1F10",tb:"Top",loom:"F10",ws:"DW330",len:3106,beam:52,spool:780,maxY:96108,maxL:3106},
-{pair:"AB1F10",tb:"Bot",loom:"F10",ws:"DW330",len:1520,beam:52,spool:518,maxY:40045,maxL:1520},
-{pair:"BB1F10",tb:"Bot",loom:"F10",ws:"DW330",len:1230,beam:52,spool:518,maxY:40045,maxL:1520},
-{pair:"CB1F10",tb:"Bot",loom:"F10",ws:"DW330",len:750,beam:52,spool:518,maxY:40045,maxL:1520},
-{pair:"DB1F10",tb:"Bot",loom:"F10",ws:"DW330",len:750,beam:52,spool:518,maxY:39900,maxL:1520},
-{pair:"ET1F10",tb:"Top",loom:"F10",ws:"DW039",len:600,beam:52,spool:739,maxY:84731,maxL:3060},
-{pair:"EB1F10",tb:"Bot",loom:"F10",ws:"DW039",len:600,beam:52,spool:739,maxY:48000,maxL:1500},
-{pair:"AT1F11",tb:"Top",loom:"F11",ws:"DW340",len:3099,beam:44,spool:660,maxY:89796,maxL:3099},
-{pair:"AB1F11",tb:"Bot",loom:"F11",ws:"DW340",len:1011,beam:44,spool:438,maxY:22442,maxL:1011},
-{pair:"BT1F11",tb:"Top",loom:"F11",ws:"DW330",len:3106,beam:44,spool:780,maxY:96108,maxL:3106},
-{pair:"BB1F11",tb:"Bot",loom:"F11",ws:"DW330",len:1520,beam:44,spool:518,maxY:40045,maxL:1520},
-{pair:"CT1F11",tb:"Top",loom:"F11",ws:"DW320",len:3380,beam:46,spool:984,maxY:137615,maxL:3380},
-{pair:"CB1F11",tb:"Bot",loom:"F11",ws:"DW320",len:1636,beam:44,spool:654,maxY:52083,maxL:1636},
-{pair:"DT1F11",tb:"Top",loom:"F11",ws:"DW960",len:1680,beam:88,spool:924,maxY:81522,maxL:3000},
-{pair:"ET1F11",tb:"Top",loom:"F11",ws:"DW330",len:1553,beam:44,spool:780,maxY:96108,maxL:3106},
-{pair:"EB1F11",tb:"Bot",loom:"F11",ws:"DW330",len:1520,beam:44,spool:518,maxY:40045,maxL:1520},
-{pair:"FT1F11",tb:"Top",loom:"F11",ws:"DW320",len:1690,beam:46,spool:984,maxY:137615,maxL:3380},
-{pair:"FB1F11",tb:"Bot",loom:"F11",ws:"DW320",len:1636,beam:44,spool:654,maxY:52083,maxL:1636},
-{pair:"DT1F11-Trial",tb:"Top",loom:"F11",ws:"DW320",len:600,beam:46,spool:984,maxY:138396,maxL:600},
-{pair:"DB1F11_Trial",tb:"Bot",loom:"F11",ws:"DW320",len:587,beam:44,spool:654,maxY:52302,maxL:600},
-{pair:"GT1F11",tb:"Top",loom:"F11",ws:"DW320",len:3380,beam:46,spool:984,maxY:138396,maxL:3380},
-{pair:"GB1F11",tb:"Bot",loom:"F11",ws:"DW320",len:1636,beam:44,spool:654,maxY:52302,maxL:1636},
-{pair:"AT1F12",tb:"Top",loom:"F12",ws:"DW340",len:3110,beam:40,spool:660,maxY:89796,maxL:3110},
-{pair:"AB1F12",tb:"Bot",loom:"F12",ws:"DW340",len:1015,beam:40,spool:438,maxY:22442,maxL:1015},
-{pair:"BT1F12",tb:"Top",loom:"F12",ws:"DW330",len:3106,beam:40,spool:780,maxY:96108,maxL:3106},
-{pair:"BB1F12",tb:"Bot",loom:"F12",ws:"DW330",len:1520,beam:40,spool:518,maxY:40045,maxL:1520},
-{pair:"CT1F12",tb:"Top",loom:"F12",ws:"DW960",len:1680,beam:80,spool:924,maxY:81522,maxL:3000},
-{pair:"DT1F12_Trial",tb:"Top",loom:"F12",ws:"DW340",len:1015,beam:40,spool:660,maxY:73000,maxL:1015},
-{pair:"DB1F12_Trial",tb:"Bot",loom:"F12",ws:"DW340",len:1037,beam:40,spool:438,maxY:20700,maxL:1037},
-{pair:"EB1F12",tb:"Bot",loom:"F12",ws:"DW340",len:1015,beam:40,spool:438,maxY:21800,maxL:1015},
-{pair:"FT1F12",tb:"Top",loom:"F12",ws:"DW320",len:1800,beam:42,spool:984,maxY:137615,maxL:3380},
-{pair:"FB1F12",tb:"Bot",loom:"F12",ws:"DW320",len:1750,beam:40,spool:654,maxY:52083,maxL:1636},
-{pair:"GT1F12",tb:"Top",loom:"F12",ws:"DW555",len:900,beam:40,spool:986,maxY:137615,maxL:3360},
-{pair:"GB1F12",tb:"Bot",loom:"F12",ws:"DW555",len:900,beam:40,spool:614,maxY:52083,maxL:1644},
-{pair:"AT1F13",tb:"Top",loom:"F13",ws:"DW555",len:3160,beam:58,spool:986,maxY:137615,maxL:3360},
-{pair:"AB1F13",tb:"Bot",loom:"F13",ws:"DW555",len:1530,beam:56,spool:614,maxY:52083,maxL:1644},
-{pair:"BT1F13",tb:"Top",loom:"F13",ws:"DW555",len:3128,beam:58,spool:986,maxY:137615,maxL:3360},
-{pair:"BB1F13",tb:"Bot",loom:"F13",ws:"DW555",len:1526,beam:56,spool:614,maxY:52083,maxL:1644},
-{pair:"CT1F13",tb:"Top",loom:"F13",ws:"DW555",len:1000,beam:58,spool:986,maxY:137615,maxL:3360},
-{pair:"CB1F13",tb:"Bot",loom:"F13",ws:"DW555",len:1000,beam:56,spool:614,maxY:52083,maxL:1644},
-{pair:"DT1F13",tb:"Top",loom:"F13",ws:"DW555",len:1650,beam:58,spool:986,maxY:138396,maxL:3360},
-{pair:"DB1F13",tb:"Bot",loom:"F13",ws:"DW555",len:1600,beam:56,spool:614,maxY:52302,maxL:1644},
-{pair:"ET1F13",tb:"Top",loom:"F13",ws:"DW555",len:2400,beam:58,spool:986,maxY:137615,maxL:3360},
-{pair:"EB1F13",tb:"Bot",loom:"F13",ws:"DW555",len:1170,beam:56,spool:614,maxY:52083,maxL:1644},
-{pair:"AB1P01",tb:"Bot",loom:"P01",ws:"4PLY",len:280,beam:90,spool:390,maxY:10000,maxL:280},
-{pair:"AB1P06",tb:"Bot",loom:"P06",ws:"4PLY",len:380,beam:44,spool:496,maxY:10000,maxL:380},
-{pair:"AB1P07",tb:"Bot",loom:"P07",ws:"4PLY",len:400,beam:51,spool:546,maxY:10000,maxL:400},
-{pair:"AB1P08",tb:"Bot",loom:"P08",ws:"4PLY",len:245,beam:84,spool:390,maxY:10000,maxL:245},
-{pair:"BB1P08",tb:"Bot",loom:"P08",ws:"JAX4",len:1250,beam:84,spool:158,maxY:22200,maxL:1250},
-{pair:"CB1P08",tb:"Bot",loom:"P08",ws:"4PLY",len:245,beam:84,spool:390,maxY:10000,maxL:245},
-{pair:"AB1P09",tb:"Bot",loom:"P09",ws:"JAX5",len:1150,beam:60,spool:175,maxY:14000,maxL:1150},
-{pair:"BB1P09",tb:"Bot",loom:"P09",ws:"C38",len:585,beam:60,spool:624,maxY:18720,maxL:585},
-{pair:"CB1P09",tb:"Bot",loom:"P09",ws:"JAX5",len:1380,beam:60,spool:175,maxY:14000,maxL:1380},
-{pair:"DB1P09",tb:"Bot",loom:"P09",ws:"4PLY",len:420,beam:60,spool:496,maxY:10000,maxL:400},
-{pair:"EB1P09",tb:"Bot",loom:"P09",ws:"4PLY",len:365,beam:60,spool:496,maxY:10000,maxL:385},
-{pair:"FB1P09",tb:"Bot",loom:"P09",ws:"C38",len:585,beam:60,spool:624,maxY:15500,maxL:585},
-{pair:"GB1P09",tb:"Bot",loom:"P09",ws:"C38",len:585,beam:60,spool:624,maxY:15000,maxL:585},
-{pair:"HB1P09",tb:"Bot",loom:"P09",ws:"C38",len:585,beam:60,spool:624,maxY:23000,maxL:585},
-{pair:"AB1P11",tb:"Bot",loom:"P11",ws:"C38",len:620,beam:66,spool:676,maxY:18720,maxL:620},
-{pair:"BB1P11",tb:"Bot",loom:"P11",ws:"C38",len:618,beam:66,spool:676,maxY:15500,maxL:620},
-{pair:"CB1P11",tb:"Bot",loom:"P11",ws:"C38",len:530,beam:66,spool:676,maxY:15500,maxL:620},
-{pair:"DB1P11",tb:"Bot",loom:"P11",ws:"C38",len:565,beam:72,spool:676,maxY:15000,maxL:620},
-{pair:"EB1P11",tb:"Bot",loom:"P11",ws:"C38",len:570,beam:72,spool:676,maxY:23000,maxL:620},
-{pair:"AB1P03",tb:"Bot",loom:"P03",ws:"C38",len:650,beam:42,spool:688,maxY:18720,maxL:650},
-{pair:"BB1P03",tb:"Bot",loom:"P03",ws:"C38",len:650,beam:42,spool:688,maxY:15500,maxL:650},
-{pair:"CB1P03",tb:"Bot",loom:"P03",ws:"C38",len:320,beam:42,spool:688,maxY:15500,maxL:650},
-{pair:"DB1P03",tb:"Bot",loom:"P03",ws:"M2",len:650,beam:42,spool:1032,maxY:57000,maxL:650},
-{pair:"EB1P03",tb:"Bot",loom:"P03",ws:"C38",len:650,beam:42,spool:688,maxY:15000,maxL:650},
-{pair:"FB1P03",tb:"Bot",loom:"P03",ws:"C38",len:594,beam:46,spool:688,maxY:23000,maxL:650},
-{pair:"AB1P13",tb:"Bot",loom:"P13",ws:"C38",len:593,beam:46,spool:688,maxY:18720,maxL:650},
-{pair:"BB1P13",tb:"Bot",loom:"P13",ws:"C38",len:645,beam:46,spool:688,maxY:15500,maxL:650},
-{pair:"CB1P13",tb:"Bot",loom:"P13",ws:"C38",len:593,beam:46,spool:688,maxY:15000,maxL:650},
-{pair:"DB1P13",tb:"Bot",loom:"P13",ws:"C38",len:593,beam:46,spool:688,maxY:15500,maxL:650},
-{pair:"EB1P13",tb:"Bot",loom:"P13",ws:"C38",len:300,beam:46,spool:688,maxY:23000,maxL:650},
-{pair:"FB1P13",tb:"Bot",loom:"P13",ws:"C38",len:593,beam:46,spool:688,maxY:23000,maxL:650},
-{pair:"GB1P13",tb:"Bot",loom:"P13",ws:"C38",len:296,beam:46,spool:688,maxY:15500,maxL:650},
-{pair:"AB1P04",tb:"Bot",loom:"P04",ws:"C38",len:213,beam:55,spool:480,maxY:18720,maxL:230},
-{pair:"BB1P04",tb:"Bot",loom:"P04",ws:"C38",len:230,beam:55,spool:480,maxY:15500,maxL:230},
-{pair:"CB1P04",tb:"Bot",loom:"P04",ws:"M2",len:480,beam:55,spool:708,maxY:57000,maxL:480},
-{pair:"DB1P04",tb:"Bot",loom:"P04",ws:"M2",len:480,beam:55,spool:708,maxY:57000,maxL:480},
-{pair:"AB1P14",tb:"Bot",loom:"P14",ws:"C38",len:650,beam:54,spool:688,maxY:18720,maxL:650},
-{pair:"BB1P14",tb:"Bot",loom:"P14",ws:"C38",len:650,beam:54,spool:688,maxY:15500,maxL:650},
-{pair:"CB1P14",tb:"Bot",loom:"P14",ws:"4PLY",len:406,beam:54,spool:546,maxY:10000,maxL:400},
-{pair:"DB1P14",tb:"Bot",loom:"P14",ws:"4PLY",len:406,beam:54,spool:546,maxY:10000,maxL:400},
-{pair:"AB1P15",tb:"Bot",loom:"P15",ws:"JAX4",len:2750,beam:120,spool:110,maxY:28000,maxL:2750},
-{pair:"BB1P15",tb:"Bot",loom:"P15",ws:"JAX5",len:2180,beam:120,spool:90,maxY:14000,maxL:2200},
-{pair:"CB1P15",tb:"Bot",loom:"P15",ws:"JAX4",len:2750,beam:112,spool:110,maxY:28000,maxL:2750},
-{pair:"DB1P15",tb:"Bot",loom:"P15",ws:"JAX5",len:2200,beam:114,spool:92,maxY:14000,maxL:2200},
-{pair:"EB1P15",tb:"Bot",loom:"P15",ws:"JAX5",len:2180,beam:114,spool:90,maxY:14000,maxL:2180},
-{pair:"FB1P15",tb:"Bot",loom:"P15",ws:"JAX5",len:2180,beam:120,spool:90,maxY:14000,maxL:2180}
+["N","YRF","DW500","12-00310-02-04","920W-0,14",3400,3400,56,508,4,200,2,103283,2.20,95400],
+["N","YRF","DW500","12-00010-01-04","920W-0,14, top marker",3400,3400,56,6,1,200,2,103286,2.20,95400],
+["N","YRF","DW500","12-80140-01-04","921H-0,22",1664,1664,56,508,4,200,2,47529,2.50,46792],
+["N","YRF","DW500","12-00005-02-04","921H-0,22 bottom marker",1664,1664,56,6,1,200,2,47525,2.50,46792],
+["N","YRF","DW340","12-80309-01-04","FFP145/1021-0,15",3200,2400,56,474,4,200,2,73000,1.77,67400],
+["N","YRF","DW340","12-80312-01-04","FFP145 top marker",3200,2400,56,6,1,200,2,73000,1.77,67400],
+["N","YRF","DW340","12-80307-01-04","FFP150/1016-0,32",1044,1175,56,314,4,200,4,20700,2.30,16650],
+["N","YRF","DW340","12-80308-01-04","FFP150 bottom marker",1044,1175,56,6,1,200,4,20700,2.30,16650],
+["Y","YRF","DW340","12-15047-01-04","920Y-0.15",3200,3200,56,474,4,200,2,89796,2.20,89800],
+["Y","YRF","DW340","12-15045-01-04","920Y-0.15 top marker",3200,3200,56,6,1,200,2,89886,2.20,89800],
+["Y","YRF","DW340","12-80073-01-04","921H-0.32",1044,1044,57,314,4,364,3,22442,2.50,20200],
+["Y","YRF","DW340","12-80072-01-04","921H-0.32 bottom marker",1044,1044,57,6,1,364,3,22444,2.50,20200],
+["Y","YRF","DW330","12-80365-01-04","40-50W-0,12",3375,2906,56,570,4,400,2,96108,1.50,81768],
+["Y","YRF","DW330","12-80365-02-04","40-50W-0,12 top marker",3375,2906,56,6,1,400,2,96108,1.50,81768],
+["Y","YRF","DW330","12-80325-01-04","40-60W-0.24",1650,1422,56,378,4,200,2,40045,2.50,40016],
+["Y","YRF","DW330","12-80325-02-04","40-60W-0.24 bottom marker",1650,1422,56,6,1,200,2,40045,2.50,40016],
+["N","YRP","JAX4","11-16030-02-06","X211, 0.40mm F05-HAI",3200,3150,112,83,1,150,16,22200,3.30,22200],
+["Y","YRP","JAX5","11-11100-01-05","X211 0.50 - HAI",2200,1980,112,69,1,140,16,14000,3.30,14000],
+["Y","YRP","M2","11-11480-03-05","X205, 0.2mm",2700,2470,69,382,2,200,3,57000,2.15,57010],
+["Y","YRP","JAX4","11-16030-02-06","X211, 0.40mm F05-HAI",3200,3150,112,78,1,150,16,22200,3.30,22200],
+["Y","YRF","DW330","12-80365-01-04","40-50W-0,12",3375,2440,56,570,4,400,2,96108,1.50,68720],
+["Y","YRF","DW330","12-80365-02-04","40-50W-0,12 top marker",3375,2440,56,6,1,400,2,96108,1.50,68720],
+["Y","YRF","DW330","12-80325-01-04","40-60W-0.24",1650,1194,56,378,4,200,2,40045,2.50,33632],
+["Y","YRF","DW330","12-80325-02-04","40-60W-0.24 bottom marker",1650,1194,56,6,1,200,2,40045,2.50,33632],
+["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,3360,54,986,4,400,2,137615,1.50,91120],
+["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,3360,54,6,1,400,2,137613,1.50,91120],
+["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,614,4,200,2,52083,2.50,42944],
+["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
+["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,3360,54,1002,4,400,2,137615,1.50,91120],
+["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,3360,54,6,1,400,2,137613,1.50,91120],
+["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,624,4,200,2,52083,2.50,42944],
+["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
+["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,1680,54,1002,4,400,1,137615,1.50,91120],
+["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,1680,54,6,1,400,1,137613,1.50,91120],
+["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,624,4,200,2,52083,2.50,42944],
+["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
+["Y","YRF","DW555","12-86475-01-04","40-50w 0.10mm white D200",3360,1650,54,1002,4,400,1,138396,1.55,89500],
+["Y","YRF","DW555","12-86495-01-04","40-50w 0.10mm blue D200 MK",3360,1650,54,6,1,400,1,138396,1.55,89500],
+["Y","YRF","DW555","12-86500-01-04","40-60w 0.21mm white D200",1644,1600,52,624,4,200,2,52302,2.50,41800],
+["Y","YRF","DW555","12-86505-01-04","40-60w 0.21mm blue D200 MK",1644,1600,52,6,1,200,2,52302,2.50,41800],
+["Y","YRF","DW330","12-80365-01-04","40-50W-0,12",3106,3106,52,780,4,400,2,96108,1.50,81156],
+["Y","YRF","DW330","12-80365-02-04","40-50W-0,12 top marker",3106,3106,52,6,1,400,2,96108,1.50,81156],
+["Y","YRF","DW330","12-80325-01-04","40-60W-0.24",1520,1520,52,518,4,200,2,40045,2.50,39720],
+["Y","YRF","DW330","12-80325-02-04","40-60W-0.24 bottom marker",1520,1520,52,6,1,200,2,40045,2.50,39720],
+["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,3360,54,986,4,400,2,137615,1.50,91120],
+["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,3360,54,6,1,400,2,137613,1.50,91120],
+["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,614,4,200,2,52083,2.50,42944],
+["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
+["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,1644,54,986,4,400,1,137615,1.50,89176],
+["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,1644,54,6,1,400,1,137613,1.50,89176],
+["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,614,4,200,2,52083,2.50,42944],
+["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
+["Y","YRF","DW500","12-00310-02-04","920W-0,14",3060,3060,52,698,4,200,2,103283,2.20,79760],
+["Y","YRF","DW500","12-00010-01-04","920W-0,14, top marker",3060,3060,52,6,1,200,2,103286,2.20,79760],
+["Y","YRF","DW500","12-80140-01-04","921H-0,22",1500,1500,52,698,4,200,2,47529,2.50,39200],
+["Y","YRF","DW500","12-00005-02-04","921H-0,22 bottom marker",1500,1500,52,6,1,200,2,47525,2.50,39200],
+["Y","YRF","DW330","12-80365-01-04","40-50W-0,12",3106,3106,52,780,4,400,2,96108,1.50,81156],
+["Y","YRF","DW330","12-80365-02-04","40-50W-0,12 top marker",3106,3106,52,6,1,400,2,96108,1.50,81156],
+["Y","YRF","DW330","12-80325-01-04","40-60W-0.24",1520,1520,52,518,4,200,2,40045,2.50,39720],
+["Y","YRF","DW330","12-80325-02-04","40-60W-0.24 bottom marker",1520,1520,52,6,1,200,2,40045,2.50,39720],
+["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,3360,54,986,4,400,2,137615,1.50,91120],
+["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,3360,54,6,1,400,2,137613,1.50,91120],
+["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,614,4,200,2,52083,2.50,42944],
+["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
+["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,1644,54,986,4,400,1,137615,1.50,89176],
+["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,1644,54,6,1,400,1,137613,1.50,89176],
+["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,614,4,200,2,52083,2.50,42944],
+["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
+["Y","YRP","JAX4","11-16030-02-06","X211, 0.40mm F05-HAI",2750,2750,120,77,1,200,15,22200,3.30,22200],
+["Y","YRP","4PLY","11-86230-01-05","SKS X205 4PLY WARP",1000,910,120,92,2,200,15,10000,1.55,7480],
+["Y","YRP","4PLY","11-86230-01-05","SKS X205 4PLY WARP",1000,500,120,92,2,200,15,10000,1.55,4200]
 ];
-// Reference table render
 const refBody=document.getElementById('refBody'),refSearch=document.getElementById('refSearch'),refFilter=document.getElementById('refFilter'),refCount=document.getElementById('refCount');
 function renderRef(){
-  const q=refSearch.value.trim().toLowerCase(),fws=refFilter.value;
-  let f=warpData.filter(d=>(!fws||d.ws===fws)&&(!q||d.ws.toLowerCase().includes(q)||d.loom.toLowerCase().includes(q)||d.pair.toLowerCase().includes(q)));
-  const g={};f.forEach(d=>{if(!g[d.ws])g[d.ws]=[];g[d.ws].push(d)});
-  const ks=Object.keys(g).sort();
-  refCount.textContent=f.length+' 条';
-  let h='';
-  ks.forEach(ws=>{
-    h+='<tr class="warp-group"><td colspan="7"><span class="warp-label">'+ws+'</span></td></tr>';
+  const q=refSearch.value.trim().toLowerCase(),fw=refFilter.value;
+  let f=warpData.filter(d=>(!fw||d[2]===fw)&&(!q||d[2].toLowerCase().includes(q)||d[3].toLowerCase().includes(q)||d[4].toLowerCase().includes(q)));
+  const g={};f.forEach(d=>{if(!g[d[2]])g[d[2]]=[];g[d[2]].push(d)});
+  const ks=Object.keys(g).sort();refCount.textContent=f.length+' 条';
+  let h='';ks.forEach(ws=>{
+    h+='<tr class="ws-head"><td colspan="9"><span style="font-weight:700;font-size:13px">'+ws+'</span></td></tr>';
     g[ws].forEach(d=>{
-      const tc=d.tb==='Top'?'badge-top':'badge-bot';
-      h+='<tr data-len="'+d.len+'" data-beam="'+d.beam+'" data-spool="'+d.spool+'" data-maxy="'+d.maxY+'" data-maxl="'+d.maxL+'" data-tb="'+d.tb+'">';
-      h+='<td>'+d.pair+'</td><td>'+d.loom+'</td><td><span class="badge '+tc+'">'+d.tb.slice(0,1)+'</span></td><td>'+d.len+'</td><td>'+d.beam+'</td><td>'+d.spool+'</td><td>'+d.maxY+'</td></tr>'
+      const mk=d[4].includes('marker')?' style="opacity:.6"':'';
+      h+='<tr'+mk+' data-ws="'+d[2]+'" data-len="'+d[6]+'" data-beams="'+d[7]+'" data-spools="'+d[8]+'" data-times="'+d[11]+'" data-mxl="'+d[5]+'" data-ismarker="'+(d[4].includes('marker')?'1':'0')+'">';
+      h+='<td>'+d[3]+'</td><td>'+d[4]+'</td><td>'+d[2]+'</td><td>'+d[6]+'</td><td>'+d[7]+'</td><td>'+d[8]+'</td><td>'+d[11]+'</td><td>'+d[5]+'</td><td>'+d[12]+'</td></tr>'
     })
   });
-  refBody.innerHTML=f.length?h:'<tr><td colspan="7" class="empty-state">无匹配数据</td></tr>'
+  refBody.innerHTML=f.length?h:'<tr><td colspan="9" style="padding:28px;text-align:center;color:#9ca3af">无匹配数据</td></tr>'
 }
-const wsSet=Array.from(new Set(warpData.map(d=>d.ws))).sort();
+const wsSet=Array.from(new Set(warpData.map(d=>d[2]))).sort();
 wsSet.forEach(ws=>{const o=document.createElement('option');o.value=ws;o.textContent=ws;refFilter.appendChild(o)});
 refSearch.addEventListener('input',renderRef);refFilter.addEventListener('change',renderRef);renderRef();
-// Click ref row to fill
 refBody.addEventListener('click',function(e){
-  const tr=e.target.closest('tr');
-  if(!tr||!tr.dataset.len)return;
-  document.getElementById('maxL').value=tr.dataset.maxl;
+  const tr=e.target.closest('tr');if(!tr||!tr.dataset.ws)return;
   document.getElementById('warpLen').value=tr.dataset.len;
-  document.getElementById('beamCnt').value=tr.dataset.beam;
+  document.getElementById('beamCnt').value=tr.dataset.beams;
+  document.getElementById('maxWarpLen').value=tr.dataset.mxl;
+  const spool=tr.dataset.spools,times=tr.dataset.times;
+  const desc=tr.cells[1]?tr.cells[1].textContent:'';
+  if(desc.includes('top')||desc.includes('Top')){
+    document.getElementById('tSpool').value=spool;document.getElementById('tTimes').value=times
+  }else if(desc.includes('bottom')||desc.includes('Bot')){
+    document.getElementById('bSpool').value=spool;document.getElementById('bTimes').value=times
+  }else{
+    document.getElementById('tSpool').value=spool;document.getElementById('tTimes').value=times;
+    document.getElementById('bSpool').value=spool;document.getElementById('bTimes').value=times
+  }
 });
-// Calculator logic
-const fmt=x=>Number(x).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
-function calcOne(times,spools,warpLen,beamCnt,maxL){
-  const base=warpLen*beamCnt+200*times;
-  let doubled=false;
-  let total=base;
-  if(base>maxL){total=base*2;doubled=true}
-  return{total,doubled,base}
-}
-function fmtResult(r){
-  let s=fmt(r.total)+' 米';
-  if(r.doubled)s+=' <span style="color:#dc2626;font-size:11px">(翻倍)</span>';
-  return s
-}
+function cef(v){return Math.ceil(v)||0}
+function fmt(x){return Number(x).toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:0})}
 function calc(){
-  const warpLen=parseFloat(document.getElementById('warpLen').value)||0;
-  const beamCnt=parseFloat(document.getElementById('beamCnt').value)||0;
-  const maxL=parseFloat(document.getElementById('maxL').value)||0;
-  const tTimes=parseFloat(document.getElementById('topTimes').value)||0;
-  const tSpools=parseFloat(document.getElementById('topSpools').value)||0;
-  const bTimes=parseFloat(document.getElementById('botTimes').value)||0;
-  const bSpools=parseFloat(document.getElementById('botSpools').value)||0;
-  if(!warpLen||!beamCnt||!maxL){document.getElementById('topResult').innerHTML='<span style="color:#dc2626">请填参数</span>';document.getElementById('botResult').innerHTML='<span style="color:#dc2626">请填参数</span>';return}
-  const rTop=calcOne(tTimes,tSpools,warpLen,beamCnt,maxL);
-  const rBot=calcOne(bTimes,bSpools,warpLen,beamCnt,maxL);
-  document.getElementById('topResult').innerHTML=fmtResult(rTop);
-  document.getElementById('botResult').innerHTML=fmtResult(rBot);
+  const wl=parseFloat(document.getElementById('warpLen').value)||0;
+  const bc=parseFloat(document.getElementById('beamCnt').value)||0;
+  const mwl=parseFloat(document.getElementById('maxWarpLen').value)||0;
+  if(!wl||!bc){document.getElementById('tLenRes').textContent='—';document.getElementById('bLenRes').textContent='—';return}
+  function cr(mid,sid,tid,lid,srid,wid){
+    const m=parseFloat(document.getElementById(mid).value)||0;
+    const s=parseFloat(document.getElementById(sid).value)||0;
+    const t=parseFloat(document.getElementById(tid).value)||0;
+    document.getElementById(lid).textContent=fmt(wl*bc*cef(m));
+    document.getElementById(srid).textContent=fmt((s+4)*t);
+    document.getElementById(wid).textContent=wl*bc*cef(m)>mwl?'⚠ 超最大整经长度':'';
+  }
+  cr('tMount','tSpool','tTimes','tLenRes','tSpoolRes','tWarn');
+  cr('bMount','bSpool','bTimes','bLenRes','bSpoolRes','bWarn');
 }
 document.getElementById('calcBtn').addEventListener('click',calc);
 document.querySelectorAll('input').forEach(inp=>inp.addEventListener('keydown',e=>{if(e.key==='Enter')calc()}));
