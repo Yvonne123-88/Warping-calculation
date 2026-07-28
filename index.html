@@ -10,8 +10,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 .container{max-width:1100px;width:100%;background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:20px 24px 28px}
 h1{font-size:20px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 h1 svg{width:24px;height:24px;flex-shrink:0}
-.section{margin-bottom:16px}
-.section-title{font-size:13px;font-weight:600;color:#5b6777;letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #e9ecef}
 .param-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
 .param-row .fg{display:flex;flex-direction:column;gap:2px;flex:1;min-width:110px}
 .param-row .fg label{font-size:11px;color:#6b7280;font-weight:500}
@@ -31,9 +29,9 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 .row-res .item .v{font-size:16px;font-weight:700;color:#1e40af}
 .row-res .item .lbl{font-size:10px;color:#6b7280}
 .row-res .item .warn{color:#dc2626;font-size:11px}
-.calc-btn{padding:8px 28px;background:#4f6ef7;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer}
+.calc-btn{padding:8px 28px;background:#4f6ef7;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;margin-top:4px}
 .calc-btn:hover{background:#3b57d9}
-.formula-note{margin-top:10px;font-size:12px;color:#9ca3af;line-height:1.5;padding:8px 12px;background:#f9fafb;border-radius:4px}
+.formula-note{margin-top:8px;font-size:12px;color:#9ca3af;line-height:1.5;padding:8px 12px;background:#f9fafb;border-radius:4px}
 .ref-controls{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
 .ref-controls input{flex:1;min-width:140px;font-size:13px;padding:6px 10px;border:1px solid #d1d5db;border-radius:6px;outline:none}
 .ref-controls select{font-size:13px;padding:6px 10px;border:1px solid #d1d5db;border-radius:6px;outline:none}
@@ -50,53 +48,50 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 .badge-top{background:#dbeafe;color:#1e3a5f}
 .badge-bot{background:#fce7f3;color:#831843}
 .click-hint{font-size:11px;color:#9ca3af;display:block;margin-top:4px}
-.footnote{margin-top:16px;padding-top:12px;border-top:1px solid #e9ecef;font-size:12px;color:#9ca3af;line-height:1.6}
+.footnote{margin-top:14px;padding-top:10px;border-top:1px solid #e9ecef;font-size:12px;color:#9ca3af;line-height:1.6}
+.section-title{font-size:13px;font-weight:600;color:#5b6777;letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #e9ecef}
+.section{margin-bottom:14px}
 @media(max-width:700px){body{padding:10px}.container{padding:14px 12px}.row-line{gap:5px}.row-line .fg{min-width:70px}.row-res{gap:6px}.row-res .item .v{font-size:14px}}
 </style>
 </head>
 <body>
 <div class="container">
-<h1>
-<svg viewBox="0 0 24 24" fill="none" stroke="#4f6ef7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-整经方案计算器
-</h1>
-<div class="section">
-<div class="section-title">① 计算参数</div>
+<h1><svg viewBox="0 0 24 24" fill="none" stroke="#4f6ef7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>整经方案计算器</h1>
+
+<div class="section"><div class="section-title">① 计算参数</div>
 <div class="param-row">
-<div class="fg"><label>整经长度 <span style="color:#888">(米)</span></label><input type="number" id="warpLen" min="0.01" step="0.1" value="3400"></div>
-<div class="fg"><label>经盘数量 <span style="color:#888">(个)</span></label><input type="number" id="beamCnt" min="1" step="1" value="56"></div>
-<div class="fg"><label>最大整经长度 <span style="color:#888">(米)</span></label><input type="number" id="maxWarpLen" min="0.01" step="0.1" value="3400"></div>
-</div>
-</div>
-<div class="section">
-<div class="section-title">② 计算明细</div>
+<div class="fg"><label>整经长度 <span style="color:#888">(米)</span></label><input type="number" id="warpLen" step="0.1" value="3400"></div>
+<div class="fg"><label>经盘数量 <span style="color:#888">(个)</span></label><input type="number" id="beamCnt" step="1" value="56"></div>
+<div class="fg"><label>最大整经长度 <span style="color:#888">(米)</span></label><input type="number" id="maxWarpLen" step="0.1" value="3400"></div>
+</div></div>
+
+<div class="section"><div class="section-title">② 计算明细</div>
+
 <div class="row-line top">
 <div class="row-label top"><b>TOP</b></div>
-<div class="fg" style="max-width:90px"><label>上架数</label><input type="number" id="tMount" min="0.01" step="0.01" value="2"></div>
-<div class="fg" style="max-width:110px"><label>loom 线轴数量</label><input type="number" id="tSpool" min="0" step="1" value="508"></div>
-<div class="fg" style="max-width:90px"><label>上架次数</label><input type="number" id="tTimes" min="0" step="1" value="2"></div>
+<div class="fg" style="max-width:90px"><label>上架数</label><input type="number" id="tMount" step="0.01" value="2"></div>
+<div class="fg" style="max-width:110px"><label>loom 线轴数量</label><input type="number" id="tSpool" step="1" value="508"></div>
+<div class="fg" style="max-width:90px"><label>上架次数</label><input type="number" id="tTimes" step="1" value="2"></div>
 <div class="row-res">
 <div class="item"><div class="lbl">线轴长度</div><div class="v" id="tLenRes">—</div><div class="warn" id="tWarn"></div></div>
 <div class="item" style="border-left:1px solid #d1d5db;padding-left:10px"><div class="lbl">线轴数量</div><div class="v" id="tSpoolRes">—</div></div>
-</div>
-</div>
+</div></div>
+
 <div class="row-line bot">
 <div class="row-label bot"><b>BOT</b></div>
-<div class="fg" style="max-width:90px"><label>上架数</label><input type="number" id="bMount" min="0.01" step="0.01" value="2"></div>
-<div class="fg" style="max-width:110px"><label>loom 线轴数量</label><input type="number" id="bSpool" min="0" step="1" value="508"></div>
-<div class="fg" style="max-width:90px"><label>上架次数</label><input type="number" id="bTimes" min="0" step="1" value="2"></div>
+<div class="fg" style="max-width:90px"><label>上架数</label><input type="number" id="bMount" step="0.01" value="2"></div>
+<div class="fg" style="max-width:110px"><label>loom 线轴数量</label><input type="number" id="bSpool" step="1" value="508"></div>
+<div class="fg" style="max-width:90px"><label>上架次数</label><input type="number" id="bTimes" step="1" value="2"></div>
 <div class="row-res">
 <div class="item"><div class="lbl">线轴长度</div><div class="v" id="bLenRes">—</div><div class="warn" id="bWarn"></div></div>
 <div class="item" style="border-left:1px solid #d1d5db;padding-left:10px"><div class="lbl">线轴数量</div><div class="v" id="bSpoolRes">—</div></div>
-</div>
-</div>
+</div></div>
+
 <button class="calc-btn" id="calcBtn">计算</button>
-<div class="formula-note">
-<b>公式：</b>线轴长度 = 整经长度 &times; 经盘数量 &times; ceil(上架数) &nbsp;|&nbsp; 线轴数量 = (loom 线轴数量 + 4) &times; 上架次数
+<div class="formula-note">线轴长度 = 整经长度 &times; 经盘数量 &times; ceil(上架数) &nbsp;|&nbsp; 线轴数量 = (loom 线轴数量 + 4) &times; 上架次数</div>
 </div>
-</div>
-<div class="section">
-<div class="section-title">③ 整经数据参考表 — 点击行填入</div>
+
+<div class="section"><div class="section-title">③ 整经数据参考表 — 点击行填入</div>
 <div class="ref-controls">
 <input type="text" id="refSearch" placeholder="搜索 WarpSet 或 Loom...">
 <select id="refFilter"><option value="">全部 WarpSet</option></select>
@@ -105,10 +100,141 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 <div class="ref-wrap">
 <table class="ref-table"><thead><tr><th>Top/Bot</th><th>Loom</th><th>WarpSet</th><th>描述</th><th>整经长度</th><th>经盘数</th><th>线轴数</th><th>上架次数</th><th>最大线轴长</th></tr></thead><tbody id="refBody"></tbody></table>
 </div>
-<span class="click-hint">💡 点击行自动填入公共参数和对应行的线轴数量、上架次数</span>
+<span class="click-hint">💡 点击行自动填入参数</span>
 </div>
 <div class="footnote">数据来源：整经数据.xlsx</div>
 </div>
+
 <script>
-var w = [
-["Top","F01","Y","YRF","DW500","12-00310-02-04","920W-0,14",3400,3400,56,508,4,200,2,1
+// 数据格式: [Top/Bot, Loom, Active, PL, WarpSet, 料号, 描述, 最大经长, 整经长, 经盘数, 线轴数, 经盘余, 轴余, 上架次, 最大线轴长]
+var D=[
+["Top","F01","Y","YRF","DW500","","920W-0,14",3400,3400,56,508,4,200,2,103283],
+["","F01","Y","YRF","DW500","","920W top marker",3400,3400,56,6,1,200,2,103286],
+["Bot","F01","Y","YRF","DW500","","921H-0,22",1664,1664,56,508,4,200,2,47529],
+["","F01","Y","YRF","DW500","","921H bottom marker",1664,1664,56,6,1,200,2,47525],
+["Top","F02","Y","YRF","DW500","","920W-0,14",3400,3400,56,508,4,200,2,103283],
+["","F02","Y","YRF","DW500","","920W top marker",3400,3400,56,6,1,200,2,103286],
+["Bot","F02","Y","YRF","DW500","","921H-0,22",1664,1664,56,508,4,200,2,47529],
+["","F02","Y","YRF","DW500","","921H bottom marker",1664,1664,56,6,1,200,2,47525],
+["Top","F02","N","YRF","DW340","","FFP145-0,15",3200,2400,56,474,4,200,2,73000],
+["","F02","N","YRF","DW340","","FFP145 top marker",3200,2400,56,6,1,200,2,73000],
+["Bot","F02","N","YRF","DW340","","FFP150-0,32",1044,1175,56,314,4,200,4,20700],
+["","F02","N","YRF","DW340","","FFP150 bottom marker",1044,1175,56,6,1,200,4,20700],
+["Top","F02","Y","YRF","DW340","","920Y-0.15",3200,3200,56,474,4,200,2,89796],
+["","F02","Y","YRF","DW340","","920Y top marker",3200,3200,56,6,1,200,2,89886],
+["Bot","F02","Y","YRF","DW340","","921H-0.32",1044,1044,57,314,4,364,3,22442],
+["","F02","Y","YRF","DW340","","921H bottom marker",1044,1044,57,6,1,364,3,22444],
+["Top","F02","Y","YRF","DW330","","40-50W-0,12",3375,2906,56,570,4,400,2,96108],
+["","F02","Y","YRF","DW330","","40-50W top marker",3375,2906,56,6,1,400,2,96108],
+["Bot","F02","Y","YRF","DW330","","40-60W-0.24",1650,1422,56,378,4,200,2,40045],
+["","F02","Y","YRF","DW330","","40-60W bottom marker",1650,1422,56,6,1,200,2,40045],
+["Bot","F02","N","YRP","JAX4","","X211 0.40mm",3200,3150,112,83,1,150,16,22200],
+["Bot","F02","Y","YRP","JAX5","","X211 0.50",2200,1980,112,69,1,140,16,14000],
+["Bot","F02","Y","YRP","M2","","X205 0.2mm",2700,2470,69,382,2,200,3,57000],
+["Bot","F02","Y","YRP","JAX4","","X211 0.40mm",3200,3150,112,78,1,150,16,22200],
+["Top","F02","Y","YRF","DW330","","40-50W-0,12",3375,2440,56,570,4,400,2,96108],
+["","F02","Y","YRF","DW330","","40-50W top marker",3375,2440,56,6,1,400,2,96108],
+["Bot","F02","Y","YRF","DW330","","40-60W-0.24",1650,1194,56,378,4,200,2,40045],
+["","F02","Y","YRF","DW330","","40-60W bottom marker",1650,1194,56,6,1,200,2,40045],
+["Top","F03","Y","YRF","DW555","","920Y-0,10",3360,3360,54,986,4,400,2,137615],
+["","F03","Y","YRF","DW555","","920Y top marker",3360,3360,54,6,1,400,2,137613],
+["Bot","F03","Y","YRF","DW555","","921H-0,21",1644,1644,52,614,4,200,2,52083],
+["","F03","Y","YRF","DW555","","921H bottom marker",1644,1644,52,6,1,200,2,52080],
+["Top","F03","Y","YRF","DW555","","920Y-0,10",3360,3360,54,1002,4,400,2,137615],
+["","F03","Y","YRF","DW555","","920Y top marker",3360,3360,54,6,1,400,2,137613],
+["Bot","F03","Y","YRF","DW555","","921H-0,21",1644,1644,52,624,4,200,2,52083],
+["","F03","Y","YRF","DW555","","921H bottom marker",1644,1644,52,6,1,200,2,52080],
+["Top","F03","Y","YRF","DW555","","920Y-0,10",3360,1680,54,1002,4,400,1,137615],
+["","F03","Y","YRF","DW555","","920Y top marker",3360,1680,54,6,1,400,1,137613],
+["Bot","F03","Y","YRF","DW555","","921H-0,21",1644,1644,52,624,4,200,2,52083],
+["","F03","Y","YRF","DW555","","921H bottom marker",1644,1644,52,6,1,200,2,52080],
+["Top","F03","Y","YRF","DW555","","40-50w 0.10mm white",3360,1650,54,1002,4,400,1,138396],
+["","F03","Y","YRF","DW555","","40-50w blue MK",3360,1650,54,6,1,400,1,138396],
+["Bot","F03","Y","YRF","DW555","","40-60w 0.21mm white",1644,1600,52,624,4,200,2,52302],
+["","F03","Y","YRF","DW555","","40-60w blue MK",1644,1600,52,6,1,200,2,52302],
+["Top","F04","Y","YRF","DW330","","40-50W-0,12",3106,3106,52,780,4,400,2,96108],
+["","F04","Y","YRF","DW330","","40-50W top marker",3106,3106,52,6,1,400,2,96108],
+["Bot","F04","Y","YRF","DW330","","40-60W-0.24",1520,1520,52,518,4,200,2,40045],
+["","F04","Y","YRF","DW330","","40-60W bottom marker",1520,1520,52,6,1,200,2,40045],
+["Top","F04","Y","YRF","DW555","","920Y-0,10",3360,3360,54,986,4,400,2,137615],
+["","F04","Y","YRF","DW555","","920Y top marker",3360,3360,54,6,1,400,2,137613],
+["Bot","F04","Y","YRF","DW555","","921H-0,21",1644,1644,52,614,4,200,2,52083],
+["","F04","Y","YRF","DW555","","921H bottom marker",1644,1644,52,6,1,200,2,52080],
+["Bot","F05","Y","YRP","JAX4","","X211 0.40mm",2750,2750,120,77,1,200,15,22200],
+["Bot","F05","Y","YRP","4PLY","","X205 4PLY WARP",1000,910,120,92,2,200,15,10000],
+["Bot","F05","Y","YRP","4PLY","","X205 4PLY WARP",1000,500,120,92,2,200,15,10000],
+["Top","F06","Y","YRF","DW500","","920W-0,14",3060,3060,52,698,4,200,2,103283],
+["","F06","Y","YRF","DW500","","920W top marker",3060,3060,52,6,1,200,2,103286],
+["Bot","F06","Y","YRF","DW500","","921H-0,22",1500,1500,52,698,4,200,2,47529],
+["","F06","Y","YRF","DW500","","921H bottom marker",1500,1500,52,6,1,200,2,47525],
+["Top","F06","Y","YRF","DW330","","40-50W-0,12",3106,3106,52,780,4,400,2,96108],
+["","F06","Y","YRF","DW330","","40-50W top marker",3106,3106,52,6,1,400,2,96108],
+["Bot","F06","Y","YRF","DW330","","40-60W-0.24",1520,1520,52,518,4,200,2,40045],
+["","F06","Y","YRF","DW330","","40-60W bottom marker",1520,1520,52,6,1,200,2,40045],
+["Top","F06","Y","YRF","DW555","","920Y-0,10",3360,3360,54,986,4,400,2,137615],
+["","F06","Y","YRF","DW555","","920Y top marker",3360,3360,54,6,1,400,2,137613],
+["Bot","F06","Y","YRF","DW555","","921H-0,21",1644,1644,52,614,4,200,2,52083],
+["","F06","Y","YRF","DW555","","921H bottom marker",1644,1644,52,6,1,200,2,52080],
+["Top","F06","Y","YRF","DW555","","920Y-0,10",3360,1644,54,986,4,400,1,137615],
+["","F06","Y","YRF","DW555","","920Y top marker",3360,1644,54,6,1,400,1,137613],
+["Bot","F06","Y","YRF","DW555","","921H-0,21",1644,1644,52,614,4,200,2,52083],
+["","F06","Y","YRF","DW555","","921H bottom marker",1644,1644,52,6,1,200,2,52080],
+["Top","F06","Y","YRF","DW555","","40-50w 0.10mm white",3360,1550,54,986,4,200,1,138396],
+["","F06","Y","YRF","DW555","","40-50w blue MK",3360,1550,54,6,1,200,1,138396],
+["Bot","F06","Y","YRF","DW555","","40-50W 0.21mm white",1644,1500,52,614,4,200,2,52302],
+["","F06","Y","YRF","DW555","","40-50W blue MK",1644,1500,52,6,1,200,2,52302],
+["Top","F06","Y","YRF","DW500","","40-50W-0.14 White",3060,600,52,698,4,200,1,84731],
+["","F06","Y","YRF","DW500","","40-50W top marker",3060,600,52,6,1,200,1,84731],
+["Bot","F06","Y","YRF","DW500","","40-60W-0.22",1500,600,52,698,4,200,1,48000],
+["","F06","Y","YRF","DW500","","40-60W bottom marker",1500,600,52,6,1,200,1,48000]
+];
+// 0=TB,1=Loom,2=Act,3=PL,4=WS,5=料号,6=描述,7=最大经长,8=经长,9=经盘,10=线轴,11=盘余,12=轴余,13=上架次,14=最大线轴长
+var rb=document.getElementById('refBody'),rs=document.getElementById('refSearch'),rf=document.getElementById('refFilter'),rc=document.getElementById('refCount');
+function render(){
+  var q=rs.value.trim().toLowerCase(),fw=rf.value;
+  var f=D.filter(function(d){return(!fw||d[4]===fw)&&(!q||d[4].toLowerCase().includes(q)||d[1].toLowerCase().includes(q)||d[6].toLowerCase().includes(q))});
+  var g={};f.forEach(function(d){if(!g[d[4]])g[d[4]]=[];g[d[4]].push(d)});
+  var ks=Object.keys(g).sort();rc.textContent=f.length+' 条';var h='';
+  ks.forEach(function(ws){
+    h+='<tr class="ws-head"><td colspan="9"><span style="font-weight:700;font-size:13px">'+ws+'</span></td></tr>';
+    g[ws].forEach(function(d){
+      var tb=d[0],mk=d[6].includes('marker');
+      var tbc=tb==='Top'?'<span class="badge badge-top">Top</span>':tb==='Bot'?'<span class="badge badge-bot">Bot</span>':'';
+      h+='<tr'+(mk?' style="opacity:.6"':'')+' data-tb="'+tb+'" data-loom="'+d[1]+'" data-ws="'+d[4]+'" data-len="'+d[8]+'" data-beams="'+d[9]+'" data-spools="'+d[10]+'" data-times="'+d[13]+'" data-mxl="'+d[7]+'" data-mxs="'+d[14]+'">';
+      h+='<td>'+tbc+'</td><td>'+d[1]+'</td><td>'+d[4]+'</td><td>'+d[6]+'</td><td>'+d[8]+'</td><td>'+d[9]+'</td><td>'+d[10]+'</td><td>'+d[13]+'</td><td>'+d[14]+'</td></tr>'
+    })
+  });
+  rb.innerHTML=f.length?h:'<tr><td colspan="9" style="padding:28px;text-align:center;color:#9ca3af">无匹配</td></tr>'
+}
+var wsArr=[];D.forEach(function(d){if(wsArr.indexOf(d[4])<0)wsArr.push(d[4])});wsArr.sort();
+wsArr.forEach(function(ws){var o=document.createElement('option');o.value=ws;o.textContent=ws;rf.appendChild(o)});
+rs.addEventListener('input',render);rf.addEventListener('change',render);render();
+rb.addEventListener('click',function(e){
+  var tr=e.target.closest('tr');if(!tr||!tr.dataset.ws)return;
+  document.getElementById('warpLen').value=tr.dataset.len;
+  document.getElementById('beamCnt').value=tr.dataset.beams;
+  document.getElementById('maxWarpLen').value=tr.dataset.mxl;
+  var sp=tr.dataset.spools,ti=tr.dataset.times,tb=tr.dataset.tb;
+  if(tb==='Top'){document.getElementById('tSpool').value=sp;document.getElementById('tTimes').value=ti}
+  else if(tb==='Bot'){document.getElementById('bSpool').value=sp;document.getElementById('bTimes').value=ti}
+  else{document.getElementById('tSpool').value=sp;document.getElementById('tTimes').value=ti;document.getElementById('bSpool').value=sp;document.getElementById('bTimes').value=ti}
+});
+function cef(v){return Math.ceil(v)||0}
+function fm(x){return Number(x).toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function calc(){
+  var wl=parseFloat(document.getElementById('warpLen').value)||0,bc=parseFloat(document.getElementById('beamCnt').value)||0,mwl=parseFloat(document.getElementById('maxWarpLen').value)||0;
+  if(!wl||!bc){document.getElementById('tLenRes').textContent='—';document.getElementById('bLenRes').textContent='—';return}
+  function cr(mid,sid,tid,lid,srid,wid){
+    var m=parseFloat(document.getElementById(mid).value)||0,s=parseFloat(document.getElementById(sid).value)||0,t=parseFloat(document.getElementById(tid).value)||0;
+    var len=wl*bc*cef(m);document.getElementById(lid).textContent=fm(len);document.getElementById(srid).textContent=fm((s+4)*t);
+    document.getElementById(wid).textContent=len>mwl?'⚠ 超最大整经长度':''
+  }
+  cr('tMount','tSpool','tTimes','tLenRes','tSpoolRes','tWarn');
+  cr('bMount','bSpool','bTimes','bLenRes','bSpoolRes','bWarn')
+}
+document.getElementById('calcBtn').addEventListener('click',calc);
+document.querySelectorAll('input').forEach(function(i){i.addEventListener('keydown',function(e){if(e.key==='Enter')calc()})});
+calc();
+</script>
+</body>
+</html>
