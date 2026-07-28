@@ -71,6 +71,7 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 <div class="row-res">
 <div class="item"><div class="lbl">线轴长度</div><div class="v" id="tLenRes">—</div><div class="warn" id="tWarn"></div></div>
 <div class="item" style="border-left:1px solid #d1d5db;padding-left:8px"><div class="lbl">线轴数量</div><div class="v" id="tSpoolRes">—</div></div>
+<div class="item" style="border-left:1px solid #d1d5db;padding-left:8px"><div class="lbl">订购线轴长度</div><div class="v" id="bOrderRes">—</div></div>
 </div></div>
 <div class="row-line bot">
 <div class="row-label bot"><b>B</b></div>
@@ -79,6 +80,7 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 <div class="row-res">
 <div class="item"><div class="lbl">线轴长度</div><div class="v" id="bLenRes">—</div><div class="warn" id="bWarn"></div></div>
 <div class="item" style="border-left:1px solid #d1d5db;padding-left:8px"><div class="lbl">线轴数量</div><div class="v" id="bSpoolRes">—</div></div>
+<div class="item" style="border-left:1px solid #d1d5db;padding-left:8px"><div class="lbl">订购线轴长度</div><div class="v" id="tOrderRes">—</div></div>
 </div></div>
 <button class="calc-btn" id="calcBtn">计算</button>
 <div class="formula-note">线轴长度 = 整经长度 &times; 经盘数量 &nbsp;|&nbsp; 线轴数量 = (线轴数量 + 4) &times; 上架次数</div>
@@ -396,14 +398,15 @@ function fm(x){return Number(x).toLocaleString('zh-CN',{minimumFractionDigits:0,
 function calc(){
   var wl=parseFloat(document.getElementById('warpLen').value)||0,bc=parseFloat(document.getElementById('beamCnt').value)||0,mwl=parseFloat(document.getElementById('maxWarpLen').value)||0;
   if(!wl||!bc){document.getElementById('tLenRes').textContent='—';document.getElementById('bLenRes').textContent='—';return}
-  function cr(sid,tid,lid,srid,wid){
+function cr(sid,tid,lid,srid,wid,oid){
     var s=parseFloat(document.getElementById(sid).value)||0,t=parseFloat(document.getElementById(tid).value)||0;
-    var len=wl*bc;document.getElementById(lid).textContent=fm(len);
+    var len=wl*bc*1;document.getElementById(lid).textContent=fm(len);
     document.getElementById(srid).textContent=fm((s+4)*t);
+    document.getElementById(oid).textContent=fm(t>0?len/t:0);
     document.getElementById(wid).textContent=len>mwl?'⚠ 超':''
   }
-  cr('tSpool','tTimes','tLenRes','tSpoolRes','tWarn');
-  cr('bSpool','bTimes','bLenRes','bSpoolRes','bWarn')
+cr('tSpool','tTimes','tLenRes','tSpoolRes','tWarn','tOrderRes');
+cr('bSpool','bTimes','bLenRes','bSpoolRes','bWarn','bOrderRes')
 }
 document.getElementById('calcBtn').addEventListener('click',calc);
 document.querySelectorAll('input').forEach(function(i){i.addEventListener('keydown',function(e){if(e.key==='Enter')calc()})});
