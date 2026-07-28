@@ -46,6 +46,9 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 .ref-table tr{cursor:pointer}
 .ref-table tr:hover td{background:#f0f4ff}
 .ref-table .ws-head td{font-weight:700;color:#1e40af;background:#eef2ff!important;padding:4px 7px;cursor:default}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:1px 6px;border-radius:8px}
+.badge-top{background:#dbeafe;color:#1e3a5f}
+.badge-bot{background:#fce7f3;color:#831843}
 .click-hint{font-size:11px;color:#9ca3af;display:block;margin-top:4px}
 .footnote{margin-top:16px;padding-top:12px;border-top:1px solid #e9ecef;font-size:12px;color:#9ca3af;line-height:1.6}
 @media(max-width:700px){body{padding:10px}.container{padding:14px 12px}.row-line{gap:5px}.row-line .fg{min-width:70px}.row-res{gap:6px}.row-res .item .v{font-size:14px}}
@@ -89,156 +92,23 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 </div>
 <button class="calc-btn" id="calcBtn">计算</button>
 <div class="formula-note">
-<b>公式：</b>线轴长度 = 整经长度 &times; 经盘数量 &times; ceil(上架数) &nbsp;|&nbsp; 线轴数量 = (loom 线轴数量 + 4) &times; 上架次数<br>
-线轴长度超过最大整经长度时会标注 ⚠
+<b>公式：</b>线轴长度 = 整经长度 &times; 经盘数量 &times; ceil(上架数) &nbsp;|&nbsp; 线轴数量 = (loom 线轴数量 + 4) &times; 上架次数
 </div>
 </div>
 <div class="section">
 <div class="section-title">③ 整经数据参考表 — 点击行填入</div>
 <div class="ref-controls">
-<input type="text" id="refSearch" placeholder="搜索 WarpSet 或物料号...">
+<input type="text" id="refSearch" placeholder="搜索 WarpSet 或 Loom...">
 <select id="refFilter"><option value="">全部 WarpSet</option></select>
 <span class="ref-count" id="refCount"></span>
 </div>
 <div class="ref-wrap">
-<table class="ref-table"><thead><tr><th>物料号</th><th>描述</th><th>WarpSet</th><th>整经长度</th><th>经盘数</th><th>线轴数</th><th>上架次数</th><th>最大经长</th><th>最大线轴长</th></tr></thead><tbody id="refBody"></tbody></table>
+<table class="ref-table"><thead><tr><th>Top/Bot</th><th>Loom</th><th>WarpSet</th><th>描述</th><th>整经长度</th><th>经盘数</th><th>线轴数</th><th>上架次数</th><th>最大线轴长</th></tr></thead><tbody id="refBody"></tbody></table>
 </div>
-<span class="click-hint">💡 点击行自动填入公共参数和对应行的 loom 线轴数量、上架次数</span>
+<span class="click-hint">💡 点击行自动填入公共参数和对应行的线轴数量、上架次数</span>
 </div>
-<div class="footnote">
-数据来源：整经数据.xlsx &nbsp;|&nbsp; Active=Y 为有效数据
-</div>
+<div class="footnote">数据来源：整经数据.xlsx</div>
 </div>
 <script>
-const warpData=[
-["N","YRF","DW500","12-00310-02-04","920W-0,14",3400,3400,56,508,4,200,2,103283,2.20,95400],
-["N","YRF","DW500","12-00010-01-04","920W-0,14, top marker",3400,3400,56,6,1,200,2,103286,2.20,95400],
-["N","YRF","DW500","12-80140-01-04","921H-0,22",1664,1664,56,508,4,200,2,47529,2.50,46792],
-["N","YRF","DW500","12-00005-02-04","921H-0,22 bottom marker",1664,1664,56,6,1,200,2,47525,2.50,46792],
-["N","YRF","DW340","12-80309-01-04","FFP145/1021-0,15",3200,2400,56,474,4,200,2,73000,1.77,67400],
-["N","YRF","DW340","12-80312-01-04","FFP145 top marker",3200,2400,56,6,1,200,2,73000,1.77,67400],
-["N","YRF","DW340","12-80307-01-04","FFP150/1016-0,32",1044,1175,56,314,4,200,4,20700,2.30,16650],
-["N","YRF","DW340","12-80308-01-04","FFP150 bottom marker",1044,1175,56,6,1,200,4,20700,2.30,16650],
-["Y","YRF","DW340","12-15047-01-04","920Y-0.15",3200,3200,56,474,4,200,2,89796,2.20,89800],
-["Y","YRF","DW340","12-15045-01-04","920Y-0.15 top marker",3200,3200,56,6,1,200,2,89886,2.20,89800],
-["Y","YRF","DW340","12-80073-01-04","921H-0.32",1044,1044,57,314,4,364,3,22442,2.50,20200],
-["Y","YRF","DW340","12-80072-01-04","921H-0.32 bottom marker",1044,1044,57,6,1,364,3,22444,2.50,20200],
-["Y","YRF","DW330","12-80365-01-04","40-50W-0,12",3375,2906,56,570,4,400,2,96108,1.50,81768],
-["Y","YRF","DW330","12-80365-02-04","40-50W-0,12 top marker",3375,2906,56,6,1,400,2,96108,1.50,81768],
-["Y","YRF","DW330","12-80325-01-04","40-60W-0.24",1650,1422,56,378,4,200,2,40045,2.50,40016],
-["Y","YRF","DW330","12-80325-02-04","40-60W-0.24 bottom marker",1650,1422,56,6,1,200,2,40045,2.50,40016],
-["N","YRP","JAX4","11-16030-02-06","X211, 0.40mm F05-HAI",3200,3150,112,83,1,150,16,22200,3.30,22200],
-["Y","YRP","JAX5","11-11100-01-05","X211 0.50 - HAI",2200,1980,112,69,1,140,16,14000,3.30,14000],
-["Y","YRP","M2","11-11480-03-05","X205, 0.2mm",2700,2470,69,382,2,200,3,57000,2.15,57010],
-["Y","YRP","JAX4","11-16030-02-06","X211, 0.40mm F05-HAI",3200,3150,112,78,1,150,16,22200,3.30,22200],
-["Y","YRF","DW330","12-80365-01-04","40-50W-0,12",3375,2440,56,570,4,400,2,96108,1.50,68720],
-["Y","YRF","DW330","12-80365-02-04","40-50W-0,12 top marker",3375,2440,56,6,1,400,2,96108,1.50,68720],
-["Y","YRF","DW330","12-80325-01-04","40-60W-0.24",1650,1194,56,378,4,200,2,40045,2.50,33632],
-["Y","YRF","DW330","12-80325-02-04","40-60W-0.24 bottom marker",1650,1194,56,6,1,200,2,40045,2.50,33632],
-["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,3360,54,986,4,400,2,137615,1.50,91120],
-["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,3360,54,6,1,400,2,137613,1.50,91120],
-["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,614,4,200,2,52083,2.50,42944],
-["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
-["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,3360,54,1002,4,400,2,137615,1.50,91120],
-["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,3360,54,6,1,400,2,137613,1.50,91120],
-["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,624,4,200,2,52083,2.50,42944],
-["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
-["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,1680,54,1002,4,400,1,137615,1.50,91120],
-["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,1680,54,6,1,400,1,137613,1.50,91120],
-["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,624,4,200,2,52083,2.50,42944],
-["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
-["Y","YRF","DW555","12-86475-01-04","40-50w 0.10mm white D200",3360,1650,54,1002,4,400,1,138396,1.55,89500],
-["Y","YRF","DW555","12-86495-01-04","40-50w 0.10mm blue D200 MK",3360,1650,54,6,1,400,1,138396,1.55,89500],
-["Y","YRF","DW555","12-86500-01-04","40-60w 0.21mm white D200",1644,1600,52,624,4,200,2,52302,2.50,41800],
-["Y","YRF","DW555","12-86505-01-04","40-60w 0.21mm blue D200 MK",1644,1600,52,6,1,200,2,52302,2.50,41800],
-["Y","YRF","DW330","12-80365-01-04","40-50W-0,12",3106,3106,52,780,4,400,2,96108,1.50,81156],
-["Y","YRF","DW330","12-80365-02-04","40-50W-0,12 top marker",3106,3106,52,6,1,400,2,96108,1.50,81156],
-["Y","YRF","DW330","12-80325-01-04","40-60W-0.24",1520,1520,52,518,4,200,2,40045,2.50,39720],
-["Y","YRF","DW330","12-80325-02-04","40-60W-0.24 bottom marker",1520,1520,52,6,1,200,2,40045,2.50,39720],
-["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,3360,54,986,4,400,2,137615,1.50,91120],
-["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,3360,54,6,1,400,2,137613,1.50,91120],
-["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,614,4,200,2,52083,2.50,42944],
-["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
-["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,1644,54,986,4,400,1,137615,1.50,89176],
-["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,1644,54,6,1,400,1,137613,1.50,89176],
-["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,614,4,200,2,52083,2.50,42944],
-["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
-["Y","YRF","DW500","12-00310-02-04","920W-0,14",3060,3060,52,698,4,200,2,103283,2.20,79760],
-["Y","YRF","DW500","12-00010-01-04","920W-0,14, top marker",3060,3060,52,6,1,200,2,103286,2.20,79760],
-["Y","YRF","DW500","12-80140-01-04","921H-0,22",1500,1500,52,698,4,200,2,47529,2.50,39200],
-["Y","YRF","DW500","12-00005-02-04","921H-0,22 bottom marker",1500,1500,52,6,1,200,2,47525,2.50,39200],
-["Y","YRF","DW330","12-80365-01-04","40-50W-0,12",3106,3106,52,780,4,400,2,96108,1.50,81156],
-["Y","YRF","DW330","12-80365-02-04","40-50W-0,12 top marker",3106,3106,52,6,1,400,2,96108,1.50,81156],
-["Y","YRF","DW330","12-80325-01-04","40-60W-0.24",1520,1520,52,518,4,200,2,40045,2.50,39720],
-["Y","YRF","DW330","12-80325-02-04","40-60W-0.24 bottom marker",1520,1520,52,6,1,200,2,40045,2.50,39720],
-["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,3360,54,986,4,400,2,137615,1.50,91120],
-["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,3360,54,6,1,400,2,137613,1.50,91120],
-["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,614,4,200,2,52083,2.50,42944],
-["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
-["Y","YRF","DW555","12-15044-02-04","920Y-0,10",3360,1644,54,986,4,400,1,137615,1.50,89176],
-["Y","YRF","DW555","12-15044-01-04","920Y-0,1 top marker",3360,1644,54,6,1,400,1,137613,1.50,89176],
-["Y","YRF","DW555","12-103701-01-03","921H-0,21",1644,1644,52,614,4,200,2,52083,2.50,42944],
-["Y","YRF","DW555","12-10370-02-03","921H-0,21 bottom marker",1644,1644,52,6,1,200,2,52080,2.50,42944],
-["Y","YRP","JAX4","11-16030-02-06","X211, 0.40mm F05-HAI",2750,2750,120,77,1,200,15,22200,3.30,22200],
-["Y","YRP","4PLY","11-86230-01-05","SKS X205 4PLY WARP",1000,910,120,92,2,200,15,10000,1.55,7480],
-["Y","YRP","4PLY","11-86230-01-05","SKS X205 4PLY WARP",1000,500,120,92,2,200,15,10000,1.55,4200]
-];
-const refBody=document.getElementById('refBody'),refSearch=document.getElementById('refSearch'),refFilter=document.getElementById('refFilter'),refCount=document.getElementById('refCount');
-function renderRef(){
-  const q=refSearch.value.trim().toLowerCase(),fw=refFilter.value;
-  let f=warpData.filter(d=>(!fw||d[2]===fw)&&(!q||d[2].toLowerCase().includes(q)||d[3].toLowerCase().includes(q)||d[4].toLowerCase().includes(q)));
-  const g={};f.forEach(d=>{if(!g[d[2]])g[d[2]]=[];g[d[2]].push(d)});
-  const ks=Object.keys(g).sort();refCount.textContent=f.length+' 条';
-  let h='';ks.forEach(ws=>{
-    h+='<tr class="ws-head"><td colspan="9"><span style="font-weight:700;font-size:13px">'+ws+'</span></td></tr>';
-    g[ws].forEach(d=>{
-      const mk=d[4].includes('marker')?' style="opacity:.6"':'';
-      h+='<tr'+mk+' data-ws="'+d[2]+'" data-len="'+d[6]+'" data-beams="'+d[7]+'" data-spools="'+d[8]+'" data-times="'+d[11]+'" data-mxl="'+d[5]+'" data-ismarker="'+(d[4].includes('marker')?'1':'0')+'">';
-      h+='<td>'+d[3]+'</td><td>'+d[4]+'</td><td>'+d[2]+'</td><td>'+d[6]+'</td><td>'+d[7]+'</td><td>'+d[8]+'</td><td>'+d[11]+'</td><td>'+d[5]+'</td><td>'+d[12]+'</td></tr>'
-    })
-  });
-  refBody.innerHTML=f.length?h:'<tr><td colspan="9" style="padding:28px;text-align:center;color:#9ca3af">无匹配数据</td></tr>'
-}
-const wsSet=Array.from(new Set(warpData.map(d=>d[2]))).sort();
-wsSet.forEach(ws=>{const o=document.createElement('option');o.value=ws;o.textContent=ws;refFilter.appendChild(o)});
-refSearch.addEventListener('input',renderRef);refFilter.addEventListener('change',renderRef);renderRef();
-refBody.addEventListener('click',function(e){
-  const tr=e.target.closest('tr');if(!tr||!tr.dataset.ws)return;
-  document.getElementById('warpLen').value=tr.dataset.len;
-  document.getElementById('beamCnt').value=tr.dataset.beams;
-  document.getElementById('maxWarpLen').value=tr.dataset.mxl;
-  const spool=tr.dataset.spools,times=tr.dataset.times;
-  const desc=tr.cells[1]?tr.cells[1].textContent:'';
-  if(desc.includes('top')||desc.includes('Top')){
-    document.getElementById('tSpool').value=spool;document.getElementById('tTimes').value=times
-  }else if(desc.includes('bottom')||desc.includes('Bot')){
-    document.getElementById('bSpool').value=spool;document.getElementById('bTimes').value=times
-  }else{
-    document.getElementById('tSpool').value=spool;document.getElementById('tTimes').value=times;
-    document.getElementById('bSpool').value=spool;document.getElementById('bTimes').value=times
-  }
-});
-function cef(v){return Math.ceil(v)||0}
-function fmt(x){return Number(x).toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:0})}
-function calc(){
-  const wl=parseFloat(document.getElementById('warpLen').value)||0;
-  const bc=parseFloat(document.getElementById('beamCnt').value)||0;
-  const mwl=parseFloat(document.getElementById('maxWarpLen').value)||0;
-  if(!wl||!bc){document.getElementById('tLenRes').textContent='—';document.getElementById('bLenRes').textContent='—';return}
-  function cr(mid,sid,tid,lid,srid,wid){
-    const m=parseFloat(document.getElementById(mid).value)||0;
-    const s=parseFloat(document.getElementById(sid).value)||0;
-    const t=parseFloat(document.getElementById(tid).value)||0;
-    document.getElementById(lid).textContent=fmt(wl*bc*cef(m));
-    document.getElementById(srid).textContent=fmt((s+4)*t);
-    document.getElementById(wid).textContent=wl*bc*cef(m)>mwl?'⚠ 超最大整经长度':'';
-  }
-  cr('tMount','tSpool','tTimes','tLenRes','tSpoolRes','tWarn');
-  cr('bMount','bSpool','bTimes','bLenRes','bSpoolRes','bWarn');
-}
-document.getElementById('calcBtn').addEventListener('click',calc);
-document.querySelectorAll('input').forEach(inp=>inp.addEventListener('keydown',e=>{if(e.key==='Enter')calc()}));
-calc();
-</script>
-</body>
-</html>
+var w = [
+["Top","F01","Y","YRF","DW500","12-00310-02-04","920W-0,14",3400,3400,56,508,4,200,2,1
