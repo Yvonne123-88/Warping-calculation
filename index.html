@@ -402,7 +402,7 @@ function cr(sid,tid,lid,srid,wid,oid){
     var s=parseFloat(document.getElementById(sid).value)||0,t=parseFloat(document.getElementById(tid).value)||0;
     var len=wl*bc*1;document.getElementById(lid).textContent=fm(len);
     document.getElementById(srid).textContent=fm((s+4)*t);
-    document.getElementById(oid).textContent=fm(t>0?len/t:0);
+    document.getElementById(oid).textContent=fm(t>0?len/t+200*t:0);
     document.getElementById(wid).textContent=len>mwl?'⚠ 超':''
   }
 cr('tSpool','tTimes','tLenRes','tSpoolRes','tWarn','tOrderRes');
