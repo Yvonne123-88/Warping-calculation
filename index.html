@@ -374,7 +374,7 @@ function render(){
     g[ws].forEach(function(d){
       var tb=d[0],mk=d[6].includes('marker');
       var tbc=tb==='Top'?'<span class="badge badge-top">Top</span>':tb==='Bot'?'<span class="badge badge-bot">Bot</span>':'';
-      var pc=d[15]||'';var co=d[17]||'';
+      var pc=d[15]||'';var co=d[16]||'';
       h+='<tr'+(mk?' style="opacity:.6"':'')+' data-tb="'+tb+'" data-len="'+d[8]+'" data-beams="'+d[9]+'" data-spools="'+d[10]+'" data-times="'+d[13]+'" data-mxl="'+d[7]+'">';
       h+='<td>'+tbc+'</td><td>'+d[1]+'</td><td>'+d[4]+'</td><td>'+d[6]+'</td><td>'+d[8]+'</td><td>'+d[9]+'</td><td>'+d[10]+'</td><td>'+d[13]+'</td><td>'+d[14]+'</td><td>'+pc+'</td><td>'+co+'</td></tr>'
     })
