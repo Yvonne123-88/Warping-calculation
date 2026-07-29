@@ -80,7 +80,7 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 
 <button class="calc-btn" id="calcBtn">计算</button>
 <div class="formula-note">
-线轴长度 = 整经长度 × (经盘数 + 4) × 上架次 &nbsp;|&nbsp; 订购线轴长度 = 线轴长度/上架次 + 200×上架次 &nbsp;|&nbsp; 线轴数量 = (线轴数 + 4) × 上架次
+线轴长度 = 整经长度 × 经盘数  &nbsp;|&nbsp; 订购线轴长度 = 线轴长度/上架次 + 200×上架次 &nbsp;|&nbsp; 线轴数量 = (线轴数 + 4) × 上架次
 </div>
 
 <div class="section-title">④ 整经数据参考表 — 点击行填入</div>
@@ -398,7 +398,7 @@ function calc(){
     var mwl=parseFloat(document.getElementById(wid2).value)||0;
     var s=parseFloat(document.getElementById(spid).value)||0,t=parseFloat(document.getElementById(tid).value)||0;
     if(!wl||!bc||!t){document.getElementById(lid).textContent='—';document.getElementById(oid).textContent='—';document.getElementById(srid).textContent='—';return}
-    var len=wl*(bc+4)*t;
+    var len=wl*bc;
     document.getElementById(lid).textContent=fm(len);
     document.getElementById(oid).textContent=fm(len/t+200*t);
     document.getElementById(srid).textContent=fm((s+4)*t);
