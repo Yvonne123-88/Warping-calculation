@@ -7,44 +7,43 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;background:#f5f6f8;color:#1a1a2e;line-height:1.5;padding:16px;min-height:100vh;display:flex;justify-content:center;align-items:flex-start}
-.container{max-width:1180px;width:100%;background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:20px 24px 28px}
+.container{max-width:1200px;width:100%;background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:20px 24px 28px}
 h1{font-size:20px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 h1 svg{width:24px;height:24px;flex-shrink:0}
-.row-line{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:5px;margin-bottom:5px;flex-wrap:wrap}
+.row-line{display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:5px;margin-bottom:4px;flex-wrap:wrap}
 .row-line.top{background:#f0f7ff;border:1px solid #dbeafe}
 .row-line.bot{background:#fdf2f8;border:1px solid #fce7f3}
-.row-label{font-weight:600;font-size:13px;width:28px;flex-shrink:0;text-align:center}
+.row-label{font-weight:600;font-size:12px;width:28px;flex-shrink:0;text-align:center}
 .row-label.top{color:#1e40af}.row-label.bot{color:#9d174d}
 .row-line .fg{display:flex;flex-direction:column;gap:1px}
-.row-line .fg label{font-size:10px;color:#6b7280;font-weight:500;white-space:nowrap}
-.row-line .fg input{padding:4px 5px;border:1px solid #d1d5db;border-radius:3px;font-size:12px;outline:none;width:100%}
+.row-line .fg label{font-size:9px;color:#6b7280;font-weight:500;white-space:nowrap}
+.row-line .fg input{padding:3px 4px;border:1px solid #d1d5db;border-radius:3px;font-size:11px;outline:none;width:100%}
 .row-line .fg input:focus{border-color:#4f6ef7;box-shadow:0 0 0 2px rgba(79,110,247,.12)}
 .row-res{display:flex;gap:6px;flex-shrink:0}
 .row-res .item{text-align:right}
-.row-res .item .v{font-size:13px;font-weight:700;color:#1e40af}
+.row-res .item .v{font-size:12px;font-weight:700;color:#1e40af}
 .row-res .item .lbl{font-size:8px;color:#6b7280}
-.row-res .item .warn{color:#dc2626;font-size:10px}
-.calc-btn{padding:6px 24px;background:#4f6ef7;color:#fff;border:none;border-radius:5px;font-size:13px;font-weight:500;cursor:pointer}
+.row-res .item .warn{color:#dc2626;font-size:9px}
+.calc-btn{padding:5px 22px;background:#4f6ef7;color:#fff;border:none;border-radius:5px;font-size:12px;font-weight:500;cursor:pointer;margin:2px 0 4px}
 .calc-btn:hover{background:#3b57d9}
-.formula-note{margin-top:6px;font-size:11px;color:#9ca3af;line-height:1.4;padding:6px 10px;background:#f9fafb;border-radius:4px;margin-bottom:12px}
-.ref-controls{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;align-items:center}
-.ref-controls input{flex:1;min-width:140px;font-size:12px;padding:5px 8px;border:1px solid #d1d5db;border-radius:5px;outline:none}
-.ref-controls select{font-size:12px;padding:5px 8px;border:1px solid #d1d5db;border-radius:5px;outline:none}
+.formula-note{margin-top:4px;font-size:10px;color:#9ca3af;line-height:1.3;padding:5px 8px;background:#f9fafb;border-radius:4px;margin-bottom:8px}
+.ref-controls{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap;align-items:center}
+.ref-controls input{flex:1;min-width:140px;font-size:12px;padding:4px 8px;border:1px solid #d1d5db;border-radius:5px;outline:none}
+.ref-controls select{font-size:12px;padding:4px 8px;border:1px solid #d1d5db;border-radius:5px;outline:none}
 .ref-controls input:focus,.ref-controls select:focus{border-color:#4f6ef7;box-shadow:0 0 0 3px rgba(79,110,247,.15)}
 .ref-count{font-size:11px;color:#6b7280;margin-left:auto;white-space:nowrap}
-.ref-wrap{max-height:500px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:5px}
-.ref-table{width:100%;border-collapse:collapse;font-size:11px}
-.ref-table th{position:sticky;top:0;z-index:2;background:#f3f4f6;text-align:left;padding:3px 4px;font-weight:600;color:#374151;font-size:10px;border-bottom:1px solid #d1d5db}
-.ref-table td{padding:2px 4px;border-bottom:1px solid #f0f0f0;white-space:nowrap}
+.ref-wrap{max-height:480px;overflow-y:auto;border:1px solid #e5e7eb;border-radius:5px}
+.ref-table{width:100%;border-collapse:collapse;font-size:10.5px}
+.ref-table th{position:sticky;top:0;z-index:2;background:#f3f4f6;text-align:left;padding:2px 3px;font-weight:600;color:#374151;font-size:9.5px;border-bottom:1px solid #d1d5db}
+.ref-table td{padding:2px 3px;border-bottom:1px solid #f0f0f0;white-space:nowrap}
 .ref-table tr{cursor:pointer}
 .ref-table tr:hover td{background:#f0f4ff}
-.ref-table .ws-head td{font-weight:700;color:#1e40af;background:#eef2ff!important;padding:2px 4px;cursor:default}
-.badge{display:inline-block;font-size:9px;font-weight:600;padding:1px 4px;border-radius:6px}
+.ref-table .ws-head td{font-weight:700;color:#1e40af;background:#eef2ff!important;padding:2px 3px;cursor:default}
+.badge{display:inline-block;font-size:8px;font-weight:600;padding:1px 4px;border-radius:5px}
 .badge-top{background:#dbeafe;color:#1e3a5f}
 .badge-bot{background:#fce7f3;color:#831843}
-.click-hint{font-size:10px;color:#9ca3af;display:block;margin-top:3px}
-.footnote{margin-top:12px;padding-top:10px;border-top:1px solid #e9ecef;font-size:11px;color:#9ca3af;line-height:1.5}
-.section-title{font-size:12px;font-weight:600;color:#5b6777;letter-spacing:.4px;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid #e9ecef}
+.click-hint{font-size:10px;color:#9ca3af;display:block;margin-top:2px}
+.footnote{margin-top:10px;padding-top:8px;border-top:1px solid #e9ecef;font-size:11px;color:#9ca3af;line-height:1.5}
 @media(max-width:700px){body{padding:10px}.container{padding:12px 10px}}
 </style>
 </head>
@@ -54,311 +53,336 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 
 <div class="row-line top">
 <div class="row-label top"><b>T</b></div>
-<div class="fg" style="max-width:85px"><label>整经长度</label><input type="number" id="tWarpLen" step="0.1" value="3400"></div>
-<div class="fg" style="max-width:60px"><label>经盘数</label><input type="number" id="tBeamCnt" step="1" value="56"></div>
-<div class="fg" style="max-width:70px"><label>最大经长</label><input type="number" id="tMaxWL" step="0.1" value="3400"></div>
-<div class="fg" style="max-width:70px"><label>线轴数</label><input type="number" id="tSpool" step="1" value="508"></div>
-<div class="fg" style="max-width:60px"><label>上架次</label><input type="number" id="tTimes" step="1" value="2"></div>
+<div class="fg" style="max-width:80px"><label>整经长度</label><input type="number" id="tWarpLen" step="0.1" value="3400"></div>
+<div class="fg" style="max-width:55px"><label>经盘数</label><input type="number" id="tBeamCnt" step="1" value="56"></div>
+<div class="fg" style="max-width:65px"><label>最大经长</label><input type="number" id="tMaxWL" step="0.1" value="3400"></div>
+<div class="fg" style="max-width:60px"><label>线轴数</label><input type="number" id="tSpool" step="1" value="508"></div>
+<div class="fg" style="max-width:50px"><label>上架次</label><input type="number" id="tTimes" step="1" value="2"></div>
+<div class="fg" style="max-width:50px"><label>线轴余量</label><input type="number" id="tSpoolRem" step="0.1" value="0"></div>
+<div class="fg" style="max-width:65px"><label>线轴长度余量</label><input type="number" id="tLenRem" step="0.1" value="0"></div>
 <div class="row-res">
 <div class="item"><div class="lbl">线轴长度</div><div class="v" id="tLenRes">—</div></div>
-<div class="item" style="border-left:1px solid #d1d5db;padding-left:6px"><div class="lbl">订购线轴长</div><div class="v" id="tOrderRes">—</div></div>
-<div class="item" style="border-left:1px solid #d1d5db;padding-left:6px"><div class="lbl">线轴数量</div><div class="v" id="tSpoolRes">—</div><div class="warn" id="tWarn"></div></div>
+<div class="item" style="border-left:1px solid #d1d5db;padding-left:5px"><div class="lbl">订购线轴长</div><div class="v" id="tOrderRes">—</div></div>
+<div class="item" style="border-left:1px solid #d1d5db;padding-left:5px"><div class="lbl">线轴数量</div><div class="v" id="tSpoolRes">—</div></div>
 </div></div>
 
 <div class="row-line bot">
 <div class="row-label bot"><b>B</b></div>
-<div class="fg" style="max-width:85px"><label>整经长度</label><input type="number" id="bWarpLen" step="0.1" value="3400"></div>
-<div class="fg" style="max-width:60px"><label>经盘数</label><input type="number" id="bBeamCnt" step="1" value="56"></div>
-<div class="fg" style="max-width:70px"><label>最大经长</label><input type="number" id="bMaxWL" step="0.1" value="3400"></div>
-<div class="fg" style="max-width:70px"><label>线轴数</label><input type="number" id="bSpool" step="1" value="508"></div>
-<div class="fg" style="max-width:60px"><label>上架次</label><input type="number" id="bTimes" step="1" value="2"></div>
+<div class="fg" style="max-width:80px"><label>整经长度</label><input type="number" id="bWarpLen" step="0.1" value="3400"></div>
+<div class="fg" style="max-width:55px"><label>经盘数</label><input type="number" id="bBeamCnt" step="1" value="56"></div>
+<div class="fg" style="max-width:65px"><label>最大经长</label><input type="number" id="bMaxWL" step="0.1" value="3400"></div>
+<div class="fg" style="max-width:60px"><label>线轴数</label><input type="number" id="bSpool" step="1" value="508"></div>
+<div class="fg" style="max-width:50px"><label>上架次</label><input type="number" id="bTimes" step="1" value="2"></div>
+<div class="fg" style="max-width:50px"><label>线轴余量</label><input type="number" id="bSpoolRem" step="0.1" value="0"></div>
+<div class="fg" style="max-width:65px"><label>线轴长度余量</label><input type="number" id="bLenRem" step="0.1" value="0"></div>
 <div class="row-res">
 <div class="item"><div class="lbl">线轴长度</div><div class="v" id="bLenRes">—</div></div>
-<div class="item" style="border-left:1px solid #d1d5db;padding-left:6px"><div class="lbl">订购线轴长</div><div class="v" id="bOrderRes">—</div></div>
-<div class="item" style="border-left:1px solid #d1d5db;padding-left:6px"><div class="lbl">线轴数量</div><div class="v" id="bSpoolRes">—</div><div class="warn" id="bWarn"></div></div>
+<div class="item" style="border-left:1px solid #d1d5db;padding-left:5px"><div class="lbl">订购线轴长</div><div class="v" id="bOrderRes">—</div></div>
+<div class="item" style="border-left:1px solid #d1d5db;padding-left:5px"><div class="lbl">线轴数量</div><div class="v" id="bSpoolRes">—</div></div>
 </div></div>
+
+<div class="row-line" style="background:#f0fdf4;border:1px solid #bbf7d0">
+<div class="row-label" style="width:58px;color:#166534;font-size:11px;flex-shrink:0"><b>调用方案</b></div>
+<div class="fg" style="max-width:80px"><label>订购线轴长</label><input type="number" id="cOrderLen" step="0.1" value="0"></div>
+<div class="fg" style="max-width:55px"><label>线轴数量</label><input type="number" id="cSpoolQty" step="1" value="0"></div>
+<div class="fg" style="max-width:55px"><label>经盘数</label><input type="number" id="cBeamCnt" step="1" value="0"></div>
+<div class="fg" style="max-width:55px"><label>线轴数</label><input type="number" id="cSpool" step="1" value="0"></div>
+<div class="fg" style="max-width:50px"><label>上架次</label><input type="number" id="cTimes" step="1" value="0"></div>
+<div class="row-res"><div class="item"><div class="lbl">整经长度</div><div class="v" id="cWarpLenRes">—</div></div></div></div>
+
+<div class="row-line" style="background:#fef2f2;border:1px solid #fecaca">
+<div class="row-label" style="width:58px;color:#991b1b;font-size:11px;flex-shrink:0"><b>成本损耗</b></div>
+<div class="fg" style="max-width:55px"><label>单筒重量</label><input type="number" id="dWeight" step="0.01" value="0"></div>
+<div class="fg" style="max-width:65px"><label>最大线轴长</label><input type="number" id="dMaxSL" step="1" value="0"></div>
+<div class="fg" style="max-width:50px"><label>单价</label><input type="number" id="dPrice" step="0.01" value="0"></div>
+<div class="fg" style="max-width:55px"><label>损耗长度</label><input type="number" id="dLossLen" step="1" value="0"></div>
+<div class="fg" style="max-width:55px"><label>线轴数量</label><input type="number" id="dSpoolQty" step="1" value="0"></div>
+<div class="row-res">
+<div class="item"><div class="lbl">损耗重量</div><div class="v" id="dLossWtRes">—</div></div>
+<div class="item" style="border-left:1px solid #d1d5db;padding-left:5px"><div class="lbl">成本</div><div class="v" id="dCostRes">—</div></div></div></div>
 
 <button class="calc-btn" id="calcBtn">计算</button>
 <div class="formula-note">
-线轴长度 = 整经长度 × 经盘数  &nbsp;|&nbsp; 订购线轴长度 = 线轴长度/上架次 + 200×上架次 &nbsp;|&nbsp; 线轴数量 = (线轴数 + 4) × 上架次
+T/B:线轴长度=经长×经盘数 | 订购线轴长=线轴长度/上架次+线轴长度余量×上架次 | 线轴数量=(线轴数+线轴余量)×上架次<br>
+调用方案:整经长度=(订购线轴长-200×上架次)×上架次/经盘数 | 成本:损耗重量=单筒重量/最大线轴长×损耗长度×线轴数量 | 成本=单价×损耗重量
 </div>
 
-<div class="section-title">④ 整经数据参考表 — 点击行填入</div>
+<div style="font-size:12px;font-weight:600;color:#5b6777;letter-spacing:.4px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #e9ecef">⑤ 整经数据参考表 — 点击行填入</div>
 <div class="ref-controls">
 <input type="text" id="refSearch" placeholder="搜索 WarpSet 或 Loom...">
 <select id="refFilter"><option value="">全部 WarpSet</option></select>
 <span class="ref-count" id="refCount"></span>
 </div>
 <div class="ref-wrap">
-<table class="ref-table"><thead><tr><th>T/B</th><th>Loom</th><th>WS</th><th>描述</th><th>经长</th><th>盘数</th><th>线轴</th><th>上架</th><th>最大线轴长</th><th>线轴长度</th><th>筒子数</th><th>单价</th><th>Cost</th></tr></thead><tbody id="refBody"></tbody></table>
+<table class="ref-table"><thead><tr><th>T/B</th><th>Lm</th><th>WS</th><th>描述</th><th>经长</th><th>盘</th><th>线轴</th><th>上架</th><th>最大线轴长</th><th>单筒重</th><th>线轴长度</th><th>筒子数</th><th>单价</th><th>Cost</th></tr></thead><tbody id="refBody"></tbody></table>
 </div>
-<span class="click-hint">💡 点击行自动填入 T 和 B 的公共参数</span>
-<div class="footnote">数据来源：整经数据.xlsx &nbsp;|&nbsp; 仅显示 Active=Y</div>
+<span class="click-hint">💡 点击行自动填入 T/B 公共参数</span>
+<div class="footnote">数据来源：整经数据.xlsx</div>
 </div>
 <script>
-// 格式: TB|Loom|WS|描述|最大经长|经长|经盘|线轴|上架次|最大线轴长|线轴长度|筒子数|单价币种|Cost
+// TB|Loom|WS|描述|最大经长|经长|经盘|线轴|上架次|最大线轴长|单筒重量|线轴长度|筒子数|单价币种|Cost
 var raw=[
-"Top|F01|DW500|920W-0,14|3400|3400|56|508|2|103283|95400|1024|14.59 EUR|242877",
-"|F01|DW500|920W top marker|3400|3400|56|6|2|103286|95400|14|14.14 EUR|3218",
-"Bot|F01|DW500|921H-0,22|1664|1664|56|508|2|47529|46792|1024|9.68 EUR|195189",
-"|F01|DW500|921H bottom marker|1664|1664|56|6|2|47525|46792|14|10.13 EUR|2793",
-"Top|F02|DW500|920W-0,14|3400|3400|56|508|2|103283|95400|1024|14.59 EUR|242877",
-"|F02|DW500|920W top marker|3400|3400|56|6|2|103286|95400|14|14.14 EUR|3218",
-"Bot|F02|DW500|921H-0,22|1664|1664|56|508|2|47529|46792|1024|9.68 EUR|195189",
-"|F02|DW500|921H bottom marker|1664|1664|56|6|2|47525|46792|14|10.13 EUR|2793",
-"Top|F02|DW340|FFP145-0,15|3200|2400|56|474|2|73000|67400|0||",
-"|F02|DW340|FFP145 top marker|3200|2400|56|6|2|73000|67400|0||",
-"Bot|F02|DW340|FFP150-0,32|1044|1175|56|314|4|20700|16650|0||",
-"|F02|DW340|FFP150 bottom marker|1044|1175|56|6|4|20700|16650|0||",
-"Top|F02|DW340|920Y-0.15|3200|3200|56|474|2|89796|89800|956|13.69 EUR|230360",
-"|F02|DW340|920Y top marker|3200|3200|56|6|2|89886|89800|14|14.14 EUR|3484",
-"Bot|F02|DW340|921H-0.32|1044|1044|57|314|3|22442|20200|954|8.61 EUR|147880",
-"|F02|DW340|921H bottom marker|1044|1044|57|6|3|22444|20200|21|9.21 EUR|3482",
-"Top|F02|DW330|40-50W-0,12|3375|2906|56|570|2|96108|81768|1148|15.66 EUR|183543",
-"|F02|DW330|40-50W top marker|3375|2906|56|6|2|96108|81768|14|15.91 EUR|2274",
-"Bot|F02|DW330|40-60W-0.24|1650|1422|56|378|2|40045|40016|764|7.59 EUR|115891",
-"|F02|DW330|40-60W bottom marker|1650|1422|56|6|2|40045|40016|14|7.42 EUR|2076",
-"Bot|F02|JAX4|X211 0.40mm|3200|3150|112|83|16|22200|22200|0||",
-"Bot|F02|JAX5|X211 0.50|2200|1980|112|69|16|14000|14000|1120|36.20 RMB|133795",
-"Bot|F02|M2|X205 0.2mm|2700|2470|69|382|3|57000|57010|1152|34 RMB|84226",
-"Bot|F02|JAX4|X211 0.40mm|3200|3150|112|78|16|22200|22200|1264|37.69 RMB|157213",
-"Top|F02|DW330|40-50W-0,12|3375|2440|56|570|2|96108|68720|1148|15.66 EUR|154255",
-"|F02|DW330|40-50W top marker|3375|2440|56|6|2|96108|68720|14|15.91 EUR|1911",
-"Bot|F02|DW330|40-60W-0.24|1650|1194|56|378|2|40045|33632|764|7.59 EUR|97402",
-"|F02|DW330|40-60W bottom marker|1650|1194|56|6|2|40045|33632|14|7.42 EUR|1745",
-"Top|F03|DW555|920Y-0,10|3360|3360|54|986|2|137615|91120|1980|26.42 EUR|415655",
-"|F03|DW555|920Y top marker|3360|3360|54|6|2|137613|91120|14|27.07 EUR|3011",
-"Bot|F03|DW555|921H-0,21|1644|1644|52|614|2|52083|42944|1236|9.88 EUR|201390",
-"|F03|DW555|921H bottom marker|1644|1644|52|6|2|52080|42944|14|10.47 EUR|2417",
-"Top|F03|DW555|920Y-0,10|3360|3360|54|1002|2|137615|91120|2012|26.42 EUR|422373",
-"|F03|DW555|920Y top marker|3360|3360|54|6|2|137613|91120|14|27.07 EUR|3011",
-"Bot|F03|DW555|921H-0,21|1644|1644|52|624|2|52083|42944|1256|9.88 EUR|204648",
-"|F03|DW555|921H bottom marker|1644|1644|52|6|2|52080|42944|14|10.47 EUR|2417",
-"Top|F03|DW555|920Y-0,10|3360|1680|54|1002|1|137615|91120|1006|26.42 EUR|211187",
-"|F03|DW555|920Y top marker|3360|1680|54|6|1|137613|91120|7|27.07 EUR|1506",
-"Bot|F03|DW555|921H-0,21|1644|1644|52|624|2|52083|42944|1256|9.88 EUR|204648",
-"|F03|DW555|921H bottom marker|1644|1644|52|6|2|52080|42944|14|10.47 EUR|2417",
-"Top|F03|DW555|40-50w 0.10mm white|3360|1650|54|1002|1|138396|89500|1006|20.16 EUR|162633",
-"|F03|DW555|40-50w blue MK|3360|1650|54|6|1|138396|89500|7|26.11 EUR|1466",
-"Bot|F03|DW555|40-60w 0.21mm white|1644|1600|52|624|2|52302|41800|1256|7.90 EUR|158601",
-"|F03|DW555|40-60w blue MK|1644|1600|52|6|2|52302|41800|14|8.15 EUR|1824",
-"Top|F04|DW330|40-50W-0,12|3106|3106|52|780|2|96108|81156|1568|15.66 EUR|248817",
-"|F04|DW330|40-50W top marker|3106|3106|52|6|2|96108|81156|14|15.91 EUR|2257",
-"Bot|F04|DW330|40-60W-0.24|1520|1520|52|518|2|40045|39720|1044|7.59 EUR|157193",
-"|F04|DW330|40-60W bottom marker|1520|1520|52|6|2|40045|39720|14|7.42 EUR|2061",
-"Top|F04|DW555|920Y-0,10|3360|3360|54|986|2|137615|91120|1980|26.42 EUR|415655",
-"|F04|DW555|920Y top marker|3360|3360|54|6|2|137613|91120|14|27.07 EUR|3011",
-"Bot|F04|DW555|921H-0,21|1644|1644|52|614|2|52083|42944|1236|9.88 EUR|201390",
-"|F04|DW555|921H bottom marker|1644|1644|52|6|2|52080|42944|14|10.47 EUR|2417",
-"Bot|F05|JAX4|X211 0.40mm|2750|2750|120|77|15|22200|22200|1170|37.69 RMB|145521",
-"Bot|F05|4PLY|X205 4PLY WARP|1000|910|120|92|15|10000|7480|1410|54.44 RMB|88996",
-"Bot|F05|4PLY|X205 4PLY WARP|1000|500|120|92|15|10000|4200|1410|54.44 RMB|49971",
-"Top|F06|DW500|920W-0,14|3060|3060|52|698|2|103283|79760|1404|14.59 EUR|278413",
-"|F06|DW500|920W top marker|3060|3060|52|6|2|103286|79760|14|14.14 EUR|2691",
-"Bot|F06|DW500|921H-0,22|1500|1500|52|698|2|47529|39200|1404|9.68 EUR|224200",
-"|F06|DW500|921H bottom marker|1500|1500|52|6|2|47525|39200|14|10.13 EUR|2340",
-"Top|F06|DW330|40-50W-0,12|3106|3106|52|780|2|96108|81156|1568|15.66 EUR|248817",
-"|F06|DW330|40-50W top marker|3106|3106|52|6|2|96108|81156|14|15.91 EUR|2257",
-"Bot|F06|DW330|40-60W-0.24|1520|1520|52|518|2|40045|39720|1044|7.59 EUR|157193",
-"|F06|DW330|40-60W bottom marker|1520|1520|52|6|2|40045|39720|14|7.42 EUR|2061",
-"Top|F06|DW555|920Y-0,10|3360|3360|54|986|2|137615|91120|1980|26.42 EUR|415655",
-"|F06|DW555|920Y top marker|3360|3360|54|6|2|137613|91120|14|27.07 EUR|3011",
-"Bot|F06|DW555|921H-0,21|1644|1644|52|614|2|52083|42944|1236|9.88 EUR|201390",
-"|F06|DW555|921H bottom marker|1644|1644|52|6|2|52080|42944|14|10.47 EUR|2417",
-"Top|F06|DW555|920Y-0,10|3360|1644|54|986|1|137615|89176|990|26.42 EUR|203394",
-"|F06|DW555|920Y top marker|3360|1644|54|6|1|137613|89176|7|27.07 EUR|1474",
-"Bot|F06|DW555|921H-0,21|1644|1644|52|614|2|52083|42944|1236|9.88 EUR|201390",
-"|F06|DW555|921H bottom marker|1644|1644|52|6|2|52080|42944|14|10.47 EUR|2417",
-"Top|F06|DW555|40-50w 0.10mm white|3360|1550|54|986|1|138396|83900|990|20.16 EUR|150033",
-"|F06|DW555|40-50w blue MK|3360|1550|54|6|1|138396|83900|7|26.11 EUR|1374",
-"Bot|F06|DW555|40-50W 0.21mm white|1644|1500|52|614|2|52302|39200|1236|7.44 EUR|137844",
-"|F06|DW555|40-50W blue MK|1644|1500|52|6|2|52302|39200|14|7.69 EUR|1614",
-"Top|F06|DW500|40-50W-0.14 White|3060|600|52|698|1|84731|31400|702|12.80 EUR|47951",
-"|F06|DW500|40-50W top marker|3060|600|52|6|1|84731|31400|7|13.05 EUR|487",
-"Bot|F06|DW500|40-60W-0.22|1500|600|52|698|1|48000|31400|702|7.83 EUR|71915",
-"|F06|DW500|40-60W bottom marker|1500|600|52|6|1|48000|31400|7|7.63 EUR|699",
-"Top|F07|DW320|920Y-0,10|3678|3678|54|984|2|137615|99706|0||",
-"|F07|DW320|920Y top marker|3678|3678|54|6|2|137613|99706|0||",
-"Bot|F07|DW320|921H-0,21|1800|1800|52|654|2|52083|47000|0||",
-"|F07|DW320|921H bottom marker|1800|1800|52|6|2|52080|47000|0||",
-"Top|F07|DW320|920Y-0,10|3360|3360|54|984|2|137615|91120|1976|26.42 EUR|414816",
-"|F07|DW320|920Y top marker|3360|3360|54|6|2|137613|91120|14|27.07 EUR|3011",
-"Bot|F07|DW320|921H-0,21|1644|1644|52|654|2|52083|42944|1316|9.88 EUR|214424",
-"|F07|DW320|921H bottom marker|1644|1644|52|6|2|52080|42944|14|10.47 EUR|2417",
-"Top|F07|DW320|40-50w 0.10mm white|3360|3360|54|984|2|138396|91120|1976|20.16 EUR|325229",
-"|F07|DW320|40-50w blue MK|3360|3360|54|6|2|138396|91120|14|26.11 EUR|2984",
-"Bot|F07|DW320|40-60w 0.21mm white|1644|1644|54|654|2|52302|44588|1316|7.90 EUR|177261",
-"|F07|DW320|40-60w blue MK|1644|1644|54|6|2|52302|44588|14|8.15 EUR|1945",
-"Top|F07|DW320|40-50w 0.10mm white|3360|3360|54|984|2|138396|91120|1976|20.16 EUR|325229",
-"|F07|DW320|40-50w blue MK|3360|3360|54|6|2|138396|91120|14|26.11 EUR|2984",
-"Bot|F07|DW320|40-60w 0.21mm white|1644|1644|52|654|2|52302|42944|1316|7.90 EUR|170725",
-"|F07|DW320|40-60w blue MK|1644|1644|52|6|2|52302|42944|14|8.15 EUR|1874",
-"Top|F08|DW500|920W-0,14|3300|3000|48|698|2|103283|72200|1404|14.59 EUR|252024",
-"|F08|DW500|920W top marker|3300|3000|48|6|2|103286|72200|14|14.14 EUR|2436",
-"Bot|F08|DW500|921H-0,22|1615|1468|48|698|2|47529|35432|1404|9.68 EUR|202650",
-"|F08|DW500|921H bottom marker|1615|1468|48|6|2|47525|35432|14|10.13 EUR|2115",
-"Top|F08|DW500|40-50W-0.14|1500|1500|48|698|1|103000|72200|702|12.60 EUR|89283",
-"|F08|DW500|40-50W top marker|1500|1500|48|6|1|103000|72200|7|12.35 EUR|873",
-"Bot|F08|DW500|40-60W-0.22|1500|1500|48|698|2|48000|36200|1404|7.83 EUR|165816",
-"|F08|DW500|40-60W bottom marker|1500|1500|48|6|2|48000|36200|14|7.63 EUR|1611",
-"Top|F09|DW340|FFP145-0,15|3110|3110|52|660|2|73000|81060|0||",
-"|F09|DW340|FFP145 top marker|3110|3110|52|6|2|73000|81060|0||",
-"Bot|F09|DW340|FFP150-0,32|1015|1015|52|438|3|20700|17793|0||",
-"|F09|DW340|FFP150 bottom marker|1015|1015|52|6|3|20700|17793|0||",
-"Top|F09|DW340|920Y-0.15|3110|3110|52|660|2|89796|81060|1328|13.69 EUR|288854",
-"|F09|DW340|920Y top marker|3110|3110|52|6|2|89886|81060|14|14.14 EUR|3145",
-"Bot|F09|DW340|921H-0.32|1015|1015|105|438|5|22442|21515|2210|8.61 EUR|364875",
-"|F09|DW340|921H bottom marker|1015|1015|105|6|5|22444|21515|35|9.21 EUR|6181",
-"Top|F09|DW340|920Y-0.15|3110|3110|52|660|2|89796|81060|1328|13.69 EUR|288854",
-"|F09|DW340|920Y top marker|3110|3110|52|6|2|89886|81060|14|14.14 EUR|3145",
-"Bot|F09|DW340|921H-0.32|1015|1015|36|438|2|22442|18470|884|8.61 EUR|125294",
-"Bot|F09|DW340|921H-0.32|1015|1015|16|438|1|22442|16440|442|8.61 EUR|55761",
-"|F09|DW340|921H bottom marker|1015|1015|105|6|5|22444|21515|35|9.21 EUR|6181",
-"Top|F09|DW340|820Y 0.15 White|3110|1050|52|660|1|101780|54800|664|55.75 RMB|49828",
-"|F09|DW340|820Y Blue TM|3110|1050|52|6|1|101780|54800|7|60.18 RMB|567",
-"Bot|F09|DW340|P621U 0.32 white|1015|1015|52|438|3|21800|17793|1326|23.89 RMB|64649",
-"|F09|DW340|P621UB 0.32 blue|1015|1015|52|6|3|21800|17793|21|28.32 RMB|1213",
-"Top|F10|DW330|40-50W-0,12|3106|3106|52|780|2|96108|81156|1568|15.66 EUR|248817",
-"|F10|DW330|40-50W top marker|3106|3106|52|6|2|96108|81156|14|15.91 EUR|2257",
-"Bot|F10|DW330|40-60W-0.24|1520|1520|52|518|2|40045|39720|1044|7.59 EUR|157193",
-"|F10|DW330|40-60W bottom marker|1520|1520|52|6|2|40045|39720|14|7.42 EUR|2061",
-"Bot|F10|DW330|40-60W-0.24|1520|1230|52|518|2|40045|32180|1044|7.59 EUR|127353",
-"Bot|F10|DW330|40-60W-0.24|1520|750|52|518|1|40045|39200|522|7.59 EUR|77568",
-"Bot|F10|DW330|821H 0.24|1520|750|52|518|1|39900|39200|522|45.13 RMB|57865",
-"|F10|DW330|821H 0.24 marker|1520|750|52|6|1|39900|39200|10|49.56 RMB|1217",
-"Top|F10|DW039|40-50W-0.14 White|3060|600|52|739|1|84731|31400|743|12.80 EUR|50751",
-"|F10|DW039|40-50W top marker|3060|600|52|6|1|84731|31400|7|13.05 EUR|487",
-"Bot|F10|DW039|40-60W-0.22|1500|600|52|739|1|48000|31400|743|7.83 EUR|76115",
-"|F10|DW039|40-60W bottom marker|1500|600|52|6|1|48000|31400|7|7.63 EUR|699",
-"Top|F11|DW340|920Y-0.15|3099|3099|44|660|2|89796|68378|1328|13.69 EUR|243662",
-"|F11|DW340|920Y top marker|3099|3099|44|6|2|89886|68378|14|14.14 EUR|2653",
-"Bot|F11|DW340|921H-0.32|1011|1011|44|438|2|22442|22442|884|8.61 EUR|152238",
-"|F11|DW340|921H bottom marker|1011|1011|44|6|2|22444|22442|14|9.21 EUR|2579",
-"Top|F11|DW330|40-50W-0,12|3106|3106|44|780|2|96108|68732|1568|15.66 EUR|210726",
-"|F11|DW330|40-50W top marker|3106|3106|44|6|2|96108|68732|14|15.91 EUR|1912",
-"Bot|F11|DW330|40-60W-0.24|1520|1520|44|518|2|40045|33640|1044|7.59 EUR|133131",
-"|F11|DW330|40-60W bottom marker|1520|1520|44|6|2|40045|33640|14|7.42 EUR|1745",
-"Top|F11|DW320|920Y-0,10|3380|3380|46|984|2|137615|78140|1976|26.42 EUR|355725",
-"|F11|DW320|920Y top marker|3380|3380|46|6|2|137613|78140|14|27.07 EUR|2582",
-"Bot|F11|DW320|921H-0,21|1636|1636|44|654|2|52083|36192|1316|9.88 EUR|180711",
-"|F11|DW320|921H bottom marker|1636|1636|44|6|2|52080|36192|14|10.47 EUR|2037",
-"Top|F11|DW960|922W-0,13|3000|1680|88|924|2|81522|74120|1856|18.28 EUR|370172",
-"|F11|DW960|922W DW960 Marker|3000|1680|88|6|2|96108|74120|14|17.99 EUR|2331",
-"Top|F11|DW330|40-50W-0,12|3106|1553|44|780|1|96108|68732|784|15.66 EUR|105363",
-"|F11|DW330|40-50W top marker|3106|1553|44|6|1|96108|68732|7|15.91 EUR|956",
-"Bot|F11|DW330|40-60W-0.24|1520|1520|44|518|2|40045|33640|1044|7.59 EUR|133131",
-"|F11|DW330|40-60W bottom marker|1520|1520|44|6|2|40045|33640|14|7.42 EUR|1745",
-"Top|F11|DW320|920Y-0,10|3380|1690|46|984|1|137615|78140|988|26.42 EUR|177863",
-"|F11|DW320|920Y top marker|3380|1690|46|6|1|137613|78140|7|27.07 EUR|1291",
-"Bot|F11|DW320|921H-0,21|1636|1636|44|654|2|52083|36192|1316|9.88 EUR|180711",
-"|F11|DW320|921H bottom marker|1636|1636|44|6|2|52080|36192|14|10.47 EUR|2037",
-"Top|F11|DW320|40-50w 0.10mm white|600|600|46|984|1|138396|28000|988|20.16 EUR|49969",
-"|F11|DW320|40-50w blue MK|600|600|46|6|1|138396|28000|7|26.11 EUR|459",
-"Bot|F11|DW320|40-60w 0.21mm white|600|587|44|654|1|52302|26028|658|7.90 EUR|51738",
-"|F11|DW320|40-60w blue MK|600|587|44|6|1|52302|26028|7|8.15 EUR|568",
-"Top|F11|DW320|40-50w 0.10mm white|3380|3380|46|984|2|138396|78140|1976|20.16 EUR|278900",
-"|F11|DW320|40-50w blue MK|3380|3380|46|6|2|138396|78140|14|26.11 EUR|2559",
-"Bot|F11|DW320|40-60w 0.21mm white|1636|1636|44|654|2|52302|36192|1316|7.90 EUR|143882",
-"|F11|DW320|40-60w blue MK|1636|1636|44|6|2|52302|36192|14|8.15 EUR|1579",
-"Top|F12|DW340|920Y-0.15|3110|3110|40|660|2|89796|62400|1328|13.69 EUR|222360",
-"|F12|DW340|920Y top marker|3110|3110|40|6|2|89886|62400|14|14.14 EUR|2421",
-"Bot|F12|DW340|921H-0.32|1015|1015|40|438|2|22442|20500|884|8.61 EUR|139065",
-"|F12|DW340|921H bottom marker|1015|1015|40|6|2|22444|20500|14|9.21 EUR|2356",
-"Top|F12|DW330|40-50W-0,12|3106|3106|40|780|2|96108|62520|1568|15.66 EUR|191681",
-"|F12|DW330|40-50W top marker|3106|3106|40|6|2|96108|62520|14|15.91 EUR|1739",
-"Bot|F12|DW330|40-60W-0.24|1520|1520|40|518|2|40045|30600|1044|7.59 EUR|121100",
-"|F12|DW330|40-60W bottom marker|1520|1520|40|6|2|40045|30600|14|7.42 EUR|1588",
-"Top|F12|DW960|922W-0,13|3000|1680|80|924|2|81522|67400|1856|18.28 EUR|336611",
-"|F12|DW960|922W DW960 Marker|3000|1680|80|6|2|96108|67400|14|17.99 EUR|2120",
-"Top|F12|DW340|FFP145-0,15|1015|1015|40|660|1|73000|40800|664|18.04 USD|11826",
-"Bot|F12|DW340|FFP150-0,32|1037|1037|40|438|2|20700|20940|884|9.25 USD|18993",
-"Bot|F12|DW340|P621U 0.32 white|1015|1015|40|438|2|21800|20500|884|23.89 RMB|49656",
-"|F12|DW340|P621UB 0.32 blue|1015|1015|40|6|2|21800|20500|14|28.32 RMB|932",
-"Bot|F12|DW340|P621U 0.32 white|1015|1015|40|438|2|21800|20500|884|23.89 RMB|49656",
-"|F12|DW340|P621UB 0.32 blue|1015|1015|40|6|2|21800|20500|14|28.32 RMB|932",
-"Top|F12|DW320|920Y-0,10|3380|1800|42|984|2|137615|38200|1976|26.42 EUR|173902",
-"|F12|DW320|920Y top marker|3380|1800|40|6|2|137613|36400|20|27.07 EUR|1718",
-"Bot|F12|DW320|921H-0,21|1636|1750|40|654|2|52083|35200|1316|9.88 EUR|175758",
-"|F12|DW320|921H bottom marker|1636|1750|40|6|2|52080|35200|20|10.47 EUR|2831",
-"Top|F12|DW555|920Y-0,10|3360|900|40|986|2|137615|18200|1980|26.42 EUR|83022",
-"|F12|DW555|920Y top marker|3360|900|40|6|2|137613|18200|14|27.07 EUR|601",
-"Bot|F12|DW555|921H-0,21|1644|900|40|614|2|52083|18200|1236|9.88 EUR|85350",
-"|F12|DW555|921H bottom marker|1644|900|40|6|2|52080|18200|14|10.47 EUR|1024",
-"Top|F13|DW555|920Y-0,10|3360|3160|58|986|2|137615|92140|1980|26.42 EUR|420308",
-"|F13|DW555|920Y top marker|3360|3160|58|6|2|137613|92140|14|27.07 EUR|3045",
-"Bot|F13|DW555|921H-0,21|1644|1530|56|614|2|52083|43040|1236|9.88 EUR|201840",
-"|F13|DW555|921H bottom marker|1644|1530|56|6|2|52080|43040|14|10.47 EUR|2423",
-"Top|F13|DW555|920Y-0,10|3360|3128|58|986|2|137615|91212|1980|26.42 EUR|416075",
-"|F13|DW555|920Y top marker|3360|3128|58|6|2|137613|91212|14|27.07 EUR|3014",
-"Bot|F13|DW555|921H-0,21|1644|1526|56|614|2|52083|42928|1236|9.88 EUR|201315",
-"|F13|DW555|921H bottom marker|1644|1526|56|6|2|52080|42928|14|10.47 EUR|2416",
-"Top|F13|DW555|920Y-0,10|3360|1000|58|986|1|137615|58200|990|26.42 EUR|132743",
-"|F13|DW555|920Y top marker|3360|1000|58|6|1|137613|58200|7|27.07 EUR|962",
-"Bot|F13|DW555|921H-0,21|1644|1000|56|614|2|52083|28200|1236|9.88 EUR|132246",
-"|F13|DW555|921H bottom marker|1644|1000|56|6|2|52080|28200|14|10.47 EUR|1587",
-"Top|F13|DW555|40-50w 0.10mm white|3360|1650|58|986|1|138396|95900|990|20.16 EUR|171491",
-"|F13|DW555|40-50w blue MK|3360|1650|58|6|1|138396|95900|7|26.11 EUR|1570",
-"Bot|F13|DW555|40-60w 0.21mm white|1644|1600|56|614|2|52302|45000|1236|7.90 EUR|168023",
-"|F13|DW555|40-60w blue MK|1644|1600|56|6|2|52302|45000|20|8.15 EUR|2805",
-"Top|F13|DW555|920Y-0,10|3360|2400|58|986|2|137615|70100|1980|26.42 EUR|319770",
-"|F13|DW555|920Y top marker|3360|2400|58|6|2|137613|70100|14|27.07 EUR|2317",
-"Bot|F13|DW555|921H-0,21|1644|1170|56|614|2|52083|32960|1236|9.88 EUR|154569",
-"|F13|DW555|921H bottom marker|1644|1170|56|6|2|52080|32960|14|10.47 EUR|1855",
-"Bot|P01|4PLY|X205 4PLY WARP|280|280|90|390|3|10000|8600|1173|54.44 RMB|85123",
-"Bot|P06|4PLY|X205 4PLY WARP|380|380|44|496|2|10000|8600|994|54.44 RMB|72133",
-"Bot|P07|4PLY|X205 4PLY WARP|400|400|51|546|3|10000|7000|1641|54.44 RMB|96930",
-"Bot|P08|4PLY|X205 4PLY WARP|245|245|84|390|3|10000|7000|1182|54.44 RMB|69818",
-"Bot|P08|JAX4|X211 0.40mm P08|1250|1250|84|158|6|22200|17700|960|33.99 RMB|85853",
-"Bot|P08|4PLY|X205 4PLY WARP|245|245|84|390|3|10000|7000|1176|54.44 RMB|69463",
-"Bot|P09|JAX5|X211 0.50|1150|1150|60|175|5|14000|14000|875|36.20 RMB|104528",
-"Bot|P09|C38|WFN240 0.381mm|585|585|60|624|3|18720|11900|1872|9.01 USD|25733",
-"Bot|P09|JAX5|X211 0.50|1380|1380|60|175|6|14000|14000|1056|36.20 RMB|126150",
-"Bot|P09|4PLY|X205 4PLY WARP|400|420|60|496|3|10000|8600|1500|54.44 RMB|108853",
-"Bot|P09|4PLY|X205 4PLY WARP|385|365|60|496|3|10000|7500|1500|54.44 RMB|94930",
-"Bot|P09|C38|2008V 0.38 PA6.6|585|585|60|624|3|15500|11900|1872|9.70 EUR|223055",
-"Bot|P09|C38|N407 0.38mm PA66|585|585|60|624|3|15000|11900|1875|47.79 RMB|142175",
-"Bot|P09|C38|X606 0.38 WARP|585|585|60|624|3|23000|11900|1875|49.41 RMB|153386",
-"Bot|P11|C38|WFN240 0.381mm|620|620|66|676|3|18720|13840|2028|9.01 USD|32422",
-"Bot|P11|C38|2008V 0.38 PA6.6|620|618|66|676|3|15500|13764|2040|9.70 EUR|281148",
-"Bot|P11|C38|2008V 0.38 PA6.6|620|530|66|676|3|15500|11828|2040|9.70 EUR|241603",
-"Bot|P11|C38|N407 0.38mm PA66|620|565|72|676|3|15000|13728|2040|47.79 RMB|178449",
-"Bot|P11|C38|X606 0.38 WARP|620|570|72|676|3|23000|13848|2040|49.41 RMB|194202",
-"Bot|P03|C38|WFN240 0.381mm|650|650|42|688|2|18720|13840|1384|9.01 USD|22126",
-"Bot|P03|C38|2008V 0.38 PA6.6|650|650|42|688|2|15500|13840|1384|9.70 EUR|191793",
-"Bot|P03|C38|2008V 0.38 PA6.6|650|320|42|688|1|15500|13630|692|9.70 EUR|94441",
-"Bot|P03|M2|X205 0.2mm|650|650|42|1032|1|57000|27500|1036|34 RMB|36537",
-"Bot|P03|C38|N407 0.38mm PA66|650|650|42|688|2|15000|13840|1384|47.79 RMB|122053",
-"Bot|P03|C38|X606 0.38 WARP|650|594|46|688|2|23000|13852|1384|49.41 RMB|131791",
-"Bot|P13|C38|WFN240 0.381mm|650|593|46|688|2|18720|13840|1384|9.01 USD|22126",
-"Bot|P13|C38|2008V 0.38 PA6.6|650|645|46|688|2|15500|15000|1384|9.70 EUR|207868",
-"Bot|P13|C38|N407 0.38mm PA66|650|100|46|688|1|15000|4800|692|47.79 RMB|21165",
-"Bot|P13|C38|N407 0.38mm PA66|650|593|46|688|2|15000|13840|1384|47.79 RMB|122053",
-"Bot|P13|C38|2008V 0.38 PA6.6|650|593|46|688|2|15500|13840|1384|9.70 EUR|191793",
-"Bot|P13|C38|X606 0.38 WARP|650|300|46|688|1|23000|14000|692|49.41 RMB|66600",
-"Bot|P13|C38|X606 0.38 WARP|650|593|46|688|2|23000|13839|1384|49.41 RMB|131667",
-"Bot|P13|C38|2008V 0.38 PA6.6|650|296|46|688|1|15500|13781|692|9.70 EUR|95488",
-"Bot|P04|C38|WFN240 0.381mm|230|213|55|480|1|18720|11900|484|9.01 USD|6653",
-"Bot|P04|C38|2008V 0.38 PA6.6|230|230|55|480|1|15500|12850|484|9.70 EUR|62274",
-"Bot|P04|M2|X205 0.2mm|480|480|55|708|1|57000|57000|712|34 RMB|52047",
-"Bot|P04|M2|X205 0.198mm|480|480|55|708|1|57000|26600|712|34 RMB|24289",
-"Bot|P14|C38|WFN240 0.381mm|650|650|54|688|3|18720|11900|2076|9.01 USD|28537",
-"Bot|P14|C38|2008V 0.38 PA6.6|650|650|54|688|3|15500|11900|2076|9.70 EUR|247363",
-"Bot|P14|4PLY|X205 4PLY WARP|400|406|54|546|3|10000|7508|1650|54.44 RMB|104534",
-"Bot|P14|4PLY|X205 4PLY WARP|400|406|54|546|3|10000|7508|1644|54.44 RMB|104154",
-"Bot|P15|JAX4|X211 0.40mm P15|2750|2750|120|110|15|28000|22200|1665|37.69 RMB|206980",
-"Bot|P15|JAX5|X211 0.50|2200|2180|120|90|20|14000|13280|1840|36.20 RMB|208502",
-"Bot|P15|JAX4|X211 0.40mm P15|2750|2750|112|110|14|28000|22200|1568|37.69 RMB|194922",
-"Bot|P15|JAX5|X211 0.50|2200|2200|114|92|19|14000|13400|1824|36.20 RMB|208557",
-"Bot|P15|JAX5|X211 0.50|2180|2180|114|90|19|14000|13280|1786|36.20 RMB|202383",
-"Bot|P15|JAX5|X211 0.50|2180|2180|120|90|19|14000|13968|1786|36.20 RMB|212868",
-"Bot|P15|JAX5|X211 0.50|2180|1200|120|92|11|14000|13291|1056|36.20 RMB|119761",
-"Bot|P15|JAX4|X211 0.40mm P15|2750|1300|112|110|14|28000|10600|1568|37.69 RMB|93071",
-"Bot|P05|M2|X205 0.2mm|600|600|34|1008|1|57000|57000|1012|34 RMB|73977",
-"Bot|P05|M2|X205 0.198mm|600|600|34|1008|1|57000|20600|1012|34 RMB|26736",
-"Bot|P16|JAX4|X211 0.40mm P16|3600|3540|84|103|12|28000|24980|1284|36.20 RMB|172505",
-"Bot|P16|JAX4|X211 0.40mm P16|3600|3540|84|103|14|28000|21440|1498|36.20 RMB|172735",
-"Bot|P16|JAX4|X211 0.40mm P16|3600|3540|84|108|12|28000|24980|1344|36.20 RMB|180566",
-"Bot|P16|JAX4|X211 0.40mm P16|3800|3800|84|108|12|28000|26800|1344|36.20 RMB|193722"
+"Top|F01|DW500|920W-0,14|3400|3400|56|508|2|103283|2.20|95400|1024|14.59 EUR|242877",
+"|F01|DW500|920W top marker|3400|3400|56|6|2|103286|2.20|95400|14|14.14 EUR|3218",
+"Bot|F01|DW500|921H-0,22|1664|1664|56|508|2|47529|2.50|46792|1024|9.68 EUR|195189",
+"|F01|DW500|921H bottom marker|1664|1664|56|6|2|47525|2.50|46792|14|10.13 EUR|2793",
+"Top|F02|DW500|920W-0,14|3400|3400|56|508|2|103283|2.20|95400|1024|14.59 EUR|242877",
+"|F02|DW500|920W top marker|3400|3400|56|6|2|103286|2.20|95400|14|14.14 EUR|3218",
+"Bot|F02|DW500|921H-0,22|1664|1664|56|508|2|47529|2.50|46792|1024|9.68 EUR|195189",
+"|F02|DW500|921H bottom marker|1664|1664|56|6|2|47525|2.50|46792|14|10.13 EUR|2793",
+"Top|F02|DW340|FFP145-0,15|3200|2400|56|474|2|73000|1.77|67400|0||",
+"|F02|DW340|FFP145 top marker|3200|2400|56|6|2|73000|1.77|67400|0||",
+"Bot|F02|DW340|FFP150-0,32|1044|1175|56|314|4|20700|2.30|16650|0||",
+"|F02|DW340|FFP150 bottom marker|1044|1175|56|6|4|20700|2.30|16650|0||",
+"Top|F02|DW340|920Y-0.15|3200|3200|56|474|2|89796|2.20|89800|956|13.69 EUR|230360",
+"|F02|DW340|920Y top marker|3200|3200|56|6|2|89886|2.20|89800|14|14.14 EUR|3484",
+"Bot|F02|DW340|921H-0.32|1044|1044|57|314|3|22442|2.50|20200|954|8.61 EUR|147880",
+"|F02|DW340|921H bottom marker|1044|1044|57|6|3|22444|2.50|20200|21|9.21 EUR|3482",
+"Top|F02|DW330|40-50W-0,12|3375|2906|56|570|2|96108|1.50|81768|1148|15.66 EUR|183543",
+"|F02|DW330|40-50W top marker|3375|2906|56|6|2|96108|1.50|81768|14|15.91 EUR|2274",
+"Bot|F02|DW330|40-60W-0.24|1650|1422|56|378|2|40045|2.50|40016|764|7.59 EUR|115891",
+"|F02|DW330|40-60W bottom marker|1650|1422|56|6|2|40045|2.50|40016|14|7.42 EUR|2076",
+"Bot|F02|JAX4|X211 0.40mm|3200|3150|112|83|16|22200|3.30|22200|0||",
+"Bot|F02|JAX5|X211 0.50|2200|1980|112|69|16|14000|3.30|14000|1120|36.20 RMB|133795",
+"Bot|F02|M2|X205 0.2mm|2700|2470|69|382|3|57000|2.15|57010|1152|34 RMB|84226",
+"Bot|F02|JAX4|X211 0.40mm|3200|3150|112|78|16|22200|3.30|22200|1264|37.69 RMB|157213",
+"Top|F02|DW330|40-50W-0,12|3375|2440|56|570|2|96108|1.50|68720|1148|15.66 EUR|154255",
+"|F02|DW330|40-50W top marker|3375|2440|56|6|2|96108|1.50|68720|14|15.91 EUR|1911",
+"Bot|F02|DW330|40-60W-0.24|1650|1194|56|378|2|40045|2.50|33632|764|7.59 EUR|97402",
+"|F02|DW330|40-60W bottom marker|1650|1194|56|6|2|40045|2.50|33632|14|7.42 EUR|1745",
+"Top|F03|DW555|920Y-0,10|3360|3360|54|986|2|137615|1.50|91120|1980|26.42 EUR|415655",
+"|F03|DW555|920Y top marker|3360|3360|54|6|2|137613|1.50|91120|14|27.07 EUR|3011",
+"Bot|F03|DW555|921H-0,21|1644|1644|52|614|2|52083|2.50|42944|1236|9.88 EUR|201390",
+"|F03|DW555|921H bottom marker|1644|1644|52|6|2|52080|2.50|42944|14|10.47 EUR|2417",
+"Top|F03|DW555|920Y-0,10|3360|3360|54|1002|2|137615|1.50|91120|2012|26.42 EUR|422373",
+"|F03|DW555|920Y top marker|3360|3360|54|6|2|137613|1.50|91120|14|27.07 EUR|3011",
+"Bot|F03|DW555|921H-0,21|1644|1644|52|624|2|52083|2.50|42944|1256|9.88 EUR|204648",
+"|F03|DW555|921H bottom marker|1644|1644|52|6|2|52080|2.50|42944|14|10.47 EUR|2417",
+"Top|F03|DW555|920Y-0,10|3360|1680|54|1002|1|137615|1.50|91120|1006|26.42 EUR|211187",
+"|F03|DW555|920Y top marker|3360|1680|54|6|1|137613|1.50|91120|7|27.07 EUR|1506",
+"Bot|F03|DW555|921H-0,21|1644|1644|52|624|2|52083|2.50|42944|1256|9.88 EUR|204648",
+"|F03|DW555|921H bottom marker|1644|1644|52|6|2|52080|2.50|42944|14|10.47 EUR|2417",
+"Top|F03|DW555|40-50w 0.10mm white|3360|1650|54|1002|1|138396|1.55|89500|1006|20.16 EUR|162633",
+"|F03|DW555|40-50w blue MK|3360|1650|54|6|1|138396|1.55|89500|7|26.11 EUR|1466",
+"Bot|F03|DW555|40-60w 0.21mm white|1644|1600|52|624|2|52302|2.50|41800|1256|7.90 EUR|158601",
+"|F03|DW555|40-60w blue MK|1644|1600|52|6|2|52302|2.50|41800|14|8.15 EUR|1824",
+"Top|F04|DW330|40-50W-0,12|3106|3106|52|780|2|96108|1.50|81156|1568|15.66 EUR|248817",
+"|F04|DW330|40-50W top marker|3106|3106|52|6|2|96108|1.50|81156|14|15.91 EUR|2257",
+"Bot|F04|DW330|40-60W-0.24|1520|1520|52|518|2|40045|2.50|39720|1044|7.59 EUR|157193",
+"|F04|DW330|40-60W bottom marker|1520|1520|52|6|2|40045|2.50|39720|14|7.42 EUR|2061",
+"Top|F04|DW555|920Y-0,10|3360|3360|54|986|2|137615|1.50|91120|1980|26.42 EUR|415655",
+"|F04|DW555|920Y top marker|3360|3360|54|6|2|137613|1.50|91120|14|27.07 EUR|3011",
+"Bot|F04|DW555|921H-0,21|1644|1644|52|614|2|52083|2.50|42944|1236|9.88 EUR|201390",
+"|F04|DW555|921H bottom marker|1644|1644|52|6|2|52080|2.50|42944|14|10.47 EUR|2417",
+"Bot|F05|JAX4|X211 0.40mm|2750|2750|120|77|15|22200|3.30|22200|1170|37.69 RMB|145521",
+"Bot|F05|4PLY|X205 4PLY WARP|1000|910|120|92|15|10000|1.55|7480|1410|54.44 RMB|88996",
+"Bot|F05|4PLY|X205 4PLY WARP|1000|500|120|92|15|10000|1.55|4200|1410|54.44 RMB|49971",
+"Top|F06|DW500|920W-0,14|3060|3060|52|698|2|103283|2.20|79760|1404|14.59 EUR|278413",
+"|F06|DW500|920W top marker|3060|3060|52|6|2|103286|2.20|79760|14|14.14 EUR|2691",
+"Bot|F06|DW500|921H-0,22|1500|1500|52|698|2|47529|2.50|39200|1404|9.68 EUR|224200",
+"|F06|DW500|921H bottom marker|1500|1500|52|6|2|47525|2.50|39200|14|10.13 EUR|2340",
+"Top|F06|DW330|40-50W-0,12|3106|3106|52|780|2|96108|1.50|81156|1568|15.66 EUR|248817",
+"|F06|DW330|40-50W top marker|3106|3106|52|6|2|96108|1.50|81156|14|15.91 EUR|2257",
+"Bot|F06|DW330|40-60W-0.24|1520|1520|52|518|2|40045|2.50|39720|1044|7.59 EUR|157193",
+"|F06|DW330|40-60W bottom marker|1520|1520|52|6|2|40045|2.50|39720|14|7.42 EUR|2061",
+"Top|F06|DW555|920Y-0,10|3360|3360|54|986|2|137615|1.50|91120|1980|26.42 EUR|415655",
+"|F06|DW555|920Y top marker|3360|3360|54|6|2|137613|1.50|91120|14|27.07 EUR|3011",
+"Bot|F06|DW555|921H-0,21|1644|1644|52|614|2|52083|2.50|42944|1236|9.88 EUR|201390",
+"|F06|DW555|921H bottom marker|1644|1644|52|6|2|52080|2.50|42944|14|10.47 EUR|2417",
+"Top|F06|DW555|920Y-0,10|3360|1644|54|986|1|137615|1.50|89176|990|26.42 EUR|203394",
+"|F06|DW555|920Y top marker|3360|1644|54|6|1|137613|1.50|89176|7|27.07 EUR|1474",
+"Bot|F06|DW555|921H-0,21|1644|1644|52|614|2|52083|2.50|42944|1236|9.88 EUR|201390",
+"|F06|DW555|921H bottom marker|1644|1644|52|6|2|52080|2.50|42944|14|10.47 EUR|2417",
+"Top|F06|DW555|40-50w 0.10mm white|3360|1550|54|986|1|138396|1.55|83900|990|20.16 EUR|150033",
+"|F06|DW555|40-50w blue MK|3360|1550|54|6|1|138396|1.55|83900|7|26.11 EUR|1374",
+"Bot|F06|DW555|40-50W 0.21mm white|1644|1500|52|614|2|52302|2.50|39200|1236|7.44 EUR|137844",
+"|F06|DW555|40-50W blue MK|1644|1500|52|6|2|52302|2.50|39200|14|7.69 EUR|1614",
+"Top|F06|DW500|40-50W-0.14 White|3060|600|52|698|1|84731|1.80|31400|702|12.80 EUR|47951",
+"|F06|DW500|40-50W top marker|3060|600|52|6|1|84731|1.80|31400|7|13.05 EUR|487",
+"Bot|F06|DW500|40-60W-0.22|1500|600|52|698|1|48000|2.50|31400|702|7.83 EUR|71915",
+"|F06|DW500|40-60W bottom marker|1500|600|52|6|1|48000|2.50|31400|7|7.63 EUR|699",
+"Top|F07|DW320|920Y-0,10|3678|3678|54|984|2|137615|1.50|99706|0||",
+"|F07|DW320|920Y top marker|3678|3678|54|6|2|137613|1.50|99706|0||",
+"Bot|F07|DW320|921H-0,21|1800|1800|52|654|2|52083|2.50|47000|0||",
+"|F07|DW320|921H bottom marker|1800|1800|52|6|2|52080|2.50|47000|0||",
+"Top|F07|DW320|920Y-0,10|3360|3360|54|984|2|137615|1.50|91120|1976|26.42 EUR|414816",
+"|F07|DW320|920Y top marker|3360|3360|54|6|2|137613|1.50|91120|14|27.07 EUR|3011",
+"Bot|F07|DW320|921H-0,21|1644|1644|52|654|2|52083|2.50|42944|1316|9.88 EUR|214424",
+"|F07|DW320|921H bottom marker|1644|1644|52|6|2|52080|2.50|42944|14|10.47 EUR|2417",
+"Top|F07|DW320|40-50w 0.10mm white|3360|3360|54|984|2|138396|1.55|91120|1976|20.16 EUR|325229",
+"|F07|DW320|40-50w blue MK|3360|3360|54|6|2|138396|1.55|91120|14|26.11 EUR|2984",
+"Bot|F07|DW320|40-60w 0.21mm white|1644|1644|54|654|2|52302|2.50|44588|1316|7.90 EUR|177261",
+"|F07|DW320|40-60w blue MK|1644|1644|54|6|2|52302|2.50|44588|14|8.15 EUR|1945",
+"Top|F07|DW320|40-50w 0.10mm white|3360|3360|54|984|2|138396|1.55|91120|1976|20.16 EUR|325229",
+"|F07|DW320|40-50w blue MK|3360|3360|54|6|2|138396|1.55|91120|14|26.11 EUR|2984",
+"Bot|F07|DW320|40-60w 0.21mm white|1644|1644|52|654|2|52302|2.50|42944|1316|7.90 EUR|170725",
+"|F07|DW320|40-60w blue MK|1644|1644|52|6|2|52302|2.50|42944|14|8.15 EUR|1874",
+"Top|F08|DW500|920W-0,14|3300|3000|48|698|2|103283|2.20|72200|1404|14.59 EUR|252024",
+"|F08|DW500|920W top marker|3300|3000|48|6|2|103286|2.20|72200|14|14.14 EUR|2436",
+"Bot|F08|DW500|921H-0,22|1615|1468|48|698|2|47529|2.50|35432|1404|9.68 EUR|202650",
+"|F08|DW500|921H bottom marker|1615|1468|48|6|2|47525|2.50|35432|14|10.13 EUR|2115",
+"Top|F08|DW500|40-50W-0.14|1500|1500|48|698|1|103000|1.80|72200|702|12.60 EUR|89283",
+"|F08|DW500|40-50W top marker|1500|1500|48|6|1|103000|1.80|72200|7|12.35 EUR|873",
+"Bot|F08|DW500|40-60W-0.22|1500|1500|48|698|2|48000|2.50|36200|1404|7.83 EUR|165816",
+"|F08|DW500|40-60W bottom marker|1500|1500|48|6|2|48000|2.50|36200|14|7.63 EUR|1611",
+"Top|F09|DW340|FFP145-0,15|3110|3110|52|660|2|73000|1.77|81060|0||",
+"|F09|DW340|FFP145 top marker|3110|3110|52|6|2|73000|1.77|81060|0||",
+"Bot|F09|DW340|FFP150-0,32|1015|1015|52|438|3|20700|2.30|17793|0||",
+"|F09|DW340|FFP150 bottom marker|1015|1015|52|6|3|20700|2.30|17793|0||",
+"Top|F09|DW340|920Y-0.15|3110|3110|52|660|2|89796|2.20|81060|1328|13.69 EUR|288854",
+"|F09|DW340|920Y top marker|3110|3110|52|6|2|89886|2.20|81060|14|14.14 EUR|3145",
+"Bot|F09|DW340|921H-0.32|1015|1015|105|438|5|22442|2.50|21515|2210|8.61 EUR|364875",
+"|F09|DW340|921H bottom marker|1015|1015|105|6|5|22444|2.50|21515|35|9.21 EUR|6181",
+"Top|F09|DW340|920Y-0.15|3110|3110|52|660|2|89796|2.20|81060|1328|13.69 EUR|288854",
+"|F09|DW340|920Y top marker|3110|3110|52|6|2|89886|2.20|81060|14|14.14 EUR|3145",
+"Bot|F09|DW340|921H-0.32|1015|1015|36|438|2|22442|2.50|18470|884|8.61 EUR|125294",
+"Bot|F09|DW340|921H-0.32|1015|1015|16|438|1|22442|2.50|16440|442|8.61 EUR|55761",
+"|F09|DW340|921H bottom marker|1015|1015|105|6|5|22444|2.50|21515|35|9.21 EUR|6181",
+"Top|F09|DW340|820Y 0.15 White|3110|1050|52|660|1|101780|2.50|54800|664|55.75 RMB|49828",
+"|F09|DW340|820Y Blue TM|3110|1050|52|6|1|101780|2.50|54800|7|60.18 RMB|567",
+"Bot|F09|DW340|P621U 0.32 white|1015|1015|52|438|3|21800|2.50|17793|1326|23.89 RMB|64649",
+"|F09|DW340|P621UB 0.32 blue|1015|1015|52|6|3|21800|2.50|17793|21|28.32 RMB|1213",
+"Top|F10|DW330|40-50W-0,12|3106|3106|52|780|2|96108|1.50|81156|1568|15.66 EUR|248817",
+"|F10|DW330|40-50W top marker|3106|3106|52|6|2|96108|1.50|81156|14|15.91 EUR|2257",
+"Bot|F10|DW330|40-60W-0.24|1520|1520|52|518|2|40045|2.50|39720|1044|7.59 EUR|157193",
+"|F10|DW330|40-60W bottom marker|1520|1520|52|6|2|40045|2.50|39720|14|7.42 EUR|2061",
+"Bot|F10|DW330|40-60W-0.24|1520|1230|52|518|2|40045|2.50|32180|1044|7.59 EUR|127353",
+"Bot|F10|DW330|40-60W-0.24|1520|750|52|518|1|40045|2.50|39200|522|7.59 EUR|77568",
+"Bot|F10|DW330|821H 0.24|1520|750|52|518|1|39900|2.50|39200|522|45.13 RMB|57865",
+"|F10|DW330|821H 0.24 marker|1520|750|52|6|1|39900|2.50|39200|10|49.56 RMB|1217",
+"Top|F10|DW039|40-50W-0.14 White|3060|600|52|739|1|84731|1.80|31400|743|12.80 EUR|50751",
+"|F10|DW039|40-50W top marker|3060|600|52|6|1|84731|1.80|31400|7|13.05 EUR|487",
+"Bot|F10|DW039|40-60W-0.22|1500|600|52|739|1|48000|2.50|31400|743|7.83 EUR|76115",
+"|F10|DW039|40-60W bottom marker|1500|600|52|6|1|48000|2.50|31400|7|7.63 EUR|699",
+"Top|F11|DW340|920Y-0.15|3099|3099|44|660|2|89796|2.20|68378|1328|13.69 EUR|243662",
+"|F11|DW340|920Y top marker|3099|3099|44|6|2|89886|2.20|68378|14|14.14 EUR|2653",
+"Bot|F11|DW340|921H-0.32|1011|1011|44|438|2|22442|2.50|22442|884|8.61 EUR|152238",
+"|F11|DW340|921H bottom marker|1011|1011|44|6|2|22444|2.50|22442|14|9.21 EUR|2579",
+"Top|F11|DW330|40-50W-0,12|3106|3106|44|780|2|96108|1.50|68732|1568|15.66 EUR|210726",
+"|F11|DW330|40-50W top marker|3106|3106|44|6|2|96108|1.50|68732|14|15.91 EUR|1912",
+"Bot|F11|DW330|40-60W-0.24|1520|1520|44|518|2|40045|2.50|33640|1044|7.59 EUR|133131",
+"|F11|DW330|40-60W bottom marker|1520|1520|44|6|2|40045|2.50|33640|14|7.42 EUR|1745",
+"Top|F11|DW320|920Y-0,10|3380|3380|46|984|2|137615|1.50|78140|1976|26.42 EUR|355725",
+"|F11|DW320|920Y top marker|3380|3380|46|6|2|137613|1.50|78140|14|27.07 EUR|2582",
+"Bot|F11|DW320|921H-0,21|1636|1636|44|654|2|52083|2.50|36192|1316|9.88 EUR|180711",
+"|F11|DW320|921H bottom marker|1636|1636|44|6|2|52080|2.50|36192|14|10.47 EUR|2037",
+"Top|F11|DW960|922W-0,13|3000|1680|88|924|2|81522|1.50|74120|1856|18.28 EUR|370172",
+"|F11|DW960|922W DW960 Marker|3000|1680|88|6|2|96108|1.50|74120|14|17.99 EUR|2331",
+"Top|F11|DW330|40-50W-0,12|3106|1553|44|780|1|96108|1.50|68732|784|15.66 EUR|105363",
+"|F11|DW330|40-50W top marker|3106|1553|44|6|1|96108|1.50|68732|7|15.91 EUR|956",
+"Bot|F11|DW330|40-60W-0.24|1520|1520|44|518|2|40045|2.50|33640|1044|7.59 EUR|133131",
+"|F11|DW330|40-60W bottom marker|1520|1520|44|6|2|40045|2.50|33640|14|7.42 EUR|1745",
+"Top|F11|DW320|920Y-0,10|3380|1690|46|984|1|137615|1.50|78140|988|26.42 EUR|177863",
+"|F11|DW320|920Y top marker|3380|1690|46|6|1|137613|1.50|78140|7|27.07 EUR|1291",
+"Bot|F11|DW320|921H-0,21|1636|1636|44|654|2|52083|2.50|36192|1316|9.88 EUR|180711",
+"|F11|DW320|921H bottom marker|1636|1636|44|6|2|52080|2.50|36192|14|10.47 EUR|2037",
+"Top|F11|DW320|40-50w 0.10mm white|600|600|46|984|1|138396|1.55|28000|988|20.16 EUR|49969",
+"|F11|DW320|40-50w blue MK|600|600|46|6|1|138396|1.55|28000|7|26.11 EUR|459",
+"Bot|F11|DW320|40-60w 0.21mm white|600|587|44|654|1|52302|2.50|26028|658|7.90 EUR|51738",
+"|F11|DW320|40-60w blue MK|600|587|44|6|1|52302|2.50|26028|7|8.15 EUR|568",
+"Top|F11|DW320|40-50w 0.10mm white|3380|3380|46|984|2|138396|1.55|78140|1976|20.16 EUR|278900",
+"|F11|DW320|40-50w blue MK|3380|3380|46|6|2|138396|1.55|78140|14|26.11 EUR|2559",
+"Bot|F11|DW320|40-60w 0.21mm white|1636|1636|44|654|2|52302|2.50|36192|1316|7.90 EUR|143882",
+"|F11|DW320|40-60w blue MK|1636|1636|44|6|2|52302|2.50|36192|14|8.15 EUR|1579",
+"Top|F12|DW340|920Y-0.15|3110|3110|40|660|2|89796|2.20|62400|1328|13.69 EUR|222360",
+"|F12|DW340|920Y top marker|3110|3110|40|6|2|89886|2.20|62400|14|14.14 EUR|2421",
+"Bot|F12|DW340|921H-0.32|1015|1015|40|438|2|22442|2.50|20500|884|8.61 EUR|139065",
+"|F12|DW340|921H bottom marker|1015|1015|40|6|2|22444|2.50|20500|14|9.21 EUR|2356",
+"Top|F12|DW330|40-50W-0,12|3106|3106|40|780|2|96108|1.50|62520|1568|15.66 EUR|191681",
+"|F12|DW330|40-50W top marker|3106|3106|40|6|2|96108|1.50|62520|14|15.91 EUR|1739",
+"Bot|F12|DW330|40-60W-0.24|1520|1520|40|518|2|40045|2.50|30600|1044|7.59 EUR|121100",
+"|F12|DW330|40-60W bottom marker|1520|1520|40|6|2|40045|2.50|30600|14|7.42 EUR|1588",
+"Top|F12|DW960|922W-0,13|3000|1680|80|924|2|81522|1.50|67400|1856|18.28 EUR|336611",
+"|F12|DW960|922W DW960 Marker|3000|1680|80|6|2|96108|1.50|67400|14|17.99 EUR|2120",
+"Top|F12|DW340|FFP145-0,15|1015|1015|40|660|1|73000|1.77|40800|664|18.04 USD|11826",
+"Bot|F12|DW340|FFP150-0,32|1037|1037|40|438|2|20700|2.30|20940|884|9.25 USD|18993",
+"Bot|F12|DW340|P621U 0.32 white|1015|1015|40|438|2|21800|2.50|20500|884|23.89 RMB|49656",
+"|F12|DW340|P621UB 0.32 blue|1015|1015|40|6|2|21800|2.50|20500|14|28.32 RMB|932",
+"Bot|F12|DW340|P621U 0.32 white|1015|1015|40|438|2|21800|2.50|20500|884|23.89 RMB|49656",
+"|F12|DW340|P621UB 0.32 blue|1015|1015|40|6|2|21800|2.50|20500|14|28.32 RMB|932",
+"Top|F12|DW320|920Y-0,10|3380|1800|42|984|2|137615|1.50|38200|1976|26.42 EUR|173902",
+"|F12|DW320|920Y top marker|3380|1800|40|6|2|137613|1.50|36400|20|27.07 EUR|1718",
+"Bot|F12|DW320|921H-0,21|1636|1750|40|654|2|52083|2.50|35200|1316|9.88 EUR|175758",
+"|F12|DW320|921H bottom marker|1636|1750|40|6|2|52080|2.50|35200|20|10.47 EUR|2831",
+"Top|F12|DW555|920Y-0,10|3360|900|40|986|2|137615|1.50|18200|1980|26.42 EUR|83022",
+"|F12|DW555|920Y top marker|3360|900|40|6|2|137613|1.50|18200|14|27.07 EUR|601",
+"Bot|F12|DW555|921H-0,21|1644|900|40|614|2|52083|2.50|18200|1236|9.88 EUR|85350",
+"|F12|DW555|921H bottom marker|1644|900|40|6|2|52080|2.50|18200|14|10.47 EUR|1024",
+"Top|F13|DW555|920Y-0,10|3360|3160|58|986|2|137615|1.50|92140|1980|26.42 EUR|420308",
+"|F13|DW555|920Y top marker|3360|3160|58|6|2|137613|1.50|92140|14|27.07 EUR|3045",
+"Bot|F13|DW555|921H-0,21|1644|1530|56|614|2|52083|2.50|43040|1236|9.88 EUR|201840",
+"|F13|DW555|921H bottom marker|1644|1530|56|6|2|52080|2.50|43040|14|10.47 EUR|2423",
+"Top|F13|DW555|920Y-0,10|3360|3128|58|986|2|137615|1.50|91212|1980|26.42 EUR|416075",
+"|F13|DW555|920Y top marker|3360|3128|58|6|2|137613|1.50|91212|14|27.07 EUR|3014",
+"Bot|F13|DW555|921H-0,21|1644|1526|56|614|2|52083|2.50|42928|1236|9.88 EUR|201315",
+"|F13|DW555|921H bottom marker|1644|1526|56|6|2|52080|2.50|42928|14|10.47 EUR|2416",
+"Top|F13|DW555|920Y-0,10|3360|1000|58|986|1|137615|1.50|58200|990|26.42 EUR|132743",
+"|F13|DW555|920Y top marker|3360|1000|58|6|1|137613|1.50|58200|7|27.07 EUR|962",
+"Bot|F13|DW555|921H-0,21|1644|1000|56|614|2|52083|2.50|28200|1236|9.88 EUR|132246",
+"|F13|DW555|921H bottom marker|1644|1000|56|6|2|52080|2.50|28200|14|10.47 EUR|1587",
+"Top|F13|DW555|40-50w 0.10mm white|3360|1650|58|986|1|138396|1.55|95900|990|20.16 EUR|171491",
+"|F13|DW555|40-50w blue MK|3360|1650|58|6|1|138396|1.55|95900|7|26.11 EUR|1570",
+"Bot|F13|DW555|40-60w 0.21mm white|1644|1600|56|614|2|52302|2.50|45000|1236|7.90 EUR|168023",
+"|F13|DW555|40-60w blue MK|1644|1600|56|6|2|52302|2.50|45000|20|8.15 EUR|2805",
+"Top|F13|DW555|920Y-0,10|3360|2400|58|986|2|137615|1.50|70100|1980|26.42 EUR|319770",
+"|F13|DW555|920Y top marker|3360|2400|58|6|2|137613|1.50|70100|14|27.07 EUR|2317",
+"Bot|F13|DW555|921H-0,21|1644|1170|56|614|2|52083|2.50|32960|1236|9.88 EUR|154569",
+"|F13|DW555|921H bottom marker|1644|1170|56|6|2|52080|2.50|32960|14|10.47 EUR|1855",
+"Bot|P01|4PLY|X205 4PLY WARP|280|280|90|390|3|10000|1.55|8600|1173|54.44 RMB|85123",
+"Bot|P06|4PLY|X205 4PLY WARP|380|380|44|496|2|10000|1.55|8600|994|54.44 RMB|72133",
+"Bot|P07|4PLY|X205 4PLY WARP|400|400|51|546|3|10000|1.55|7000|1641|54.44 RMB|96930",
+"Bot|P08|4PLY|X205 4PLY WARP|245|245|84|390|3|10000|1.55|7000|1182|54.44 RMB|69818",
+"Bot|P08|JAX4|X211 0.40mm P08|1250|1250|84|158|6|22200|3.30|17700|960|33.99 RMB|85853",
+"Bot|P08|4PLY|X205 4PLY WARP|245|245|84|390|3|10000|1.55|7000|1176|54.44 RMB|69463",
+"Bot|P09|JAX5|X211 0.50|1150|1150|60|175|5|14000|3.30|14000|875|36.20 RMB|104528",
+"Bot|P09|C38|WFN240 0.381mm|585|585|60|624|3|18720|2.40|11900|1872|9.01 USD|25733",
+"Bot|P09|JAX5|X211 0.50|1380|1380|60|175|6|14000|3.30|14000|1056|36.20 RMB|126150",
+"Bot|P09|4PLY|X205 4PLY WARP|400|420|60|496|3|10000|1.55|8600|1500|54.44 RMB|108853",
+"Bot|P09|4PLY|X205 4PLY WARP|385|365|60|496|3|10000|1.55|7500|1500|54.44 RMB|94930",
+"Bot|P09|C38|2008V 0.38 PA6.6|585|585|60|624|3|15500|2.00|11900|1872|9.70 EUR|223055",
+"Bot|P09|C38|N407 0.38mm PA66|585|585|60|624|3|15000|2.00|11900|1875|47.79 RMB|142175",
+"Bot|P09|C38|X606 0.38 WARP|585|585|60|624|3|23000|3.20|11900|1875|49.41 RMB|153386",
+"Bot|P11|C38|WFN240 0.381mm|620|620|66|676|3|18720|2.40|13840|2028|9.01 USD|32422",
+"Bot|P11|C38|2008V 0.38 PA6.6|620|618|66|676|3|15500|2.00|13764|2040|9.70 EUR|281148",
+"Bot|P11|C38|2008V 0.38 PA6.6|620|530|66|676|3|15500|2.00|11828|2040|9.70 EUR|241603",
+"Bot|P11|C38|N407 0.38mm PA66|620|565|72|676|3|15000|2.00|13728|2040|47.79 RMB|178449",
+"Bot|P11|C38|X606 0.38 WARP|620|570|72|676|3|23000|3.20|13848|2040|49.41 RMB|194202",
+"Bot|P03|C38|WFN240 0.381mm|650|650|42|688|2|18720|2.40|13840|1384|9.01 USD|22126",
+"Bot|P03|C38|2008V 0.38 PA6.6|650|650|42|688|2|15500|2.00|13840|1384|9.70 EUR|191793",
+"Bot|P03|C38|2008V 0.38 PA6.6|650|320|42|688|1|15500|2.00|13630|692|9.70 EUR|94441",
+"Bot|P03|M2|X205 0.2mm|650|650|42|1032|1|57000|2.15|27500|1036|34 RMB|36537",
+"Bot|P03|C38|N407 0.38mm PA66|650|650|42|688|2|15000|2.00|13840|1384|47.79 RMB|122053",
+"Bot|P03|C38|X606 0.38 WARP|650|594|46|688|2|23000|3.20|13852|1384|49.41 RMB|131791",
+"Bot|P13|C38|WFN240 0.381mm|650|593|46|688|2|18720|2.40|13840|1384|9.01 USD|22126",
+"Bot|P13|C38|2008V 0.38 PA6.6|650|645|46|688|2|15500|2.00|15000|1384|9.70 EUR|207868",
+"Bot|P13|C38|N407 0.38mm PA66|650|100|46|688|1|15000|2.00|4800|692|47.79 RMB|21165",
+"Bot|P13|C38|N407 0.38mm PA66|650|593|46|688|2|15000|2.00|13840|1384|47.79 RMB|122053",
+"Bot|P13|C38|2008V 0.38 PA6.6|650|593|46|688|2|15500|2.00|13840|1384|9.70 EUR|191793",
+"Bot|P13|C38|X606 0.38 WARP|650|300|46|688|1|23000|3.20|14000|692|49.41 RMB|66600",
+"Bot|P13|C38|X606 0.38 WARP|650|593|46|688|2|23000|3.20|13839|1384|49.41 RMB|131667",
+"Bot|P13|C38|2008V 0.38 PA6.6|650|296|46|688|1|15500|2.00|13781|692|9.70 EUR|95488",
+"Bot|P04|C38|WFN240 0.381mm|230|213|55|480|1|18720|2.40|11900|484|9.01 USD|6653",
+"Bot|P04|C38|2008V 0.38 PA6.6|230|230|55|480|1|15500|2.00|12850|484|9.70 EUR|62274",
+"Bot|P04|M2|X205 0.2mm|480|480|55|708|1|57000|2.15|57000|712|34 RMB|52047",
+"Bot|P04|M2|X205 0.198mm|480|480|55|708|1|57000|2.15|26600|712|34 RMB|24289",
+"Bot|P14|C38|WFN240 0.381mm|650|650|54|688|3|18720|2.40|11900|2076|9.01 USD|28537",
+"Bot|P14|C38|2008V 0.38 PA6.6|650|650|54|688|3|15500|2.00|11900|2076|9.70 EUR|247363",
+"Bot|P14|4PLY|X205 4PLY WARP|400|406|54|546|3|10000|1.55|7508|1650|54.44 RMB|104534",
+"Bot|P14|4PLY|X205 4PLY WARP|400|406|54|546|3|10000|1.55|7508|1644|54.44 RMB|104154",
+"Bot|P15|JAX4|X211 0.40mm P15|2750|2750|120|110|15|28000|4.16|22200|1665|37.69 RMB|206980",
+"Bot|P15|JAX5|X211 0.50|2200|2180|120|90|20|14000|3.30|13280|1840|36.20 RMB|208502",
+"Bot|P15|JAX4|X211 0.40mm P15|2750|2750|112|110|14|28000|4.16|22200|1568|37.69 RMB|194922",
+"Bot|P15|JAX5|X211 0.50|2200|2200|114|92|19|14000|3.30|13400|1824|36.20 RMB|208557",
+"Bot|P15|JAX5|X211 0.50|2180|2180|114|90|19|14000|3.30|13280|1786|36.20 RMB|202383",
+"Bot|P15|JAX5|X211 0.50|2180|2180|120|90|19|14000|3.30|13968|1786|36.20 RMB|212868",
+"Bot|P15|JAX5|X211 0.50|2180|1200|120|92|11|14000|3.30|13291|1056|36.20 RMB|119761",
+"Bot|P15|JAX4|X211 0.40mm P15|2750|1300|112|110|14|28000|4.16|10600|1568|37.69 RMB|93071",
+"Bot|P05|M2|X205 0.2mm|600|600|34|1008|1|57000|2.15|57000|1012|34 RMB|73977",
+"Bot|P05|M2|X205 0.198mm|600|600|34|1008|1|57000|2.15|20600|1012|34 RMB|26736",
+"Bot|P16|JAX4|X211 0.40mm P16|3600|3540|84|103|12|28000|4.16|24980|1284|36.20 RMB|172505",
+"Bot|P16|JAX4|X211 0.40mm P16|3600|3540|84|103|14|28000|4.16|21440|1498|36.20 RMB|172735",
+"Bot|P16|JAX4|X211 0.40mm P16|3600|3540|84|108|12|28000|4.16|24980|1344|36.20 RMB|180566",
+"Bot|P16|JAX4|X211 0.40mm P16|3800|3800|84|108|12|28000|4.16|26800|1344|36.20 RMB|193722"
 ];
 var D=raw.map(function(r){return r.split('|')});
 var rb=document.getElementById('refBody'),rs=document.getElementById('refSearch'),rf=document.getElementById('refFilter'),rc=document.getElementById('refCount');
@@ -368,15 +392,15 @@ function render(){
   var g={};f.forEach(function(d){if(!g[d[2]])g[d[2]]=[];g[d[2]].push(d)});
   var ks=Object.keys(g).sort();rc.textContent=f.length+' 条';var h='';
   ks.forEach(function(ws){
-    h+='<tr class="ws-head"><td colspan="13"><span style="font-weight:700;font-size:13px">'+ws+'</span></td></tr>';
+    h+='<tr class="ws-head"><td colspan="14"><span style="font-weight:700;font-size:13px">'+ws+'</span></td></tr>';
     g[ws].forEach(function(d){
       var tb=d[0],mk=d[3].includes('marker');
       var tbc=tb==='Top'?'<span class="badge badge-top">T</span>':tb==='Bot'?'<span class="badge badge-bot">B</span>':'';
-      h+='<tr'+(mk?' style="opacity:.5"':'')+' data-tb="'+tb+'" data-len="'+d[5]+'" data-beams="'+d[6]+'" data-spools="'+d[7]+'" data-times="'+d[8]+'" data-mxl="'+d[4]+'">';
-      h+='<td>'+tbc+'</td><td>'+d[1]+'</td><td>'+d[2]+'</td><td>'+d[3]+'</td><td>'+d[5]+'</td><td>'+d[6]+'</td><td>'+d[7]+'</td><td>'+d[8]+'</td><td>'+d[9]+'</td><td>'+d[10]+'</td><td>'+d[11]+'</td><td>'+d[12]+'</td><td>'+d[13]+'</td></tr>'
+      h+='<tr'+(mk?' style="opacity:.5"':'')+' data-tb="'+tb+'" data-len="'+d[5]+'" data-beams="'+d[6]+'" data-spools="'+d[7]+'" data-times="'+d[8]+'" data-mxl="'+d[4]+'" data-sw="'+d[10]+'" data-maxsl="'+d[9]+'">';
+      h+='<td>'+tbc+'</td><td>'+d[1]+'</td><td>'+d[2]+'</td><td>'+d[3]+'</td><td>'+d[5]+'</td><td>'+d[6]+'</td><td>'+d[7]+'</td><td>'+d[8]+'</td><td>'+d[9]+'</td><td>'+d[10]+'</td><td>'+d[11]+'</td><td>'+d[12]+'</td><td>'+d[13]+'</td><td>'+d[14]+'</td></tr>'
     })
   });
-  rb.innerHTML=f.length?h:'<tr><td colspan="13" style="padding:28px;text-align:center;color:#9ca3af">无匹配</td></tr>'
+  rb.innerHTML=f.length?h:'<tr><td colspan="14" style="padding:28px;text-align:center;color:#9ca3af">无匹配</td></tr>'
 }
 var wsArr=[];D.forEach(function(d){var w=d[2];if(wsArr.indexOf(w)<0)wsArr.push(w)});wsArr.sort();
 wsArr.forEach(function(ws){var o=document.createElement('option');o.value=ws;o.textContent=ws;rf.appendChild(o)});
@@ -386,6 +410,7 @@ rb.addEventListener('click',function(e){
   var v=function(id,val){document.getElementById(id).value=val};
   v('tWarpLen',tr.dataset.len);v('tBeamCnt',tr.dataset.beams);v('tMaxWL',tr.dataset.mxl);
   v('bWarpLen',tr.dataset.len);v('bBeamCnt',tr.dataset.beams);v('bMaxWL',tr.dataset.mxl);
+  v('dWeight',tr.dataset.sw);v('dMaxSL',tr.dataset.maxsl);
   var sp=tr.dataset.spools,ti=tr.dataset.times,tb=tr.dataset.tb;
   if(tb==='Top'){v('tSpool',sp);v('tTimes',ti)}
   else if(tb==='Bot'){v('bSpool',sp);v('bTimes',ti)}
@@ -393,19 +418,29 @@ rb.addEventListener('click',function(e){
 });
 function fm(x){return Number(x).toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:0})}
 function calc(){
-  function cr(wid,bid,spid,tid,lid,oid,srid,wid2){
+  function cr(wid,bid,spid,tid,remid,lrid,lid,oid,srid,mwid){
     var wl=parseFloat(document.getElementById(wid).value)||0,bc=parseFloat(document.getElementById(bid).value)||0;
-    var mwl=parseFloat(document.getElementById(wid2).value)||0;
     var s=parseFloat(document.getElementById(spid).value)||0,t=parseFloat(document.getElementById(tid).value)||0;
+    var sr=parseFloat(document.getElementById(remid).value)||0,lr=parseFloat(document.getElementById(lrid).value)||0;
     if(!wl||!bc||!t){document.getElementById(lid).textContent='—';document.getElementById(oid).textContent='—';document.getElementById(srid).textContent='—';return}
     var len=wl*bc;
     document.getElementById(lid).textContent=fm(len);
-    document.getElementById(oid).textContent=fm(len/t+200*t);
-    document.getElementById(srid).textContent=fm((s+4)*t);
-    document.getElementById('tWarn').textContent='';document.getElementById('bWarn').textContent=''
+    document.getElementById(oid).textContent=fm(len/t+lr*t);
+    document.getElementById(srid).textContent=fm((s+sr)*t)
   }
-  cr('tWarpLen','tBeamCnt','tSpool','tTimes','tLenRes','tOrderRes','tSpoolRes','tMaxWL');
-  cr('bWarpLen','bBeamCnt','bSpool','bTimes','bLenRes','bOrderRes','bSpoolRes','bMaxWL')
+  cr('tWarpLen','tBeamCnt','tSpool','tTimes','tSpoolRem','tLenRem','tLenRes','tOrderRes','tSpoolRes','tMaxWL');
+  cr('bWarpLen','bBeamCnt','bSpool','bTimes','bSpoolRem','bLenRem','bLenRes','bOrderRes','bSpoolRes','bMaxWL');
+  var cl=parseFloat(document.getElementById('cOrderLen').value)||0;
+  var cbc=parseFloat(document.getElementById('cBeamCnt').value)||0;
+  var ctm=parseFloat(document.getElementById('cTimes').value)||0;
+  document.getElementById('cWarpLenRes').textContent=ctm&&cbc?fm((cl-200*ctm)*ctm/cbc):'—';
+  var dw=parseFloat(document.getElementById('dWeight').value)||0;
+  var dms=parseFloat(document.getElementById('dMaxSL').value)||0;
+  var dp=parseFloat(document.getElementById('dPrice').value)||0;
+  var dll=parseFloat(document.getElementById('dLossLen').value)||0;
+  var dsq=parseFloat(document.getElementById('dSpoolQty').value)||0;
+  document.getElementById('dLossWtRes').textContent=dms?fm(dw/dms*dll*dsq):'—';
+  document.getElementById('dCostRes').textContent=dms&&dp?fm(dp*(dw/dms*dll*dsq)):'—'
 }
 document.getElementById('calcBtn').addEventListener('click',calc);
 document.querySelectorAll('input').forEach(function(i){i.addEventListener('keydown',function(e){if(e.key==='Enter')calc()})});
