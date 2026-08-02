@@ -123,7 +123,7 @@ T/B:线轴长=经长×经盘数 | 订购线轴=线轴长/上架次+200 | 线轴�
 <div class="ref-wrap">
 <table class="ref-table"><thead><tr><th>TB</th><th>Lm</th><th>WS</th><th>描述</th><th>经长</th><th>盘</th><th>线轴</th><th>盘余</th><th>轴余</th><th>上架</th><th>最大轴长</th><th>单筒重</th><th>轴长度</th><th>筒子</th><th>单价</th><th>Cost</th></tr></thead><tbody id="refBody"></tbody></table>
 </div>
-<span class="click-hint">💡 点击自动填入所有可用字段</span>
+<span class="click-hint">💡 先点击计算区的空格（使其处于选中状态），再点击参考表单元格，只填入当前空格</span>
 <div class="footnote">数据来源：整经数据.xlsx</div>
 </div>
 <script>
@@ -413,23 +413,16 @@ function render(){
 var wsArr=[];D.forEach(function(d){var w=d[2];if(wsArr.indexOf(w)<0)wsArr.push(w)});wsArr.sort();
 wsArr.forEach(function(ws){var o=document.createElement('option');o.value=ws;o.textContent=ws;rf.appendChild(o)});
 rs.addEventListener('input',render);rf.addEventListener('change',render);render();
+var activeInput='';
+document.querySelectorAll('input').forEach(function(i){
+  i.addEventListener('focus',function(){activeInput=this.id});
+});
 rb.addEventListener('click',function(e){
   var tdEl=e.target.closest('td');if(!tdEl)return;
   var tr=tdEl.closest('tr');if(!tr||tr.classList.contains('ws-head'))return;
-  var td=tr.cells,d=function(i){return td[i]?td[i].textContent.trim():''};
-  var col=tdEl.cellIndex;
-  var v=function(id,val){document.getElementById(id).value=val};
-  var tb=d(0).includes('T')?'Top':d(0).includes('B')?'Bot':'';
-  if(col===4){v('tWarpLen',d(4));v('bWarpLen',d(4));v('dSub',d(4))}
-  else if(col===5){v('tBeamCnt',d(5));v('bBeamCnt',d(5));v('cBeamCnt',d(5))}
-  else if(col===6){v('cSpool',d(6));v('cSpoolQty',d(6));if(tb==='Top')v('tSpool',d(6));else if(tb==='Bot')v('bSpool',d(6))}
-  else if(col===7){if(tb==='Top')v('tSpoolRem',d(7));else if(tb==='Bot')v('bSpoolRem',d(7))}
-  else if(col===8){if(tb==='Top')v('tLenRem',d(8));else if(tb==='Bot')v('bLenRem',d(8))}
-  else if(col===9){v('cTimes',d(9));if(tb==='Top')v('tTimes',d(9));else if(tb==='Bot')v('bTimes',d(9))}
-  else if(col===10)v('dMaxSL',d(10));
-  else if(col===11)v('dWeight',d(11));
-  else if(col===12)v('dMin',d(12));
-  else if(col===14)v('dPrice',d(14));
+  if(!activeInput){alert('请先点击计算区中要填入的空格');return}
+  var val=tdEl.textContent.trim();
+  document.getElementById(activeInput).value=val;
 });
 function fm(x){return Number(x).toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:0})}
 function calc(){
