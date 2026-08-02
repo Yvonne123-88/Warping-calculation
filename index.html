@@ -90,6 +90,12 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 <div class="fg" style="max-width:38px"><label>上架次</label><input type="number" id="cTimes" step="1" value="0"></div>
 <div class="row-res"><div class="item"><div class="lbl">整经长</div><div class="v" id="cWarpLenRes">—</div></div></div></div>
 
+<div class="row-line" style="background:#fffbeb;border:1px solid #fde68a">
+<div class="row-label" style="width:52px;color:#92400e;font-size:10px;flex-shrink:0"><b>损耗长</b></div>
+<div class="fg" style="max-width:64px"><label>被减数</label><input type="number" id="dMin" step="1" value="0"></div>
+<div class="fg" style="max-width:64px"><label>减数</label><input type="number" id="dSub" step="1" value="0"></div>
+<div class="row-res"><div class="item"><div class="lbl">损耗长度</div><div class="v" id="dCalcRes">—</div></div></div>
+</div>
 <div class="row-line" style="background:#fef2f2;border:1px solid #fecaca">
 <div class="row-label" style="width:52px;color:#991b1b;font-size:10px;flex-shrink:0"><b>损耗</b></div>
 <div class="fg" style="max-width:48px"><label>单筒重量</label><input type="number" id="dWeight" step="0.01" value="0"></div>
@@ -103,8 +109,9 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 
 <button class="calc-btn" id="calcBtn">计算</button>
 <div class="formula-note">
-T/B:线轴长=经长×经盘数 | 订购线轴=线轴长/上架次+经长余量×上架次 | 线轴数量=(线轴数+轴余量)×上架次<br>
-调用:整经长=(订购-200×上架次)×上架次/经盘数 | 损耗重量=单筒重/最大线轴长×损耗长×轴数 | 成本=单价×损耗重量
+T/B:线轴长=经长×经盘数 | 订购线轴=线轴长/上架次+200 | 线轴数量=(线轴数+轴余量)×上架次<br>
+调用:整经长=(订购-200)×上架次/经盘数 | 损耗长=被减数-减数 | 损耗重量=单筒重/最大线轴长×损耗长×轴数 | 成本=单价×损耗重量<br>
+点击参考表单个单元格只填入对应字段
 </div>
 
 <div style="font-size:11px;font-weight:600;color:#5b6777;margin-bottom:5px;padding-bottom:3px;border-bottom:1px solid #e9ecef">⑥ 整经数据参考表 — 点击行全部填入</div>
@@ -407,16 +414,22 @@ var wsArr=[];D.forEach(function(d){var w=d[2];if(wsArr.indexOf(w)<0)wsArr.push(w
 wsArr.forEach(function(ws){var o=document.createElement('option');o.value=ws;o.textContent=ws;rf.appendChild(o)});
 rs.addEventListener('input',render);rf.addEventListener('change',render);render();
 rb.addEventListener('click',function(e){
-  var tr=e.target.closest('tr');if(!tr||tr.classList.contains('ws-head'))return;
-  var td=tr.cells,d=function(i){return td[i]?td[i].textContent:''};
+  var tdEl=e.target.closest('td');if(!tdEl)return;
+  var tr=tdEl.closest('tr');if(!tr||tr.classList.contains('ws-head'))return;
+  var td=tr.cells,d=function(i){return td[i]?td[i].textContent.trim():''};
+  var col=tdEl.cellIndex;
   var v=function(id,val){document.getElementById(id).value=val};
-  v('tWarpLen',d(4));v('tBeamCnt',d(5));v('tMaxWL','');v('tSpool',d(6));v('tTimes',d(9));v('tSpoolRem',d(7));v('tLenRem',d(8));
-  v('bWarpLen',d(4));v('bBeamCnt',d(5));v('bMaxWL','');v('bSpool',d(6));v('bTimes',d(9));v('bSpoolRem',d(7));v('bLenRem',d(8));
-  v('dWeight',d(11));v('dMaxSL',d(10));v('dPrice',d(14));
   var tb=d(0).includes('T')?'Top':d(0).includes('B')?'Bot':'';
-  if(tb==='Top'){v('cSpoolQty',d(6));v('cSpool',d(6));v('cTimes',d(9))}
-  else{v('cSpoolQty',d(6));v('cSpool',d(6));v('cTimes',d(9))}
-  v('cBeamCnt',d(5));
+  if(col===4){v('tWarpLen',d(4));v('bWarpLen',d(4));v('dSub',d(4))}
+  else if(col===5){v('tBeamCnt',d(5));v('bBeamCnt',d(5));v('cBeamCnt',d(5))}
+  else if(col===6){v('cSpool',d(6));v('cSpoolQty',d(6));if(tb==='Top')v('tSpool',d(6));else if(tb==='Bot')v('bSpool',d(6))}
+  else if(col===7){if(tb==='Top')v('tSpoolRem',d(7));else if(tb==='Bot')v('bSpoolRem',d(7))}
+  else if(col===8){if(tb==='Top')v('tLenRem',d(8));else if(tb==='Bot')v('bLenRem',d(8))}
+  else if(col===9){v('cTimes',d(9));if(tb==='Top')v('tTimes',d(9));else if(tb==='Bot')v('bTimes',d(9))}
+  else if(col===10)v('dMaxSL',d(10));
+  else if(col===11)v('dWeight',d(11));
+  else if(col===12)v('dMin',d(12));
+  else if(col===14)v('dPrice',d(14));
 });
 function fm(x){return Number(x).toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:0})}
 function calc(){
@@ -427,7 +440,7 @@ function calc(){
     if(!wl||!bc||!ti){document.getElementById(lo).textContent='—';document.getElementById(oo).textContent='—';document.getElementById(so).textContent='—';return}
     var len=wl*bc;
     document.getElementById(lo).textContent=fm(len);
-    document.getElementById(oo).textContent=fm(len/ti+lr2*ti);
+    document.getElementById(oo).textContent=fm(len/ti+200);
     document.getElementById(so).textContent=fm((sp+sr2)*ti)
   }
   cr('tWarpLen','tBeamCnt','tSpool','tTimes','tSpoolRem','tLenRem','tLenRes','tOrderRes','tSpoolRes');
@@ -435,14 +448,19 @@ function calc(){
   var cl=parseFloat(document.getElementById('cOrderLen').value)||0;
   var cb=parseFloat(document.getElementById('cBeamCnt').value)||0;
   var ct=parseFloat(document.getElementById('cTimes').value)||0;
-  document.getElementById('cWarpLenRes').textContent=ct&&cb?fm((cl-200*ct)*ct/cb):'—';
+  document.getElementById('cWarpLenRes').textContent=ct&&cb?fm((cl-200)*ct/cb):'—';
   var dw=parseFloat(document.getElementById('dWeight').value)||0;
   var dm=parseFloat(document.getElementById('dMaxSL').value)||0;
   var dp=parseFloat(document.getElementById('dPrice').value)||0;
   var dl=parseFloat(document.getElementById('dLossLen').value)||0;
   var dq=parseFloat(document.getElementById('dSpoolQty').value)||0;
   document.getElementById('dLossWtRes').textContent=dm?fm(dw/dm*dl*dq):'—';
-  document.getElementById('dCostRes').textContent=dm&&dp?fm(dp*(dw/dm*dl*dq)):'—'
+  document.getElementById('dCostRes').textContent=dm&&dp?fm(dp*(dw/dm*dl*dq)):'—';
+  var dm2=parseFloat(document.getElementById('dMin').value)||0;
+  var ds2=parseFloat(document.getElementById('dSub').value)||0;
+  var dc2=dm2-ds2;
+  document.getElementById('dCalcRes').textContent=dc2>=0?fm(dc2):'—';
+  document.getElementById('dLossLen').value=dc2>=0?dc2:0
 }
 document.getElementById('calcBtn').addEventListener('click',calc);
 document.querySelectorAll('input').forEach(function(i){i.addEventListener('keydown',function(e){if(e.key==='Enter')calc()})});
