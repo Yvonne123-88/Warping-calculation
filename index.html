@@ -108,6 +108,8 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 <div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">成本</div><div class="v" id="dCostRes">—</div></div></div></div>
 
 <button class="calc-btn" id="calcBtn">计算</button>
+<button class="calc-btn" id="saveBtn" style="background:#16a34a;margin-left:4px">保存此方案</button>
+<button class="calc-btn" id="clearBtn" style="background:#dc2626;margin-left:4px">清空此方案</button>
 <div class="formula-note">
 T/B:线轴长=经长×经盘数 | 订购线轴=线轴长/上架次+200 | 线轴数量=(线轴数+轴余量)×上架次<br>
 调用:整经长=(订购-200)×上架次/经盘数 | 损耗长=被减数-减数 | 损耗重量=单筒重/最大线轴长×损耗长×轴数 | 成本=单价×损耗重量<br>
@@ -458,6 +460,57 @@ function calc(){
 document.getElementById('calcBtn').addEventListener('click',calc);
 document.querySelectorAll('input').forEach(function(i){i.addEventListener('keydown',function(e){if(e.key==='Enter')calc()})});
 calc();
+function collectPlan(){
+  var groups=[
+    {name:'T 行',fields:[['tWarpLen','整经长度'],['tBeamCnt','经盘数'],['tMaxWL','最大经长'],['tSpool','线轴数'],['tTimes','上架次'],['tSpoolRem','轴余量'],['tLenRem','经长余量']],results:[['tLenRes','线轴长'],['tOrderRes','订购线轴'],['tSpoolRes','线轴数']]},
+    {name:'B 行',fields:[['bWarpLen','整经长度'],['bBeamCnt','经盘数'],['bMaxWL','最大经长'],['bSpool','线轴数'],['bTimes','上架次'],['bSpoolRem','轴余量'],['bLenRem','经长余量']],results:[['bLenRes','线轴长'],['bOrderRes','订购线轴'],['bSpoolRes','线轴数']]},
+    {name:'调用方案',fields:[['cOrderLen','订购线轴长'],['cSpoolQty','线轴数量'],['cBeamCnt','经盘数'],['cSpool','线轴数'],['cTimes','上架次']],results:[['cWarpLenRes','整经长度']]},
+    {name:'损耗长度',fields:[['dMin','被减数'],['dSub','减数']],results:[['dCalcRes','损耗长度']]},
+    {name:'成本损耗',fields:[['dWeight','单筒重量'],['dMaxSL','最大线轴长'],['dPrice','单价'],['dLossLen','损耗长度'],['dSpoolQty','线轴数量']],results:[['dLossWtRes','损耗重量'],['dCostRes','成本']]}
+  ];
+  var lines=['=== 整经方案 ===','保存时间：'+new Date().toLocaleString(),''];
+  groups.forEach(function(g){
+    lines.push('【'+g.name+'】');
+    g.fields.forEach(function(f){
+      var el=document.getElementById(f[0]);
+      lines.push(f[1]+'：'+(el?el.value:''))
+    });
+    lines.push('-- 计算结果 --');
+    g.results.forEach(function(r){
+      var el=document.getElementById(r[0]);
+      lines.push(r[1]+'：'+(el?el.textContent:''))
+    });
+    lines.push('')
+  });
+  return lines.join('\r\n')
+}
+function savePlan(){
+  var text=collectPlan();
+  var blob=new Blob(['\ufeff'+text],{type:'text/plain;charset=utf-8'});
+  var name='整经方案_'+new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')+'.txt';
+  if(window.showSaveFilePicker){
+    window.showSaveFilePicker({suggestedName:name,types:[{description:'文本文件',accept:{'text/plain':['.txt']}}]})
+      .then(function(handle){return handle.createWritable().then(function(w){return w.write(blob).then(function(){return w.close()})})})
+      .then(function(){alert('方案已保存')})
+      .catch(function(){})
+  }else{
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(a.href)},1000);
+    alert('方案已保存到下载目录')
+  }
+}
+function clearPlan(){
+  document.querySelectorAll('.container input[type="number"]').forEach(function(i){i.value=''});
+  document.querySelectorAll('.row-res .v').forEach(function(v){v.textContent='—'});
+  calc()
+}
+document.getElementById('saveBtn').addEventListener('click',savePlan);
+document.getElementById('clearBtn').addEventListener('click',clearPlan);
 </script>
 </body>
 </html>
