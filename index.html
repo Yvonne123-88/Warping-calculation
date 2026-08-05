@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>整经方案计算器</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC",sans-serif;background:#f5f6f8;color:#1a1a2e;line-height:1.5;padding:16px;min-height:100vh;display:flex;justify-content:center;align-items:flex-start}
@@ -64,7 +65,9 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 <div class="item"><div class="lbl">线轴长</div><div class="v" id="tLenRes">—</div></div>
 <div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">订购线轴</div><div class="v" id="tOrderRes">—</div></div>
 <div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">线轴数</div><div class="v" id="tSpoolRes">—</div></div>
-</div></div>
+</div>
+<button class="calc-btn" id="calcT" style="margin-left:6px">计算</button>
+</div>
 
 <div class="row-line bot">
 <div class="row-label bot"><b>B</b></div>
@@ -79,41 +82,67 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 <div class="item"><div class="lbl">线轴长</div><div class="v" id="bLenRes">—</div></div>
 <div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">订购线轴</div><div class="v" id="bOrderRes">—</div></div>
 <div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">线轴数</div><div class="v" id="bSpoolRes">—</div></div>
-</div></div>
+</div>
+<button class="calc-btn" id="calcB" style="margin-left:6px">计算</button>
+</div>
 
 <div class="row-line" style="background:#f0fdf4;border:1px solid #bbf7d0">
-<div class="row-label" style="width:52px;color:#166534;font-size:10px;flex-shrink:0"><b>调用</b></div>
-<div class="fg" style="max-width:68px"><label>订购线轴长</label><input type="number" id="cOrderLen" step="0.1" value="0"></div>
-<div class="fg" style="max-width:44px"><label>线轴数</label><input type="number" id="cSpoolQty" step="1" value="0"></div>
-<div class="fg" style="max-width:44px"><label>经盘数</label><input type="number" id="cBeamCnt" step="1" value="0"></div>
-<div class="fg" style="max-width:48px"><label>线轴数</label><input type="number" id="cSpool" step="1" value="0"></div>
-<div class="fg" style="max-width:38px"><label>上架次</label><input type="number" id="cTimes" step="1" value="0"></div>
-<div class="row-res"><div class="item"><div class="lbl">整经长</div><div class="v" id="cWarpLenRes">—</div></div></div></div>
+<div class="row-label" style="width:52px;color:#166534;font-size:10px;flex-shrink:0"><b>调用A</b></div>
+<div class="fg" style="max-width:68px"><label>订购线轴数</label><input type="number" id="cAOrderLen" step="0.1" value="0"></div>
+<div class="fg" style="max-width:44px"><label>经盘数</label><input type="number" id="cABeamCnt" step="1" value="0"></div>
+<div class="fg" style="max-width:48px"><label>线轴数</label><input type="number" id="cASpool" step="1" value="0"></div>
+<div class="fg" style="max-width:38px"><label>上架次</label><input type="number" id="cATimes" step="1" value="0"></div>
+<div class="row-res"><div class="item"><div class="lbl">整经长</div><div class="v" id="cAWarpLenRes">—</div></div></div>
+<button class="calc-btn" id="calcCallA" style="margin-left:6px">计算</button>
+</div>
+<div class="row-line" style="background:#f0fdf4;border:1px solid #bbf7d0">
+<div class="row-label" style="width:52px;color:#166534;font-size:10px;flex-shrink:0"><b>调用B</b></div>
+<div class="fg" style="max-width:68px"><label>订购线轴数</label><input type="number" id="cBOrderLen" step="0.1" value="0"></div>
+<div class="fg" style="max-width:44px"><label>经盘数</label><input type="number" id="cBBeamCnt" step="1" value="0"></div>
+<div class="fg" style="max-width:48px"><label>线轴数</label><input type="number" id="cBSpool" step="1" value="0"></div>
+<div class="fg" style="max-width:38px"><label>上架次</label><input type="number" id="cBTimes" step="1" value="0"></div>
+<div class="row-res"><div class="item"><div class="lbl">整经长</div><div class="v" id="cBWarpLenRes">—</div></div></div>
+<button class="calc-btn" id="calcCallB" style="margin-left:6px">计算</button>
+</div>
 
 <div class="row-line" style="background:#fffbeb;border:1px solid #fde68a">
-<div class="row-label" style="width:52px;color:#92400e;font-size:10px;flex-shrink:0"><b>损耗长</b></div>
-<div class="fg" style="max-width:64px"><label>被减数</label><input type="number" id="dMin" step="1" value="0"></div>
-<div class="fg" style="max-width:64px"><label>减数</label><input type="number" id="dSub" step="1" value="0"></div>
-<div class="row-res"><div class="item"><div class="lbl">损耗长度</div><div class="v" id="dCalcRes">—</div></div></div>
-</div>
-<div class="row-line" style="background:#fef2f2;border:1px solid #fecaca">
-<div class="row-label" style="width:52px;color:#991b1b;font-size:10px;flex-shrink:0"><b>损耗</b></div>
-<div class="fg" style="max-width:48px"><label>单筒重量</label><input type="number" id="dWeight" step="0.01" value="0"></div>
-<div class="fg" style="max-width:54px"><label>最大线轴长</label><input type="number" id="dMaxSL" step="1" value="0"></div>
-<div class="fg" style="max-width:48px"><label>单价</label><input type="number" id="dPrice" step="0.01" value="0"></div>
-<div class="fg" style="max-width:48px"><label>损耗长度</label><input type="number" id="dLossLen" step="1" value="0"></div>
-<div class="fg" style="max-width:44px"><label>轴数</label><input type="number" id="dSpoolQty" step="1" value="0"></div>
+<div class="row-label" style="width:52px;color:#92400e;font-size:10px;flex-shrink:0"><b>损耗A</b></div>
+<div class="fg" style="max-width:60px"><label>被减数</label><input type="number" id="dAMin" step="1" value="0"></div>
+<div class="fg" style="max-width:60px"><label>减数</label><input type="number" id="dASub" step="1" value="0"></div>
+<div class="fg" style="max-width:60px"><label>损耗长度</label><input type="number" id="dALossLen" step="1" value="0"></div>
+<div class="fg" style="max-width:48px"><label>单筒重量</label><input type="number" id="dAWeight" step="0.01" value="0"></div>
+<div class="fg" style="max-width:54px"><label>最大线轴长</label><input type="number" id="dAMaxSL" step="1" value="0"></div>
+<div class="fg" style="max-width:48px"><label>单价</label><input type="number" id="dAPrice" step="0.01" value="0"></div>
+<div class="fg" style="max-width:44px"><label>轴数</label><input type="number" id="dASpoolQty" step="1" value="0"></div>
 <div class="row-res">
-<div class="item"><div class="lbl">损耗重量</div><div class="v" id="dLossWtRes">—</div></div>
-<div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">成本</div><div class="v" id="dCostRes">—</div></div></div></div>
+<div class="item"><div class="lbl">损耗长</div><div class="v" id="dACalcRes">—</div></div>
+<div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">损耗重量</div><div class="v" id="dALossWtRes">—</div></div>
+<div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">成本</div><div class="v" id="dACostRes">—</div></div></div>
+<button class="calc-btn" id="calcLossA" style="margin-left:6px">计算</button>
+</div>
+<div class="row-line" style="background:#fffbeb;border:1px solid #fde68a">
+<div class="row-label" style="width:52px;color:#92400e;font-size:10px;flex-shrink:0"><b>损耗B</b></div>
+<div class="fg" style="max-width:60px"><label>被减数</label><input type="number" id="dBMin" step="1" value="0"></div>
+<div class="fg" style="max-width:60px"><label>减数</label><input type="number" id="dBSub" step="1" value="0"></div>
+<div class="fg" style="max-width:60px"><label>损耗长度</label><input type="number" id="dBLossLen" step="1" value="0"></div>
+<div class="fg" style="max-width:48px"><label>单筒重量</label><input type="number" id="dBWeight" step="0.01" value="0"></div>
+<div class="fg" style="max-width:54px"><label>最大线轴长</label><input type="number" id="dBMaxSL" step="1" value="0"></div>
+<div class="fg" style="max-width:48px"><label>单价</label><input type="number" id="dBPrice" step="0.01" value="0"></div>
+<div class="fg" style="max-width:44px"><label>轴数</label><input type="number" id="dBSpoolQty" step="1" value="0"></div>
+<div class="row-res">
+<div class="item"><div class="lbl">损耗长</div><div class="v" id="dBCalcRes">—</div></div>
+<div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">损耗重量</div><div class="v" id="dBLossWtRes">—</div></div>
+<div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">成本</div><div class="v" id="dBCostRes">—</div></div></div>
+<button class="calc-btn" id="calcLossB" style="margin-left:6px">计算</button>
+</div>
 
 <button class="calc-btn" id="calcBtn">计算</button>
 <button class="calc-btn" id="saveBtn" style="background:#16a34a;margin-left:4px">保存此方案</button>
 <button class="calc-btn" id="clearBtn" style="background:#dc2626;margin-left:4px">清空此方案</button>
 <div class="formula-note">
 T/B:线轴长=经长×经盘数 | 订购线轴=线轴长/上架次+200 | 线轴数量=(线轴数+轴余量)×上架次<br>
-调用:整经长=(订购-200)×上架次/经盘数 | 损耗长=被减数-减数 | 损耗重量=单筒重/最大线轴长×损耗长×轴数 | 成本=单价×损耗重量<br>
-点击参考表单个单元格只填入对应字段
+调用A/B:整经长=(订购线轴数-200)×上架次/经盘数 | 损耗A/B:损耗长=被减数-减数 | 损耗重量=单筒重/最大线轴长×损耗长×轴数 | 成本=单价×损耗重量<br>
+每行末尾的计算按钮只计算当前行 | 点击参考表单元格填入当前选中的空格
 </div>
 
 <div style="font-size:11px;font-weight:600;color:#5b6777;margin-bottom:5px;padding-bottom:3px;border-bottom:1px solid #e9ecef">⑥ 整经数据参考表 — 点击行全部填入</div>
@@ -394,6 +423,34 @@ var R=[
 "Bot|P16|JAX4|X211 0.40mm P16|3800|3800|84|108|4|200|12|28000|4.16|26800|1344|36.20 RMB|193722"
 ];
 var D=R.map(function(r){return r.split('|')});
+function loadExcel(){
+  if(!window.XLSX)return;
+  var url='database.xlsx?t='+Date.now();
+  fetch(url).then(function(res){
+    if(!res.ok)throw new Error('file not found');
+    return res.arrayBuffer()
+  }).then(function(buf){
+    var wb=XLSX.read(buf,{type:'array'});
+    var ws=wb.Sheets[wb.SheetNames[0]];
+    var rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+    var arr=[];
+    rows.forEach(function(r){
+      if(!r||r.length<21)return;
+      var tb=String(r[0]||'').trim();
+      var loom=String(r[1]||'').trim();
+      var wsName=String(r[4]||'').trim();
+      var desc=String(r[6]||'').trim();
+      if(!wsName&&!desc)return;
+      var num=function(v){var n=parseFloat(v);return isNaN(n)?0:n};
+      var unit=(String(r[18]||'')+' '+String(r[19]||'')).trim();
+      var cost=String(r[20]||'').replace(/[,\s]/g,'');
+      arr.push([tb,loom,wsName,desc,String(num(r[7])),String(num(r[8])),String(num(r[9])),String(num(r[10])),String(num(r[11])),String(num(r[12])),String(num(r[13])),String(num(r[14])),String(num(r[15])),String(num(r[16])),String(num(r[17])),unit,cost])
+    });
+    if(arr.length){D=arr;render()}
+  }).catch(function(){})
+}
+loadExcel();
+setInterval(loadExcel,5*60*1000);
 var rb=document.getElementById('refBody'),rs=document.getElementById('refSearch'),rf=document.getElementById('refFilter'),rc=document.getElementById('refCount');
 function render(){
   var q=rs.value.trim().toLowerCase(),fw=rf.value;
@@ -428,45 +485,103 @@ rb.addEventListener('click',function(e){
 });
 function fm(x){return Number(x).toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:0})}
 function calc(){
-  function cr(w,b,s,t,sr,lr,lo,oo,so){
-    var wl=parseFloat(document.getElementById(w).value)||0,bc=parseFloat(document.getElementById(b).value)||0;
-    var sp=parseFloat(document.getElementById(s).value)||0,ti=parseFloat(document.getElementById(t).value)||0;
-    var sr2=parseFloat(document.getElementById(sr).value)||0,lr2=parseFloat(document.getElementById(lr).value)||0;
-    if(!wl||!bc||!ti){document.getElementById(lo).textContent='—';document.getElementById(oo).textContent='—';document.getElementById(so).textContent='—';return}
+  function calcRow(p){
+    var wl=parseFloat(document.getElementById(p+'WarpLen').value)||0;
+    var bc=parseFloat(document.getElementById(p+'BeamCnt').value)||0;
+    var sp=parseFloat(document.getElementById(p+'Spool').value)||0;
+    var ti=parseFloat(document.getElementById(p+'Times').value)||0;
+    var sr=parseFloat(document.getElementById(p+'SpoolRem').value)||0;
     var len=wl*bc;
-    document.getElementById(lo).textContent=fm(len);
-    document.getElementById(oo).textContent=fm(len/ti+200);
-    document.getElementById(so).textContent=fm((sp+sr2)*ti)
+    if(!wl||!bc||!ti){document.getElementById(p+'LenRes').textContent='—';document.getElementById(p+'OrderRes').textContent='—';document.getElementById(p+'SpoolRes').textContent='—';return}
+    document.getElementById(p+'LenRes').textContent=fm(len);
+    document.getElementById(p+'OrderRes').textContent=fm(len/ti+200);
+    document.getElementById(p+'SpoolRes').textContent=fm((sp+sr)*ti)
   }
-  cr('tWarpLen','tBeamCnt','tSpool','tTimes','tSpoolRem','tLenRem','tLenRes','tOrderRes','tSpoolRes');
-  cr('bWarpLen','bBeamCnt','bSpool','bTimes','bSpoolRem','bLenRem','bLenRes','bOrderRes','bSpoolRes');
-  var cl=parseFloat(document.getElementById('cOrderLen').value)||0;
-  var cb=parseFloat(document.getElementById('cBeamCnt').value)||0;
-  var ct=parseFloat(document.getElementById('cTimes').value)||0;
-  document.getElementById('cWarpLenRes').textContent=ct&&cb?fm((cl-200)*ct/cb):'—';
-  var dw=parseFloat(document.getElementById('dWeight').value)||0;
-  var dm=parseFloat(document.getElementById('dMaxSL').value)||0;
-  var dp=parseFloat(document.getElementById('dPrice').value)||0;
-  var dl=parseFloat(document.getElementById('dLossLen').value)||0;
-  var dq=parseFloat(document.getElementById('dSpoolQty').value)||0;
-  document.getElementById('dLossWtRes').textContent=dm?fm(dw/dm*dl*dq):'—';
-  document.getElementById('dCostRes').textContent=dm&&dp?fm(dp*(dw/dm*dl*dq)):'—';
-  var dm2=parseFloat(document.getElementById('dMin').value)||0;
-  var ds2=parseFloat(document.getElementById('dSub').value)||0;
-  var dc2=dm2-ds2;
-  document.getElementById('dCalcRes').textContent=dc2>=0?fm(dc2):'—';
-  document.getElementById('dLossLen').value=dc2>=0?dc2:0
+  function calcCall(p){
+    var cl=parseFloat(document.getElementById(p+'OrderLen').value)||0;
+    var cb=parseFloat(document.getElementById(p+'BeamCnt').value)||0;
+    var ct=parseFloat(document.getElementById(p+'Times').value)||0;
+    document.getElementById(p+'WarpLenRes').textContent=ct&&cb?fm((cl-200)*ct/cb):'—'
+  }
+  function calcLoss(p){
+    var min=parseFloat(document.getElementById(p+'Min').value)||0;
+    var sub=parseFloat(document.getElementById(p+'Sub').value)||0;
+    var dl=min-sub;
+    if(dl>=0)document.getElementById(p+'LossLen').value=dl;
+    document.getElementById(p+'CalcRes').textContent=dl>=0?fm(dl):'—';
+    var dw=parseFloat(document.getElementById(p+'Weight').value)||0;
+    var ms=parseFloat(document.getElementById(p+'MaxSL').value)||0;
+    var pr=parseFloat(document.getElementById(p+'Price').value)||0;
+    var sq=parseFloat(document.getElementById(p+'SpoolQty').value)||0;
+    var l=parseFloat(document.getElementById(p+'LossLen').value)||0;
+    var wt=ms?dw/ms*l*sq:0;
+    document.getElementById(p+'LossWtRes').textContent=ms?fm(wt):'—';
+    document.getElementById(p+'CostRes').textContent=ms&&pr?fm(pr*wt):'—'
+  }
+  calcRow('t');
+  calcRow('b');
+  calcCall('cA');
+  calcCall('cB');
+  calcLoss('dA');
+  calcLoss('dB')
 }
-document.getElementById('calcBtn').addEventListener('click',calc);
-document.querySelectorAll('input').forEach(function(i){i.addEventListener('keydown',function(e){if(e.key==='Enter')calc()})});
-calc();
+function calcRow(p){
+  var wl=parseFloat(document.getElementById(p+'WarpLen').value)||0;
+  var bc=parseFloat(document.getElementById(p+'BeamCnt').value)||0;
+  var sp=parseFloat(document.getElementById(p+'Spool').value)||0;
+  var ti=parseFloat(document.getElementById(p+'Times').value)||0;
+  var sr=parseFloat(document.getElementById(p+'SpoolRem').value)||0;
+  var len=wl*bc;
+  if(!wl||!bc||!ti){document.getElementById(p+'LenRes').textContent='—';document.getElementById(p+'OrderRes').textContent='—';document.getElementById(p+'SpoolRes').textContent='—';return}
+  document.getElementById(p+'LenRes').textContent=fm(len);
+  document.getElementById(p+'OrderRes').textContent=fm(len/ti+200);
+  document.getElementById(p+'SpoolRes').textContent=fm((sp+sr)*ti)
+}
+function calcCall(p){
+  var cl=parseFloat(document.getElementById(p+'OrderLen').value)||0;
+  var cb=parseFloat(document.getElementById(p+'BeamCnt').value)||0;
+  var ct=parseFloat(document.getElementById(p+'Times').value)||0;
+  document.getElementById(p+'WarpLenRes').textContent=ct&&cb?fm((cl-200)*ct/cb):'—'
+}
+function calcLoss(p){
+  var min=parseFloat(document.getElementById(p+'Min').value)||0;
+  var sub=parseFloat(document.getElementById(p+'Sub').value)||0;
+  var dl=min-sub;
+  if(dl>=0)document.getElementById(p+'LossLen').value=dl;
+  document.getElementById(p+'CalcRes').textContent=dl>=0?fm(dl):'—';
+  var dw=parseFloat(document.getElementById(p+'Weight').value)||0;
+  var ms=parseFloat(document.getElementById(p+'MaxSL').value)||0;
+  var pr=parseFloat(document.getElementById(p+'Price').value)||0;
+  var sq=parseFloat(document.getElementById(p+'SpoolQty').value)||0;
+  var l=parseFloat(document.getElementById(p+'LossLen').value)||0;
+  var wt=ms?dw/ms*l*sq:0;
+  document.getElementById(p+'LossWtRes').textContent=ms?fm(wt):'—';
+  document.getElementById(p+'CostRes').textContent=ms&&pr?fm(pr*wt):'—'
+}
+function calcAll(){calcRow('t');calcRow('b');calcCall('cA');calcCall('cB');calcLoss('dA');calcLoss('dB')}
+function calcT(){calcRow('t')}
+function calcB(){calcRow('b')}
+function calcCallA(){calcCall('cA')}
+function calcCallB(){calcCall('cB')}
+function calcLossA(){calcLoss('dA')}
+function calcLossB(){calcLoss('dB')}
+document.getElementById('calcBtn').addEventListener('click',calcAll);
+document.getElementById('calcT').addEventListener('click',calcT);
+document.getElementById('calcB').addEventListener('click',calcB);
+document.getElementById('calcCallA').addEventListener('click',calcCallA);
+document.getElementById('calcCallB').addEventListener('click',calcCallB);
+document.getElementById('calcLossA').addEventListener('click',calcLossA);
+document.getElementById('calcLossB').addEventListener('click',calcLossB);
+document.querySelectorAll('input').forEach(function(i){i.addEventListener('keydown',function(e){if(e.key==='Enter')calcAll()})});
+calcAll();
 function collectPlan(){
   var groups=[
     {name:'T 行',fields:[['tWarpLen','整经长度'],['tBeamCnt','经盘数'],['tMaxWL','最大经长'],['tSpool','线轴数'],['tTimes','上架次'],['tSpoolRem','轴余量'],['tLenRem','经长余量']],results:[['tLenRes','线轴长'],['tOrderRes','订购线轴'],['tSpoolRes','线轴数']]},
     {name:'B 行',fields:[['bWarpLen','整经长度'],['bBeamCnt','经盘数'],['bMaxWL','最大经长'],['bSpool','线轴数'],['bTimes','上架次'],['bSpoolRem','轴余量'],['bLenRem','经长余量']],results:[['bLenRes','线轴长'],['bOrderRes','订购线轴'],['bSpoolRes','线轴数']]},
-    {name:'调用方案',fields:[['cOrderLen','订购线轴长'],['cSpoolQty','线轴数量'],['cBeamCnt','经盘数'],['cSpool','线轴数'],['cTimes','上架次']],results:[['cWarpLenRes','整经长度']]},
-    {name:'损耗长度',fields:[['dMin','被减数'],['dSub','减数']],results:[['dCalcRes','损耗长度']]},
-    {name:'成本损耗',fields:[['dWeight','单筒重量'],['dMaxSL','最大线轴长'],['dPrice','单价'],['dLossLen','损耗长度'],['dSpoolQty','线轴数量']],results:[['dLossWtRes','损耗重量'],['dCostRes','成本']]}
+    {name:'调用A',fields:[['cAOrderLen','订购线轴数'],['cABeamCnt','经盘数'],['cASpool','线轴数'],['cATimes','上架次']],results:[['cAWarpLenRes','整经长度']]},
+    {name:'调用B',fields:[['cBOrderLen','订购线轴数'],['cBBeamCnt','经盘数'],['cBSpool','线轴数'],['cBTimes','上架次']],results:[['cBWarpLenRes','整经长度']]},
+    {name:'损耗A',fields:[['dAMin','被减数'],['dASub','减数'],['dALossLen','损耗长度'],['dAWeight','单筒重量'],['dAMaxSL','最大线轴长'],['dAPrice','单价'],['dASpoolQty','线轴数量']],results:[['dACalcRes','损耗长'],['dALossWtRes','损耗重量'],['dACostRes','成本']]},
+    {name:'损耗B',fields:[['dBMin','被减数'],['dBSub','减数'],['dBLossLen','损耗长度'],['dBWeight','单筒重量'],['dBMaxSL','最大线轴长'],['dBPrice','单价'],['dBSpoolQty','线轴数量']],results:[['dBCalcRes','损耗长'],['dBLossWtRes','损耗重量'],['dBCostRes','成本']]}
   ];
   var lines=['=== 整经方案 ===','保存时间：'+new Date().toLocaleString(),''];
   groups.forEach(function(g){
