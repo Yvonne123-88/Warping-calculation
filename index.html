@@ -88,7 +88,8 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 
 <div class="row-line" style="background:#f0fdf4;border:1px solid #bbf7d0">
 <div class="row-label" style="width:52px;color:#166534;font-size:10px;flex-shrink:0"><b>调用A</b></div>
-<div class="fg" style="max-width:68px"><label>订购线轴数</label><input type="number" id="cAOrderLen" step="0.1" value="0"></div>
+<div class="fg" style="max-width:68px"><label>订购线轴长</label><input type="number" id="cAOrderLen" step="0.1" value="0"></div>
+<div class="fg" style="max-width:56px"><label>订购线轴数</label><input type="number" id="cAOrderQty" step="1" value="0"></div>
 <div class="fg" style="max-width:44px"><label>经盘数</label><input type="number" id="cABeamCnt" step="1" value="0"></div>
 <div class="fg" style="max-width:48px"><label>线轴数</label><input type="number" id="cASpool" step="1" value="0"></div>
 <div class="fg" style="max-width:38px"><label>上架次</label><input type="number" id="cATimes" step="1" value="0"></div>
@@ -97,7 +98,8 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 </div>
 <div class="row-line" style="background:#f0fdf4;border:1px solid #bbf7d0">
 <div class="row-label" style="width:52px;color:#166534;font-size:10px;flex-shrink:0"><b>调用B</b></div>
-<div class="fg" style="max-width:68px"><label>订购线轴数</label><input type="number" id="cBOrderLen" step="0.1" value="0"></div>
+<div class="fg" style="max-width:68px"><label>订购线轴长</label><input type="number" id="cBOrderLen" step="0.1" value="0"></div>
+<div class="fg" style="max-width:56px"><label>订购线轴数</label><input type="number" id="cBOrderQty" step="1" value="0"></div>
 <div class="fg" style="max-width:44px"><label>经盘数</label><input type="number" id="cBBeamCnt" step="1" value="0"></div>
 <div class="fg" style="max-width:48px"><label>线轴数</label><input type="number" id="cBSpool" step="1" value="0"></div>
 <div class="fg" style="max-width:38px"><label>上架次</label><input type="number" id="cBTimes" step="1" value="0"></div>
@@ -106,32 +108,38 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 </div>
 
 <div class="row-line" style="background:#fffbeb;border:1px solid #fde68a">
-<div class="row-label" style="width:52px;color:#92400e;font-size:10px;flex-shrink:0"><b>损耗A</b></div>
-<div class="fg" style="max-width:60px"><label>被减数</label><input type="number" id="dAMin" step="1" value="0"></div>
-<div class="fg" style="max-width:60px"><label>减数</label><input type="number" id="dASub" step="1" value="0"></div>
+<div class="row-label" style="width:52px;color:#92400e;font-size:10px;flex-shrink:0"><b>损耗长A</b></div>
+<div class="fg" style="max-width:60px"><label>长度1</label><input type="number" id="dALen1" step="1" value="0"></div>
+<div class="fg" style="max-width:60px"><label>长度2</label><input type="number" id="dALen2" step="1" value="0"></div>
+<div class="row-res"><div class="item"><div class="lbl">损耗长度</div><div class="v" id="dACalcRes">—</div></div></div>
+</div>
+<div class="row-line" style="background:#fef2f2;border:1px solid #fecaca">
+<div class="row-label" style="width:52px;color:#991b1b;font-size:10px;flex-shrink:0"><b>损耗A</b></div>
 <div class="fg" style="max-width:60px"><label>损耗长度</label><input type="number" id="dALossLen" step="1" value="0"></div>
 <div class="fg" style="max-width:48px"><label>单筒重量</label><input type="number" id="dAWeight" step="0.01" value="0"></div>
 <div class="fg" style="max-width:54px"><label>最大线轴长</label><input type="number" id="dAMaxSL" step="1" value="0"></div>
 <div class="fg" style="max-width:48px"><label>单价</label><input type="number" id="dAPrice" step="0.01" value="0"></div>
 <div class="fg" style="max-width:44px"><label>轴数</label><input type="number" id="dASpoolQty" step="1" value="0"></div>
 <div class="row-res">
-<div class="item"><div class="lbl">损耗长</div><div class="v" id="dACalcRes">—</div></div>
-<div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">损耗重量</div><div class="v" id="dALossWtRes">—</div></div>
+<div class="item"><div class="lbl">损耗重量</div><div class="v" id="dALossWtRes">—</div></div>
 <div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">成本</div><div class="v" id="dACostRes">—</div></div></div>
 <button class="calc-btn" id="calcLossA" style="margin-left:6px">计算</button>
 </div>
 <div class="row-line" style="background:#fffbeb;border:1px solid #fde68a">
-<div class="row-label" style="width:52px;color:#92400e;font-size:10px;flex-shrink:0"><b>损耗B</b></div>
-<div class="fg" style="max-width:60px"><label>被减数</label><input type="number" id="dBMin" step="1" value="0"></div>
-<div class="fg" style="max-width:60px"><label>减数</label><input type="number" id="dBSub" step="1" value="0"></div>
+<div class="row-label" style="width:52px;color:#92400e;font-size:10px;flex-shrink:0"><b>损耗长B</b></div>
+<div class="fg" style="max-width:60px"><label>长度1</label><input type="number" id="dBLen1" step="1" value="0"></div>
+<div class="fg" style="max-width:60px"><label>长度2</label><input type="number" id="dBLen2" step="1" value="0"></div>
+<div class="row-res"><div class="item"><div class="lbl">损耗长度</div><div class="v" id="dBCalcRes">—</div></div></div>
+</div>
+<div class="row-line" style="background:#fef2f2;border:1px solid #fecaca">
+<div class="row-label" style="width:52px;color:#991b1b;font-size:10px;flex-shrink:0"><b>损耗B</b></div>
 <div class="fg" style="max-width:60px"><label>损耗长度</label><input type="number" id="dBLossLen" step="1" value="0"></div>
 <div class="fg" style="max-width:48px"><label>单筒重量</label><input type="number" id="dBWeight" step="0.01" value="0"></div>
 <div class="fg" style="max-width:54px"><label>最大线轴长</label><input type="number" id="dBMaxSL" step="1" value="0"></div>
 <div class="fg" style="max-width:48px"><label>单价</label><input type="number" id="dBPrice" step="0.01" value="0"></div>
 <div class="fg" style="max-width:44px"><label>轴数</label><input type="number" id="dBSpoolQty" step="1" value="0"></div>
 <div class="row-res">
-<div class="item"><div class="lbl">损耗长</div><div class="v" id="dBCalcRes">—</div></div>
-<div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">损耗重量</div><div class="v" id="dBLossWtRes">—</div></div>
+<div class="item"><div class="lbl">损耗重量</div><div class="v" id="dBLossWtRes">—</div></div>
 <div class="item" style="border-left:1px solid #ddd;padding-left:4px"><div class="lbl">成本</div><div class="v" id="dBCostRes">—</div></div></div>
 <button class="calc-btn" id="calcLossB" style="margin-left:6px">计算</button>
 </div>
@@ -141,7 +149,7 @@ h1 svg{width:24px;height:24px;flex-shrink:0}
 <button class="calc-btn" id="clearBtn" style="background:#dc2626;margin-left:4px">清空此方案</button>
 <div class="formula-note">
 T/B:线轴长=经长×经盘数 | 订购线轴=线轴长/上架次+200 | 线轴数量=(线轴数+轴余量)×上架次<br>
-调用A/B:整经长=(订购线轴数-200)×上架次/经盘数 | 损耗A/B:损耗长=被减数-减数 | 损耗重量=单筒重/最大线轴长×损耗长×轴数 | 成本=单价×损耗重量<br>
+调用A/B:整经长=(订购线轴长-200)×上架次/经盘数 | 损耗长A/B:损耗长度=长度1-长度2 | 损耗重量=单筒重/最大线轴长×损耗长×轴数 | 成本=单价×损耗重量<br>
 每行末尾的计算按钮只计算当前行 | 点击参考表单元格填入当前选中的空格
 </div>
 
@@ -536,9 +544,9 @@ function calc(){
     document.getElementById(p+'WarpLenRes').textContent=ct&&cb?fm((cl-200)*ct/cb):'—'
   }
   function calcLoss(p){
-    var min=parseFloat(document.getElementById(p+'Min').value)||0;
-    var sub=parseFloat(document.getElementById(p+'Sub').value)||0;
-    var dl=min-sub;
+    var len1=parseFloat(document.getElementById(p+'Len1').value)||0;
+    var len2=parseFloat(document.getElementById(p+'Len2').value)||0;
+    var dl=len1-len2;
     if(dl>=0)document.getElementById(p+'LossLen').value=dl;
     document.getElementById(p+'CalcRes').textContent=dl>=0?fm(dl):'—';
     var dw=parseFloat(document.getElementById(p+'Weight').value)||0;
@@ -576,9 +584,9 @@ function calcCall(p){
   document.getElementById(p+'WarpLenRes').textContent=ct&&cb?fm((cl-200)*ct/cb):'—'
 }
 function calcLoss(p){
-  var min=parseFloat(document.getElementById(p+'Min').value)||0;
-  var sub=parseFloat(document.getElementById(p+'Sub').value)||0;
-  var dl=min-sub;
+  var len1=parseFloat(document.getElementById(p+'Len1').value)||0;
+  var len2=parseFloat(document.getElementById(p+'Len2').value)||0;
+  var dl=len1-len2;
   if(dl>=0)document.getElementById(p+'LossLen').value=dl;
   document.getElementById(p+'CalcRes').textContent=dl>=0?fm(dl):'—';
   var dw=parseFloat(document.getElementById(p+'Weight').value)||0;
@@ -610,10 +618,12 @@ function collectPlan(){
   var groups=[
     {name:'T 行',fields:[['tWarpLen','整经长度'],['tBeamCnt','经盘数'],['tMaxWL','最大经长'],['tSpool','线轴数'],['tTimes','上架次'],['tSpoolRem','轴余量'],['tLenRem','经长余量']],results:[['tLenRes','线轴长'],['tOrderRes','订购线轴'],['tSpoolRes','线轴数']]},
     {name:'B 行',fields:[['bWarpLen','整经长度'],['bBeamCnt','经盘数'],['bMaxWL','最大经长'],['bSpool','线轴数'],['bTimes','上架次'],['bSpoolRem','轴余量'],['bLenRem','经长余量']],results:[['bLenRes','线轴长'],['bOrderRes','订购线轴'],['bSpoolRes','线轴数']]},
-    {name:'调用A',fields:[['cAOrderLen','订购线轴数'],['cABeamCnt','经盘数'],['cASpool','线轴数'],['cATimes','上架次']],results:[['cAWarpLenRes','整经长度']]},
-    {name:'调用B',fields:[['cBOrderLen','订购线轴数'],['cBBeamCnt','经盘数'],['cBSpool','线轴数'],['cBTimes','上架次']],results:[['cBWarpLenRes','整经长度']]},
-    {name:'损耗A',fields:[['dAMin','被减数'],['dASub','减数'],['dALossLen','损耗长度'],['dAWeight','单筒重量'],['dAMaxSL','最大线轴长'],['dAPrice','单价'],['dASpoolQty','线轴数量']],results:[['dACalcRes','损耗长'],['dALossWtRes','损耗重量'],['dACostRes','成本']]},
-    {name:'损耗B',fields:[['dBMin','被减数'],['dBSub','减数'],['dBLossLen','损耗长度'],['dBWeight','单筒重量'],['dBMaxSL','最大线轴长'],['dBPrice','单价'],['dBSpoolQty','线轴数量']],results:[['dBCalcRes','损耗长'],['dBLossWtRes','损耗重量'],['dBCostRes','成本']]}
+    {name:'调用A',fields:[['cAOrderLen','订购线轴长'],['cAOrderQty','订购线轴数'],['cABeamCnt','经盘数'],['cASpool','线轴数'],['cATimes','上架次']],results:[['cAWarpLenRes','整经长度']]},
+    {name:'调用B',fields:[['cBOrderLen','订购线轴长'],['cBOrderQty','订购线轴数'],['cBBeamCnt','经盘数'],['cBSpool','线轴数'],['cBTimes','上架次']],results:[['cBWarpLenRes','整经长度']]},
+    {name:'损耗长A',fields:[['dALen1','长度1'],['dALen2','长度2']],results:[['dACalcRes','损耗长度']]},
+    {name:'损耗A',fields:[['dALossLen','损耗长度'],['dAWeight','单筒重量'],['dAMaxSL','最大线轴长'],['dAPrice','单价'],['dASpoolQty','轴数']],results:[['dALossWtRes','损耗重量'],['dACostRes','成本']]},
+    {name:'损耗长B',fields:[['dBLen1','长度1'],['dBLen2','长度2']],results:[['dBCalcRes','损耗长度']]},
+    {name:'损耗B',fields:[['dBLossLen','损耗长度'],['dBWeight','单筒重量'],['dBMaxSL','最大线轴长'],['dBPrice','单价'],['dBSpoolQty','轴数']],results:[['dBLossWtRes','损耗重量'],['dBCostRes','成本']]}
   ];
   var lines=['=== 整经方案 ===','保存时间：'+new Date().toLocaleString(),''];
   groups.forEach(function(g){
