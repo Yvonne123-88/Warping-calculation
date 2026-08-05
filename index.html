@@ -457,7 +457,8 @@ function loadExcel(){
     var cCost=idx(['Cost/RMB','Cost','Cost RMB']);
     function g(r,c){return c>=0&&c<r.length?String(r[c]||'').trim():''}
     function num(v){var n=parseFloat(v);return isNaN(n)?0:n}
-    function gn(r,c){return String(num(g(r,c)))}
+    function fmtNum(v){return Number.isInteger(v)?String(v):v.toFixed(2)}
+    function gn(r,c){var v=num(g(r,c));return fmtNum(v)}
     var arr=[];
     for(var i=1;i<rows.length;i++){
       var r=rows[i];if(!r)continue;
@@ -467,8 +468,13 @@ function loadExcel(){
       var mat=g(r,cMat);
       var desc=g(r,cDesc);
       if(!wsName&&!desc&&!loom)continue;
-      var cost=g(r,cCost).replace(/[,\s]/g,'');
-      arr.push([tb,loom,wsName,mat,desc,gn(r,cMaxL),gn(r,cLen),gn(r,cBeam),gn(r,cSpool),gn(r,cBeamRem),gn(r,cSpoolRem),gn(r,cTimes),gn(r,cMaxSL),gn(r,cWeight),gn(r,cSpoolLen),gn(r,cBobbin),g(r,cUnit),g(r,cCur),cost])
+      var unitRaw=g(r,cUnit);
+      var uv=unitRaw===''?NaN:num(unitRaw);
+      var unit=unitRaw===''?'':fmtNum(uv);
+      var costRaw=g(r,cCost).replace(/[,\s]/g,'');
+      var cv=parseFloat(costRaw);
+      var cost=isNaN(cv)?g(r,cCost):Math.round(cv).toLocaleString('zh-CN');
+      arr.push([tb,loom,wsName,mat,desc,gn(r,cMaxL),gn(r,cLen),gn(r,cBeam),gn(r,cSpool),gn(r,cBeamRem),gn(r,cSpoolRem),gn(r,cTimes),gn(r,cMaxSL),gn(r,cWeight),gn(r,cSpoolLen),gn(r,cBobbin),unit,g(r,cCur),cost])
     }
     if(arr.length){D=arr;render()}
   }).catch(function(){})
@@ -509,7 +515,7 @@ rb.addEventListener('click',function(e){
   var val=tdEl.textContent.trim();
   document.getElementById(activeInput).value=val;
 });
-function fm(x){return Number(x).toLocaleString('zh-CN',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function fm(x){var v=Number(x);if(!isFinite(v))return '—';return v.toLocaleString('zh-CN',{minimumFractionDigits:Number.isInteger(v)?0:2,maximumFractionDigits:2})}
 function calc(){
   function calcRow(p){
     var wl=parseFloat(document.getElementById(p+'WarpLen').value)||0;
