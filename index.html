@@ -433,22 +433,43 @@ function loadExcel(){
     var wb=XLSX.read(buf,{type:'array'});
     var ws=wb.Sheets[wb.SheetNames[0]];
     var rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+    if(!rows.length)return;
+    var header=rows[0].map(function(h){return String(h||'').trim()});
+    function idx(aliases){for(var i=0;i<aliases.length;i++){var p=header.indexOf(aliases[i]);if(p>=0)return p}return -1}
+    var cTB=idx(['TOP/BOT','Top/Bot','TopBot']);
+    var cLoom=idx(['Loom','LOOM']);
+    var cWS=idx(['WarpSet','WS']);
+    var cMat=idx(['物料号']);
+    var cDesc=idx(['描述']);
+    var cMaxL=idx(['最大整经长度','最大经长']);
+    var cLen=idx(['整经长度','经长']);
+    var cBeam=idx(['经盘数量','经盘数','盘数','盘']);
+    var cSpool=idx(['线轴数量','线轴数','线轴']);
+    var cBeamRem=idx(['经盘余量','盘余']);
+    var cSpoolRem=idx(['线轴余量','轴余']);
+    var cTimes=idx(['上架次数','上架次','上架']);
+    var cMaxSL=idx(['最大线轴长度','最大轴长','最大线轴长']);
+    var cWeight=idx(['单筒重量','单筒重']);
+    var cSpoolLen=idx(['线轴长度','轴长度']);
+    var cBobbin=idx(['筒子数量','筒子数','筒子']);
+    var cUnit=idx(['Unit price','UnitPrice','单价']);
+    var cCur=idx(['Currency','币种']);
+    var cCost=idx(['Cost/RMB','Cost','Cost RMB']);
+    function g(r,c){return c>=0&&c<r.length?String(r[c]||'').trim():''}
+    function num(v){var n=parseFloat(v);return isNaN(n)?0:n}
+    function gn(r,c){return String(num(g(r,c)))}
     var arr=[];
-    rows.forEach(function(r){
-      if(!r||r.length<19)return;
-      if(String(r[0]||'').trim()==='TOP/BOT'||String(r[1]||'').trim()==='Loom')return;
-      var tb=String(r[0]||'').trim();
-      var loom=String(r[1]||'').trim();
-      var wsName=String(r[2]||'').trim();
-      var mat=String(r[3]||'').trim();
-      var desc=String(r[4]||'').trim();
-      if(!wsName&&!desc&&!loom)return;
-      var num=function(v){var n=parseFloat(v);return isNaN(n)?0:n};
-      var unit=String(r[16]||'').trim();
-      var cur=String(r[17]||'').trim();
-      var cost=String(r[18]||'').replace(/[,\s]/g,'');
-      arr.push([tb,loom,wsName,mat,desc,String(num(r[5])),String(num(r[6])),String(num(r[7])),String(num(r[8])),String(num(r[9])),String(num(r[10])),String(num(r[11])),String(num(r[12])),String(num(r[13])),String(num(r[14])),String(num(r[15])),unit,cur,cost])
-    });
+    for(var i=1;i<rows.length;i++){
+      var r=rows[i];if(!r)continue;
+      var tb=g(r,cTB);
+      var loom=g(r,cLoom);
+      var wsName=g(r,cWS);
+      var mat=g(r,cMat);
+      var desc=g(r,cDesc);
+      if(!wsName&&!desc&&!loom)continue;
+      var cost=g(r,cCost).replace(/[,\s]/g,'');
+      arr.push([tb,loom,wsName,mat,desc,gn(r,cMaxL),gn(r,cLen),gn(r,cBeam),gn(r,cSpool),gn(r,cBeamRem),gn(r,cSpoolRem),gn(r,cTimes),gn(r,cMaxSL),gn(r,cWeight),gn(r,cSpoolLen),gn(r,cBobbin),g(r,cUnit),g(r,cCur),cost])
+    }
     if(arr.length){D=arr;render()}
   }).catch(function(){})
 }
