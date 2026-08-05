@@ -152,7 +152,7 @@ T/B:线轴长=经长×经盘数 | 订购线轴=线轴长/上架次+200 | 线轴�
 <span class="ref-count" id="refCount"></span>
 </div>
 <div class="ref-wrap">
-<table class="ref-table"><thead><tr><th>TB</th><th>Lm</th><th>WS</th><th>描述</th><th>经长</th><th>盘</th><th>线轴</th><th>盘余</th><th>轴余</th><th>上架</th><th>最大轴长</th><th>单筒重</th><th>轴长度</th><th>筒子</th><th>单价</th><th>Cost</th></tr></thead><tbody id="refBody"></tbody></table>
+<table class="ref-table"><thead><tr><th>TB</th><th>Loom</th><th>WS</th><th>描述</th><th>最大经长</th><th>经长</th><th>盘</th><th>线轴</th><th>盘余</th><th>轴余</th><th>上架</th><th>最大轴长</th><th>单筒重</th><th>轴长度</th><th>筒子</th><th>单价</th><th>币种</th><th>Cost</th></tr></thead><tbody id="refBody"></tbody></table>
 </div>
 <span class="click-hint">💡 先点击计算区的空格（使其处于选中状态），再点击参考表单元格，只填入当前空格</span>
 <div class="footnote">数据来源：整经数据.xlsx</div>
@@ -435,16 +435,19 @@ function loadExcel(){
     var rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
     var arr=[];
     rows.forEach(function(r){
-      if(!r||r.length<21)return;
+      if(!r||r.length<19)return;
+      if(String(r[0]||'').trim()==='TOP/BOT'||String(r[1]||'').trim()==='Loom')return;
       var tb=String(r[0]||'').trim();
       var loom=String(r[1]||'').trim();
-      var wsName=String(r[4]||'').trim();
-      var desc=String(r[6]||'').trim();
-      if(!wsName&&!desc)return;
+      var wsName=String(r[2]||'').trim();
+      var mat=String(r[3]||'').trim();
+      var desc=String(r[4]||'').trim();
+      if(!wsName&&!desc&&!loom)return;
       var num=function(v){var n=parseFloat(v);return isNaN(n)?0:n};
-      var unit=(String(r[18]||'')+' '+String(r[19]||'')).trim();
-      var cost=String(r[20]||'').replace(/[,\s]/g,'');
-      arr.push([tb,loom,wsName,desc,String(num(r[7])),String(num(r[8])),String(num(r[9])),String(num(r[10])),String(num(r[11])),String(num(r[12])),String(num(r[13])),String(num(r[14])),String(num(r[15])),String(num(r[16])),String(num(r[17])),unit,cost])
+      var unit=String(r[16]||'').trim();
+      var cur=String(r[17]||'').trim();
+      var cost=String(r[18]||'').replace(/[,\s]/g,'');
+      arr.push([tb,loom,wsName,mat,desc,String(num(r[5])),String(num(r[6])),String(num(r[7])),String(num(r[8])),String(num(r[9])),String(num(r[10])),String(num(r[11])),String(num(r[12])),String(num(r[13])),String(num(r[14])),String(num(r[15])),unit,cur,cost])
     });
     if(arr.length){D=arr;render()}
   }).catch(function(){})
@@ -454,20 +457,22 @@ setInterval(loadExcel,5*60*1000);
 var rb=document.getElementById('refBody'),rs=document.getElementById('refSearch'),rf=document.getElementById('refFilter'),rc=document.getElementById('refCount');
 function render(){
   var q=rs.value.trim().toLowerCase(),fw=rf.value;
-  var f=D.filter(function(d){return d&&d.length>3&&(!fw||d[2]===fw)&&(!q||d[2].toLowerCase().includes(q)||d[1].toLowerCase().includes(q)||d[3].toLowerCase().includes(q))});
+  var f=D.filter(function(d){return d&&d.length>3&&(!fw||d[2]===fw)&&(!q||d[2].toLowerCase().includes(q)||d[1].toLowerCase().includes(q)||d[3].toLowerCase().includes(q)||(d[4]||'').toLowerCase().includes(q))});
   var g={};f.forEach(function(d){if(!g[d[2]])g[d[2]]=[];g[d[2]].push(d)});
   var ks=Object.keys(g).sort();rc.textContent=f.length+' 条';var h='';
   ks.forEach(function(ws){
-    h+='<tr class="ws-head"><td colspan="16"><span style="font-weight:700;font-size:12px">'+ws+'</span></td></tr>';
+    h+='<tr class="ws-head"><td colspan="18"><span style="font-weight:700;font-size:12px">'+ws+'</span></td></tr>';
     g[ws].forEach(function(d){
       if(!d||d.length<4)return;
-      var tb=d[0],mk=d[3].includes('marker');
+      var isNew=d.length>17;
+      var tb=d[0],desc=isNew?d[4]:d[3];
+      var mk=desc.includes('marker');
       var tbc=tb==='Top'?'<span class="badge badge-top">T</span>':tb==='Bot'?'<span class="badge badge-bot">B</span>':'';
       h+='<tr'+(mk?' style="opacity:.45"':'')+'>';
-      h+='<td>'+tbc+'</td><td>'+d[1]+'</td><td>'+d[2]+'</td><td>'+d[3]+'</td><td>'+d[5]+'</td><td>'+d[6]+'</td><td>'+d[7]+'</td><td>'+d[8]+'</td><td>'+d[9]+'</td><td>'+d[10]+'</td><td>'+d[11]+'</td><td>'+d[12]+'</td><td>'+d[13]+'</td><td>'+d[14]+'</td><td>'+d[15]+'</td><td>'+d[16]+'</td></tr>'
+      h+='<td>'+tbc+'</td><td>'+d[1]+'</td><td>'+d[2]+'</td><td>'+desc+'</td><td>'+(isNew?d[5]:d[4])+'</td><td>'+(isNew?d[6]:d[5])+'</td><td>'+(isNew?d[7]:d[6])+'</td><td>'+(isNew?d[8]:d[7])+'</td><td>'+(isNew?d[9]:d[8])+'</td><td>'+(isNew?d[10]:d[9])+'</td><td>'+(isNew?d[11]:d[10])+'</td><td>'+(isNew?d[12]:d[11])+'</td><td>'+(isNew?d[13]:d[12])+'</td><td>'+(isNew?d[14]:d[13])+'</td><td>'+(isNew?d[15]:d[14])+'</td><td>'+(isNew?d[16]:'')+'</td><td>'+(isNew?d[17]:'')+'</td><td>'+(isNew?d[18]:d[16])+'</td></tr>'
     })
   });
-  rb.innerHTML=f.length?h:'<tr><td colspan="16" style="padding:24px;text-align:center;color:#9ca3af">无匹配</td></tr>'
+  rb.innerHTML=f.length?h:'<tr><td colspan="18" style="padding:24px;text-align:center;color:#9ca3af">无匹配</td></tr>'
 }
 var wsArr=[];D.forEach(function(d){var w=d[2];if(wsArr.indexOf(w)<0)wsArr.push(w)});wsArr.sort();
 wsArr.forEach(function(ws){var o=document.createElement('option');o.value=ws;o.textContent=ws;rf.appendChild(o)});
