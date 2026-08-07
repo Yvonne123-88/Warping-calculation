@@ -179,10 +179,10 @@ T/B:线轴长=经长×经盘数 | 订购线轴=线轴长/上架次+200 | 线轴�
 </div>
 <button class="calc-btn" id="optBtn">查找最优解</button>
 <div style="font-size:10px;font-weight:600;color:#374151;margin:6px 0 3px">Top 最优解</div>
-<div class="ref-wrap" style="max-height:220px"><table class="ref-table"><thead><tr><th>描述</th><th>经盘</th><th>线轴</th><th>轴余</th><th>上架</th><th>最大经长</th><th>最优整经长</th><th>所需线轴长</th><th>翻倍</th><th>需线轴数</th><th>浪费</th><th>状态</th></tr></thead><tbody id="optTopBody"></tbody></table></div>
+<div class="ref-wrap" style="max-height:220px"><table class="ref-table"><thead><tr><th>描述</th><th>经盘</th><th>线轴</th><th>盘余</th><th>上架</th><th>最大经长</th><th>最优整经长</th><th>所需线轴长</th><th>翻倍</th><th>需线轴数</th><th>浪费</th><th>状态</th></tr></thead><tbody id="optTopBody"></tbody></table></div>
 <div id="optTopRec" style="font-size:10px;color:#1e40af;margin:3px 0 6px"></div>
 <div style="font-size:10px;font-weight:600;color:#374151;margin:6px 0 3px">Bot 最优解</div>
-<div class="ref-wrap" style="max-height:220px"><table class="ref-table"><thead><tr><th>描述</th><th>经盘</th><th>线轴</th><th>轴余</th><th>上架</th><th>最大经长</th><th>最优整经长</th><th>所需线轴长</th><th>翻倍</th><th>需线轴数</th><th>浪费</th><th>状态</th></tr></thead><tbody id="optBotBody"></tbody></table></div>
+<div class="ref-wrap" style="max-height:220px"><table class="ref-table"><thead><tr><th>描述</th><th>经盘</th><th>线轴</th><th>盘余</th><th>上架</th><th>最大经长</th><th>最优整经长</th><th>所需线轴长</th><th>翻倍</th><th>需线轴数</th><th>浪费</th><th>状态</th></tr></thead><tbody id="optBotBody"></tbody></table></div>
 <div id="optBotRec" style="font-size:10px;color:#1e40af;margin:3px 0 0"></div>
 </div>
 
@@ -398,7 +398,7 @@ document.getElementById('clearBtn').addEventListener('click',function(){
   calcAll()
 });
 function optNeed(d){
-  return {beam:parseFloat(d[7])||0,spool:parseFloat(d[8])||0,rem:parseFloat(d[10])||0,times:parseFloat(d[11])||0,maxL:parseFloat(d[5])||0,maxSL:parseFloat(d[12])||0,desc:d[4]||d[3]}
+  return {beam:parseFloat(d[7])||0,spool:parseFloat(d[8])||0,rem:parseFloat(d[9])||0,times:parseFloat(d[11])||0,maxL:parseFloat(d[5])||0,maxSL:parseFloat(d[12])||0,desc:d[4]||d[3]}
 }
 function optBest(d,orderLen,orderQty){
   var n=optNeed(d);
