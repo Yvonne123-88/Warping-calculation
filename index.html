@@ -165,6 +165,27 @@ T/B:线轴长=经长×经盘数 | 订购线轴=线轴长/上架次+200 | 线轴�
 每行末尾的计算按钮只计算当前行 | 先点计算区空格再点参考表单元格填入
 </div>
 
+<div class="panel" id="optPanel">
+<div class="title">调用最优解</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:5px">
+<input type="text" id="optLoom" placeholder="Loom，如 F01" style="width:90px;font-size:11px;padding:4px 6px;border:1px solid #d1d5db;border-radius:4px">
+<input type="text" id="optWS" placeholder="WarpSet，如 DW500" style="width:110px;font-size:11px;padding:4px 6px;border:1px solid #d1d5db;border-radius:4px">
+</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:5px">
+<input type="number" id="optTLen" placeholder="Top 订购线轴长" step="0.1" style="width:120px;font-size:11px;padding:4px 6px;border:1px solid #d1d5db;border-radius:4px">
+<input type="number" id="optTQty" placeholder="Top 订购线轴数" step="1" style="width:110px;font-size:11px;padding:4px 6px;border:1px solid #d1d5db;border-radius:4px">
+<input type="number" id="optBLen" placeholder="Bot 订购线轴长" step="0.1" style="width:120px;font-size:11px;padding:4px 6px;border:1px solid #d1d5db;border-radius:4px">
+<input type="number" id="optBQty" placeholder="Bot 订购线轴数" step="1" style="width:110px;font-size:11px;padding:4px 6px;border:1px solid #d1d5db;border-radius:4px">
+</div>
+<button class="calc-btn" id="optBtn">查找最优解</button>
+<div style="font-size:10px;font-weight:600;color:#374151;margin:6px 0 3px">Top 最优解</div>
+<div class="ref-wrap" style="max-height:220px"><table class="ref-table"><thead><tr><th>描述</th><th>经盘</th><th>线轴</th><th>轴余</th><th>上架</th><th>最大经长</th><th>最优整经长</th><th>所需线轴长</th><th>翻倍</th><th>需线轴数</th><th>浪费</th><th>状态</th></tr></thead><tbody id="optTopBody"></tbody></table></div>
+<div id="optTopRec" style="font-size:10px;color:#1e40af;margin:3px 0 6px"></div>
+<div style="font-size:10px;font-weight:600;color:#374151;margin:6px 0 3px">Bot 最优解</div>
+<div class="ref-wrap" style="max-height:220px"><table class="ref-table"><thead><tr><th>描述</th><th>经盘</th><th>线轴</th><th>轴余</th><th>上架</th><th>最大经长</th><th>最优整经长</th><th>所需线轴长</th><th>翻倍</th><th>需线轴数</th><th>浪费</th><th>状态</th></tr></thead><tbody id="optBotBody"></tbody></table></div>
+<div id="optBotRec" style="font-size:10px;color:#1e40af;margin:3px 0 0"></div>
+</div>
+
 <div style="font-size:11px;font-weight:600;color:#5b6777;margin-bottom:5px;padding-bottom:3px;border-bottom:1px solid #e9ecef">整经数据参考表</div>
 <div class="ref-controls">
 <input type="text" id="refSearch" placeholder="搜 WarpSet 或 Loom...">
@@ -375,6 +396,58 @@ document.getElementById('clearBtn').addEventListener('click',function(){
   document.querySelectorAll('.container input[type="number"]').forEach(function(i){i.value=''});
   document.querySelectorAll('.row-res .v').forEach(function(v){v.textContent='—'});
   calcAll()
+});
+function optNeed(d){
+  return {beam:parseFloat(d[7])||0,spool:parseFloat(d[8])||0,rem:parseFloat(d[10])||0,times:parseFloat(d[11])||0,maxL:parseFloat(d[5])||0,maxSL:parseFloat(d[12])||0,desc:d[4]||d[3]}
+}
+function optBest(d,orderLen,orderQty){
+  var n=optNeed(d);
+  if(!n.beam||!n.maxL)return null;
+  var qty=(n.spool+n.rem)*n.times;
+  if(orderQty<qty)return {ok:false,reason:'线轴数不足',qty:qty,need:n};
+  var cands=[];
+  var l1=Math.min(n.maxL,orderLen/n.beam);
+  if(l1>0&&l1*n.beam<=n.maxSL)cands.push({L:l1,len:l1*n.beam,double:false});
+  var l2=Math.min(n.maxL,orderLen/(2*n.beam));
+  if(l2>0&&l2*n.beam>n.maxSL)cands.push({L:l2,len:l2*n.beam*2,double:true});
+  if(!cands.length)return {ok:false,reason:'无可行整经长度',qty:qty,need:n};
+  cands.sort(function(a,b){return b.len-a.len});
+  var best=cands[0];
+  return {ok:true,reason:'可用',best:best,waste:orderLen-best.len,qty:qty,need:n}
+}
+function renderOpt(bodyId,recId,rows,orderLen,orderQty,tb){
+  var body=document.getElementById(bodyId),rec=document.getElementById(recId);
+  if(!rows.length){body.innerHTML='<tr><td colspan="12" style="padding:12px;text-align:center;color:#9ca3af">未找到 '+tb+' 匹配数据</td></tr>';rec.textContent='';return}
+  var html='',bestItem=null;
+  rows.forEach(function(d){
+    var r=optBest(d,orderLen,orderQty);
+    if(!r){html+='<tr><td colspan="12">参数缺失</td></tr>';return}
+    var n=r.need;
+    html+='<tr style="opacity:'+(r.ok?1:.5)+'">';
+    html+='<td>'+n.desc+'</td><td>'+n.beam+'</td><td>'+n.spool+'</td><td>'+n.rem+'</td><td>'+n.times+'</td><td>'+n.maxL+'</td>';
+    if(r.ok){
+      html+='<td>'+fm(r.best.L)+'</td><td>'+fm(r.best.len)+'</td><td>'+(r.best.double?'是':'否')+'</td><td>'+fm(r.qty)+'</td><td>'+fm(r.waste)+'</td><td>可用</td>';
+      if(!bestItem||r.waste<bestItem.r.waste)bestItem={d:d,r:r}
+    }else{
+      html+='<td colspan="5" style="color:#dc2626">'+r.reason+'</td>'
+    }
+    html+='</tr>'
+  });
+  body.innerHTML=html;
+  rec.textContent=bestItem?'推荐：'+bestItem.r.need.desc+' | 最优整经长度 '+fm(bestItem.r.best.L)+' | 所需线轴长 '+fm(bestItem.r.best.len)+' | 浪费 '+fm(bestItem.r.waste):'无可用匹配方案'
+}
+document.getElementById('optBtn').addEventListener('click',function(){
+  var loom=document.getElementById('optLoom').value.trim().toUpperCase();
+  var ws=document.getElementById('optWS').value.trim().toUpperCase();
+  if(!loom||!ws){alert('请输入 Loom 和 WarpSet');return}
+  var tLen=parseFloat(document.getElementById('optTLen').value)||0;
+  var tQty=parseFloat(document.getElementById('optTQty').value)||0;
+  var bLen=parseFloat(document.getElementById('optBLen').value)||0;
+  var bQty=parseFloat(document.getElementById('optBQty').value)||0;
+  var tops=D.filter(function(d){return d&&d[0]==='Top'&&String(d[1]||'').toUpperCase()===loom&&String(d[2]||'').toUpperCase()===ws});
+  var bots=D.filter(function(d){return d&&d[0]==='Bot'&&String(d[1]||'').toUpperCase()===loom&&String(d[2]||'').toUpperCase()===ws});
+  renderOpt('optTopBody','optTopRec',tops,tLen,tQty,'Top');
+  renderOpt('optBotBody','optBotRec',bots,bLen,bQty,'Bot')
 });
 loadEncrypted();
 setInterval(loadEncrypted,5*60*1000);
